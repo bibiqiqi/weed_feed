@@ -1,9 +1,9 @@
+languge: node_js
+node_js: node
 deploy:
   provider: heroku
   api_key:
-    secure:
-  app:
+    secure: H1u/KYJy1y3ZX3scgBljfX+b/prD9kAREfukDFQjynGAwazjmfeuFbj7cn3169bXKsUvofg3IYNs1c4wulrLmJFq3piOzaiYH95HVLxXQRb/w7l1ivstV2bOm9MSSCC/gdA5w3b9tp93zEGq8qk0vm0l+zYxCBAHE7Y+ArVzZUxMHcfA4lJXxGqXuCGCNBMyuUQJ+oP8K2Npqqfx/jJdToQ6ObONbMZBUa13Ytjwf0DgI94WIHq3LqGpoTXv5xGPp+OLX8hP9iAVKugPjn1+xNhgR9dbLH4nDvjskIOhAWhvBQGn2NZVXtM1mqw7NXKu3pfBFOE/JDag9d42XZYMA0f+rVYLCPLQRv+paW3hvYlFuF6E/39hdbuum4z+jUmpYoRCCrq0e8NEgU1sB9LBQ7AWPpRKRdODJWLp+dVMDzpLmXzYP8SvaT+eLR5jHHrrityHCO2viaE1WBAL0vruj7Qyj3kFwx+Afc+FdrhblJajiNrHC4fg6ydi2rgvGNvBMD/YAhm47fFT8kQK0/yEUSG7iilW4Z+JYaahC6C8ZCykkDlR/VW06ERGXe8noOYgZWyKXzsoayDAPPEi14hwWQOhbVxiyAY4eVB1IT+KVAnGfouOGGbVeKmWWnoDzEzYahovy/8FEucsYIarCIwNBlCyQhAF4TboJeofkEKDueA=
+  app: floating-plateau-35610
   on:
     repo: bibiqiqi/weed_growing_app
-languge: node_js
-node_js: node
