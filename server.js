@@ -3,7 +3,11 @@ const app = express();
 
 app.use(express.static('public'));
 
-app.listen(process.env.PORT || 8080);
+//app.listen(process.env.PORT || 8080);
+
+module.exports = app;
+
+let server;
 
 function runServer() {
   const port = process.env.PORT || 8080;
@@ -17,9 +21,6 @@ function runServer() {
   });
 }
 
-// like `runServer`, this function also needs to return a promise.
-// `server.close` does not return a promise on its own, so we manually
-// create one.
 function closeServer() {
   return new Promise((resolve, reject) => {
     console.log('Closing server');
@@ -33,5 +34,9 @@ function closeServer() {
     });
   });
 }
+
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+};
 
 module.exports = {app, runServer, closeServer};
