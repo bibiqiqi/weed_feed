@@ -12,15 +12,14 @@ h1 {
   padding: 2rem;
 }
 
+.hidden {
+  display: none;
+}
+
 .page {
   height: 100vh;
   width: 100vw;
-  margin: 0 auto;
-  position: relative;
-  padding: 5vh 5vw;
-}
-.hidden {
-  display: none;
+  margin: 5vh 5vw;
 }
 
 .header {
@@ -28,22 +27,54 @@ h1 {
   margin: 0 auto;
 }
 
-#grow-grid {
+
+
+/* grow-collection-page */
+#grow-collection-page #grow-grid {
   display: flex;
   flex-wrap: wrap;
+  border: .5vw solid black;
 }
 
+#grow-collection-page figure {
+  border: .5vw solid black;
+}
 
-.grid-images {
+#grow-collection-page .grid-images {
   background-position: center center;
   background-size: cover;
-  margin: 0 auto;
-  position: relative;
   z-index: 1;
-  border: .5vw solid black;
-  width: 24vw;
-  height: 23vw;
+  width: 23.5vw;
+  height: 23.5vw;
 }
+
+/* grow-entries-page */
+#grow-entries-page #grow-timeline {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 90vh;
+}
+
+#grow-entries-page #timeline-left {
+  display: flex;
+  width: 45%;
+  flex-direction: column;
+}
+
+#grow-entries-page #timeline-line {
+  display: flex;
+  width: 10%;
+  flex-direction: column;
+
+}
+#grow-entries-page #timeline-right {
+  display: flex;
+  width: 45%;
+  flex-direction: column;
+}
+
+
 
 /* Larger than mobile */
 @media (min-width: 400px) {}
