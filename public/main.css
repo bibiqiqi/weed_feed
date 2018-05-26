@@ -1,9 +1,48 @@
+html {
+font-size: 62.5% /* = 10px */
+}
+
 body {
   box-sizing: border-box;
 }
 
+h1 {
+  font-size: 5rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.page {
+  height: 100vh;
+  width: 100vw;
+  margin: 0 auto;
+  position: relative;
+  padding: 5vh 5vw;
+}
 .hidden {
   display: none;
+}
+
+.header {
+  display: block;
+  margin: 0 auto;
+}
+
+#grow-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.grid-images {
+  background-position: center center;
+  background-size: cover;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  border: .5vw solid black;
+  width: 24vw;
+  height: 23vw;
 }
 
 /* Larger than mobile */
@@ -16,7 +55,15 @@ body {
 @media (min-width: 750px) {}
 
 /* Larger than desktop */
-@media (min-width: 1000px) {}
+@media (min-width: 1000px) {
+  html {
+    font-size: 18px;
+  }
+}
 
 /* Larger than Desktop HD */
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+  html {
+    font-size: 20px;
+  }
+}
