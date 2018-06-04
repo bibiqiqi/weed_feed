@@ -4,14 +4,14 @@ const growCollection =
     {
       id: '100',
       growName: 'Tangerine Dream',
-      startDate: '2018/01/12',
+      startDate: '2018-01-15',
       endDate: '',
       strain: 'indica',
       image: 'http://wesb.com/wp-content/uploads/2015/06/citral-cannabis-plant.jpg',
       entries: [
         {
           id: '34623',
-          date: '2018/01/15',
+          date: '2018-04-15',
           phase: 'vegetative',
           watered: true,
           fed: false,
@@ -19,7 +19,7 @@ const growCollection =
         },
         {
           id: '56734',
-          date: '2018/01/18',
+          date: '2018-04-18',
           phase: 'vegetative',
           watered: false,
           fed: true,
@@ -27,7 +27,7 @@ const growCollection =
         },
         {
           id: '34136',
-          date: '2018/01/20',
+          date: '2018-04-20',
           phase: 'vegetative',
           watered: true,
           fed: false,
@@ -35,7 +35,7 @@ const growCollection =
         },
         {
           id: '674563',
-          date: '2018/01/23',
+          date: '2018-04-23',
           phase: 'vegetative',
           watered: false,
           fed: true,
@@ -43,7 +43,7 @@ const growCollection =
         },
         {
           id: '456456',
-          date: '2018/01/26',
+          date: '2018-04-26',
           phase: 'vegetative',
           watered: true,
           fed: false,
@@ -51,7 +51,7 @@ const growCollection =
         },
         {
           id: '453256',
-          date: '2018/01/29',
+          date: '2018-04-29',
           phase: 'flowering',
           watered: false,
           fed: true,
@@ -62,7 +62,7 @@ const growCollection =
     {
       id: '200',
       growName: 'Green Crack',
-      startDate: '2018/02/3',
+      startDate: '2018-02-3',
       endDate: '',
       strain: 'sativa',
       image: 'https://magazine.grasscity.com/wp-content/uploads/2016/02/How-To-Harvest-Outdoor-Marijuana-Plants-720x480@2x.jpg',
@@ -136,7 +136,7 @@ const growCollection =
     {
       id: '300',
       growName: 'Deep Sleep',
-      startDate: '2018/02/3',
+      startDate: '2018-02-3',
       endDate: '',
       strain: 'indica',
       image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Young_cannabis_plant_in_the_vegetative_stage_01.jpg',
@@ -210,7 +210,7 @@ const growCollection =
     {
       id: '400',
       growName: 'Acapulco Gold',
-      startDate: '2018/02/3',
+      startDate: '2018-02-3',
       endDate: '',
       strain: 'sativa',
       image: 'https://www.growweedeasy.com/wp-content/uploads/2013/03/fat-smelly-cannabis-cola.jpg',
@@ -284,7 +284,7 @@ const growCollection =
     {
       id: '500',
       growName: 'Acapulco Gold',
-      startDate: '2018/02/3',
+      startDate: '2018-02-3',
       endDate: '',
       strain: 'sativa',
       image: 'https://www.growweedeasy.com/wp-content/uploads/2010/05/ultimate-supercrop-bending-lst-example.jpg',
@@ -418,7 +418,7 @@ const oneGrow =
   ]
 };
 
-let postAgrow = {};
+let postAgrow;
 
 const deleteAgrow =
 {

@@ -10,6 +10,10 @@
 
   <!--fonts-->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Jura:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900" rel="stylesheet">
+
   </head>
 
   <body>
@@ -20,9 +24,7 @@
           <h1>My Grows</h1>
         </header>
         <div id="grow-grid">
-
           <!--dynamically generated-->
-
         </div>
     </section>
 
@@ -32,14 +34,18 @@
         <h1 id="grow-name"></h1>
       </header>
       <div id="grow-timeline">
-        <!--the following 3 divs are vertical columns-->
-        <div id="timeline-left">
+        <div id="left-side">
           <!--dynamically generated-->
         </div>
-        <div id="timeline-line">
-          <!--dynamically generated-->
+        <div id="timeline-middle">
+          <div id="timeline-line">
+            <!--dynamically generated-->
+          </div>
+          <div id="timeline-dot">
+
+          </div>
         </div>
-        <div id="timeline-right">
+        <div id="right-side">
           <!--dynamically generated-->
         </div>
       </div>
@@ -49,24 +55,23 @@
     <section id="add-grow-page" class="page hidden" role="region">
       <i class="ionicons ion-android-arrow-back"></i>
       <h1 class="header" role="banner">Start a New Grow</h1>
-      <form>
+      <form name="growSubmit">
       <div>
-        <label for="name">Name Your Grow</label>
+        <label for="new-grow-name">Name Your Grow </label>
         <input type="string" id="new-grow-name" name="growName">
       </div>
       <div>
-        <label for="date">Date of Germination</label>
-        <input type="string" id="germination-date" name="startDate">
+        <label for="germination-date">Date of Germination </label>
+        <input type="string" id="germination-date" name="startDate" placeholder="YYYY-DD-MM">
       </div>
       <div id="strain-group">
         <input type="radio" name="strain" id="indica-strain" class="strain" value="indica"/>
-        <label class="strain" for="indica-strain">Indica</label>
+        <label class="strain" for="indica-strain">Indica</label><br/>
         <input type="radio" name="strain" id="sativa-strain" class="strain" value="sativa"/>
-        <label class="strain" for="sativa-strain">Sativa</label>
+        <label class="strain" for="sativa-strain">Sativa</label><br/>
         <input type="radio" name="strain" id="hybrid-strain" class="strain" value="hybrid"/>
         <label class="strain" for="hybrid-strain">Hybrid</label>
       </div>
-
         <input id="submit-grow" type="submit" value="submit"/>
       </form>
     </section>
@@ -126,6 +131,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="mock-grow-entries.js"></script>
     <script src="app.js"></script>
-  <!--  <script src="moment.js"></script>-->
+    <script src="moment.js"></script>
   </body>
 </html>

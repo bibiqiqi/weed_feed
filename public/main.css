@@ -1,5 +1,5 @@
 html {
-font-size: 62.5% /* = 10px */
+  font-size: 62.5% /* = 10px */
 }
 
 body {
@@ -9,7 +9,38 @@ body {
 h1 {
   font-size: 5rem;
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  margin: 2% 0;
+}
+
+h2 {
+  font-size: 3.5rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+  font-weight: 300;
+}
+
+h4 {
+  font-size: 1rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none;
 }
 
 .hidden {
@@ -27,52 +58,150 @@ h1 {
   margin: 0 auto;
 }
 
-
-
 /* grow-collection-page */
 #grow-collection-page #grow-grid {
   display: flex;
   flex-wrap: wrap;
-  border: .5vw solid black;
 }
 
-#grow-collection-page figure {
-  border: .5vw solid black;
+#grow-collection-page .grow-links,
+ #grow-collection-page #add-a-grow {
+  margin: .2vw .1vw;
+  box-sizing: border-box;
+  width: 24.5vw;
+  height: 24.5vw;
 }
 
-#grow-collection-page .grid-images {
-  background-position: center center;
-  background-size: cover;
-  z-index: 1;
-  width: 23.5vw;
-  height: 23.5vw;
+#grow-collection-page .grow-links {
+  background-color: black;
+  padding: 4% 0%;
+}
+
+/* unvisited link */
+.grow-links:link {
+    color: white;
+}
+
+/* visited link */
+.grow-links:visited {
+    color: white;
+}
+
+/* mouse over link */
+.grow-links:hover {
+    color: black;
+}
+
+/* selected link */
+.grow-links:active {
+    color: black;
+}
+
+#grow-collection-page #add-a-grow {
+  border: .5vw dotted black;
+  padding: 5% 0%;
+}
+
+/* unvisited link */
+#add-a-grow:link {
+    color: black;
+}
+
+/* visited link */
+#add-a-grow:visited {
+    color: black;
+}
+
+/* mouse over link */
+#add-a-grow:hover {
+    color: white;
+}
+
+/* selected link */
+#add-a-grow:active {
+    color: white;
 }
 
 /* grow-entries-page */
+
 #grow-entries-page #grow-timeline {
   display: flex;
-  justify-content: space-between;
   width: 100%;
-  height: 90vh;
 }
 
-#grow-entries-page #timeline-left {
+#grow-timeline #left-side {
+  flex-grow: 2;
+  position: relative;
   display: flex;
-  width: 45%;
-  flex-direction: column;
+  justify-content: flex-end;
 }
 
-#grow-entries-page #timeline-line {
-  display: flex;
-  width: 10%;
-  flex-direction: column;
+#timeline-middle {
+  width: 40px;
+}
 
+#grow-timeline #timeline-line{
+  background-color: black;
+  width: 25%;
+  margin: 0 auto;
 }
-#grow-entries-page #timeline-right {
-  display: flex;
-  width: 45%;
-  flex-direction: column;
+
+#grow-timeline #timeline-dot{
+  background-color: black;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 25px auto;
 }
+
+#grow-timeline #right-side {
+  flex-grow: 2;
+  position: relative;
+}
+
+#grow-timeline .timeline-entry {
+  height: 50px;
+  position: absolute;
+}
+
+#grow-timeline h2 {
+  font-size: 2em;
+}
+
+
+/* add-grow form page */
+
+#add-grow-page form {
+  width: 50%;
+  margin: 5% auto;
+  line-height: 2rem;
+}
+
+#add-grow-page form div {
+  margin: 1rem;
+}
+
+
+#add-grow-page label {
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+#add-grow-page input {
+  font-size: 2rem;
+}
+
+#add-grow-page #submit-grow {
+  float: right;
+  background-color: black;
+  color: white;
+  font-family: 'Jura', sans-serif;
+  font-weight: 300
+}
+
+
 
 
 
