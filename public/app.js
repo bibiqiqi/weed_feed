@@ -1,11 +1,11 @@
 /*jshint esversion: 6*/
 
-const GROW_ENTRIES_JSON = 'mock-grow-entries.json';
 const appData = {
   page: "",
   allGrows: "",
   oneGrow: "",
   currentGrowIndex: "",
+  currentEntryIndex: "",
   timelineHtml: {
     leftSideHtml: "",
      rightSideHtml: "",
@@ -14,7 +14,18 @@ const appData = {
      name: "",
      date: "",
      strain: ""
-   }
+   },
+   entrySubmit: {
+     week: "",
+     phase: '',
+     watered: "",
+     fed: "",
+     nutrients: {},
+     notes: ""
+   },
+   entries: "",
+   entryNumber: "",
+   currentWeek: "",
 };
 
 //promise functions
@@ -27,6 +38,24 @@ function reject(letterOfOrder) {
 }
 
 //ajax calls
+function getNutrientInstructs() {
+  return new Promise ((resolve, reject) => {
+    //    const settings = {
+    //    url: ,
+    //    dataType: 'json',
+    //    type: 'GET',
+    //    success: callback
+    //  };
+    //  $.ajax(settings);
+    appData.entrySubmit.nutrients = nutrientSchedg.schedule[appData.currentWeek];
+    if (appData.entrySubmit.nutrients == nutrientSchedg.schedule[appData.currentWeek]) {
+      resolve("got this week's nutrient schedg");
+    } else {
+      reject("didn't get this week's nutrient schedg");
+    }
+  });
+}
+
 function getAllGrows() {
   return new Promise ((resolve, reject) => {
     //    const settings = {
@@ -54,11 +83,29 @@ function getGrow(id) {
     //    success: callback
     //  };
     //  $.ajax(settings);
-    appData.oneGrow = postAgrow;
-    if (appData.oneGrow == postAgrow) {
+    appData.oneGrow = oneGrow;
+    if (appData.oneGrow == oneGrow) {
       resolve("got a grow");
     } else {
       reject("didn't get a grow");
+    }
+  });
+}
+
+function getAllEntries() {
+  return new Promise ((resolve, reject) => {
+    //    const settings = {
+    //    url: GROW_ENTRIES_JSON,
+    //    dataType: 'json',
+    //    type: 'GET',
+    //    success: callback
+    //  };
+    //  $.ajax(settings);
+    appData.entries = growCollection;
+    if (appData.entries == growCollection) {
+      resolve("got all grows");
+    } else {
+      reject("didn't get all grows");
     }
   });
 }
@@ -89,6 +136,26 @@ function postGrow(postObject) {
      resolve("posted a grow");
    } else {
      reject("didn't post a grow");
+   }
+ });
+}
+
+
+function postEntry(postObject) {
+  return new Promise ((resolve, reject) => {
+  //  const settings = {
+  //    url: GROW_ENTRIES_JSON/${id},
+  //    dataType: 'json',
+  //    type: 'POST',
+  //    data: postObject,
+  //    success: callback
+  //  };
+  //  $.ajax(settings);
+   postAentry = postObject;
+   if (postAentry == postObject) {
+     resolve("posted an entry");
+   } else {
+     reject("didn't post an entry");
    }
  });
 }
@@ -171,10 +238,20 @@ function removeClass(elements, myClass) {
   }
 }
 
-
 function turnPage(previousPage, newPage) {
   addClass(document.getElementById(previousPage),'hidden');
   removeClass(document.getElementById(newPage),'hidden');
+}
+
+///goBack function (event listener that's on most pages)
+function goBack(currentPageId, returningPageId, newPageName, selector) {
+  const backArrow = document.querySelectorAll(selector);
+  backArrow[0].addEventListener('click', function () {
+    turnPage(currentPageId, returningPageId);
+    appData.page = newPageName;
+    main();
+    console.log("goBack ran");
+  });
 }
 
 ////render, display, and event listener functions for image grid of all current grows
@@ -215,6 +292,7 @@ function onGrowClick() {
     appData.currentGrowIndex = Number(imageId.slice(4, imageId.length));
     appData.page = "timeline";
     main();
+    console.log("onGrowClick ran");
   });
 }
 
@@ -224,29 +302,13 @@ function addGrowClick() {
     turnPage("grow-collection-page", "add-grow-page");
     appData.page = "add-grow";
     main();
+    console.log("addGrowClick ran");
   });
 }
 
-////render, display, and event listener functions for grow-entries timeline page
-
-//function renderTimelineBlank(side) {
-//  const entryHtml= `
-//  <div class="timeline-blank-entry ${side}>
-//  </div>
-//  `
-//  return entryHtml;
-//}
-
-//function renderTimelineLine(lineOrKnotch, lineUnitHeight){
-//  const timelineHtml= `
-//  <div class="${lineOrKnotch}" style="height: ${lineUnitHeight}"></div>
-//  `
-//  return timelineHtml;
-//}
-
 function renderTimelineEntry(index, side, topPosition) {
   const entryHtml= `
-  <div class="timeline-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
+  <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
     <h2>${appData.allGrows.grows[appData.currentGrowIndex].entries[index].date}</h2>
   </div>
   `
@@ -329,7 +391,6 @@ function displayGrowTimeline() {
     document.getElementById("grow-name").innerHTML = appData.allGrows.grows[appData.currentGrowIndex].growName;
     document.getElementById("left-side").innerHTML = appData.timelineHtml.leftSideHtml;
     document.getElementById("right-side").innerHTML = appData.timelineHtml.rightSideHtml;
-    appData.currentGrowIndex = 0;
     resolve("displayed grow timeline");
     reject("didn't display grow timeline");
   });
@@ -340,10 +401,10 @@ function validateGrowSubmit() {
     //grow name validation
     const nameField = document.getElementById("new-grow-name").value;
     if (nameField == "") {
-      alert("You have to give your grow a name.");;
+      alert("You have to give your grow a name.");
     }
     else {
-      appData.growSubmit.name = nameField;
+      Submit.name = nameField;
     }
     //strain validation
     let strainField;
@@ -355,7 +416,7 @@ function validateGrowSubmit() {
       }
     });
     //varifying whether a value was checked
-    if (strainField !=null) {
+    if (strainField != null) {
       appData.growSubmit.strain = strainField;
     }
     else {
@@ -381,7 +442,6 @@ function validateGrowSubmit() {
   });
 }
 
-//listens for user to submit info for a new grow
 function onSubmitGrowClick() {
   const submitGrow = document.getElementById("submit-grow");
   submitGrow.addEventListener('click', function () {
@@ -389,8 +449,9 @@ function onSubmitGrowClick() {
     appData.allGrows = {};
     validateGrowSubmit().then(function(resolve){
       console.log("a " + resolve);
-      return postGrow(makePostObject());
+      return postGrow(makeGrowPost());
     }).then(function(resolve){
+      appData.allGrows = {};
       console.log("b " + resolve);
       return getAllGrows();
     }).then(function(resolve){
@@ -403,7 +464,7 @@ function onSubmitGrowClick() {
   });
 }
 
-function makePostObject() {
+function makeGrowPost() {
   const post = {
     id: '',
     growName: appData.growSubmit.name,
@@ -412,6 +473,150 @@ function makePostObject() {
     strain: appData.growSubmit.strain,
   };
   return post;
+}
+
+function makeEntryPost() {
+  const post = {
+    date: moment(),
+    week: appData.currentWeek,
+    phase: appData.entrySubmit.phase,
+    watered: appData.entrySubmit.watered,
+    fed:
+      {
+        floraMicro: appData.entrySubmit.nutrients.floraMicro,
+        floraGrow: appData.entrySubmit.nutrients.floraGrow,
+        floraBloom: appData.entrySubmit.nutrients.floraBloom,
+        caliMagic: appData.entrySubmit.nutrients.caliMagic,
+      },
+    notes: appData.entrySubmit.notes
+  };
+  return post;
+}
+
+function onEntryClick() {
+  Array.from(document.getElementsByClassName("past-entry")).forEach(
+    function(element) {
+      element.addEventListener('click', function () {
+        const entryId = this.getAttribute('id');
+        appData.currentEntryIndex = Number(entryId.slice(6, entryId.length));
+        appData.entryNumber = appData.currentEntryIndex + 1;
+        appData.page = "view-entry";
+        main();
+        console.log("onEntryClick ran");
+      });
+    }
+  );
+}
+
+function displayEntry() {
+  return new Promise ((resolve, reject) => {
+    turnPage("grow-entries-page", "view-entry-page");
+    const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+    console.log(appData.currentGrowIndex);
+    const thisEntry = thisGrow.entries[appData.currentEntryIndex];
+    const thisEntryDate = moment(thisEntry.date);
+    const weekNumberClass = document.querySelectorAll("#view-entry-page .week-number");
+    weekNumberClass[0].innerHTML = thisEntry.week;
+    const entryNumberClass = document.querySelectorAll("#view-entry-page .entry-number");
+    entryNumberClass[0].innerHTML = appData.entryNumber;
+    document.getElementById('past-entry-date').innerHTML = thisEntryDate.format("M.D.YY");
+    document.getElementById('phase').innerHTML = thisEntry.phase;
+    if (thisEntry.watered === true) {
+      removeClass(document.getElementById("watered"),'hidden');
+    }
+    else {
+      removeClass(document.getElementById("fed"),'hidden');
+    }
+    const myGrows = Array.from(document.getElementsByClassName("my-grow"));
+    myGrows.forEach(
+      function(element) {
+        element.innerHTML = thisGrow.growName;
+      }
+    );
+    resolve("displayed entry");
+    reject("didn't display entry");
+  });
+}
+
+function addEntryClick() {
+  const addEntry = document.getElementById('add-entry');
+  addEntry.addEventListener('click', function () {
+    turnPage("grow-entries-page", "add-entry-page");
+    appData.page = "add-entry";
+    main();
+    console.log("addEntryClick ran");
+  });
+}
+
+function calculateInstructs() {
+  const todaysDate = moment();
+  const startDate = moment(appData.allGrows.grows[appData.currentGrowIndex].startDate);
+  appData.currentWeek = todaysDate.diff(startDate, 'weeks');
+  appData.entrySubmit.week = todaysDate.diff(startDate, 'weeks');
+  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+  appData.entryNumber = thisGrow.entries.length + 1;
+  if (appData.entryNumber % 2 == 0) {
+    appData.entrySubmit.watered = true;
+    appData.entrySubmit.fed = false;
+    return false;
+  } else if (appData.entryNumber % 2 != 0) {
+    appData.entrySubmit.watered = false;
+    appData.entrySubmit.fed = true;
+    return true;
+  }
+  console.log("a");
+}
+
+function displayEntryInstructs(trueOrFalse) {
+  return new Promise ((resolve, reject) => {
+    const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+    const theseEntries = thisGrow.entries;
+    const weekNumberClass = document.querySelectorAll("#add-entry-page .week-number");
+    weekNumberClass[0].innerHTML = appData.entrySubmit.week;
+    const entryNumberClass = document.querySelectorAll("#add-entry-page .entry-number");
+    entryNumberClass[0].innerHTML = appData.entryNumber;
+    if (trueOrFalse) {
+      removeClass(document.getElementById("feed-instruct"),'hidden');
+      document.getElementById("flora-micro").innerHTML = appData.entrySubmit.nutrients.floraMicro;
+      document.getElementById("flora-grow").innerHTML = appData.entrySubmit.nutrients.floraGrow;
+      document.getElementById("flora-bloom").innerHTML = appData.entrySubmit.nutrients.floraBloom;
+      document.getElementById("cali-magic").innerHTML = appData.entrySubmit.nutrients.caliMagic;
+    } else {
+      removeClass(document.getElementById("water-instruct"),'hidden');
+      addClass(document.getElementById("water-instruct"),'flex');
+    }
+    const lastEntry = theseEntries[theseEntries.length - 1];
+    if (appData.currentWeek > 2 && lastEntry.phase === "vegetative") {
+      removeClass(document.getElementById("phase-switch"),'hidden');
+    }
+    resolve("displayed entry instructs");
+    reject("didn't display entry instructs");
+  });
+}
+
+function onSubmitEntryClick() {
+  const submitEntry = document.getElementById("submit-entry");
+  submitEntry.addEventListener('click', function () {
+    event.preventDefault();
+    const phaseSwitch = document.getElementById('phase-switch').checked;
+    if (phaseSwitch) {
+      appData.entrySubmit.phase = 'flowering';
+    }
+    appData.entrySubmit.notes = document.getElementById("entry-notes").value;
+    postEntry(makeEntryPost).then(function(resolve){
+      //clear out the relevant local data
+      appData.allGrows = {};
+      appData.currentEntryIndex = '';
+      appData.entrySubmit = '';
+      console.log("a " + resolve);
+      return getGrow(appData.currentGrowIndex);
+    }).then(function(resolve){
+      console.log("c " + resolve);
+      turnPage("add-entry-page", "grow-entries-page");
+      appData.page = "timeline";
+      main();
+    });
+  });
 }
 
 //listens for user to select option to delete a past grow
@@ -443,19 +648,8 @@ function makePostObject() {
 //  deleteAgrow.splice(index, 1);
 //}
 
-//for grow-entries-page, where user is able to see a timeline of all the entries that have been inputed for that grow
 
-// listens for user to select one of the log entries to display grow-entries-page
-//function displayLogEntry() {
-//  $().on("click", function(event) {
-//  });
-//}
 
-//listens for user to select option to add a new log entry
-//function addLogEntry() {
-//  $().on("click", function(event) {
-//  });
-//}
 function main() {
   if (appData.page === "" || appData.page === "grows" ){
     getAllGrows().then(function(resolve){
@@ -472,9 +666,40 @@ function main() {
       return displayGrowTimeline();
     }).then(function(resolve){
       console.log("b " + resolve);
+      onEntryClick();
+      addEntryClick();
+      goBack("grow-entries-page", "grow-collection-page", "grows", "#grow-entries-page button");
     });
   } else if (appData.page === "add-grow") {
     onSubmitGrowClick();
+    goBack("add-grow-page", "grow-collection-page", "grows", "#add-grow-page button");
+  } else if (appData.page === "add-entry") {
+      if (calculateInstructs() === true) {
+          getNutrientInstructs().then(function(resolve){
+          console.log("b " + resolve);
+          return displayEntryInstructs(true);
+        }).then(function(resolve){
+           console.log("c " + resolve);
+          onSubmitEntryClick();
+          goBack("add-entry-page", "grow-entries-page", "timeline", "#add-entry-page button");
+        });
+      }
+      else {
+        displayEntryInstructs(false).then(function(resolve){
+          console.log("b " + resolve);
+          onSubmitEntryClick();
+          goBack("add-entry-page", "grow-entries-page", "timeline", "#add-entry-page button");
+        });
+      }
+  } else if (appData.page === "view-entry") {
+    displayEntry().then(function(resolve){
+      console.log("a " + resolve);
+      //return displayEntryInstructs();
+    //}).then(function(resolve){
+    //   console.log("b " + resolve);
+    //  onSubmitEntryClick();
+    //  goBack("add-entry-page", "grow-entries-page", "timeline", "#add-entry-page button");
+    });
   }
 }
 

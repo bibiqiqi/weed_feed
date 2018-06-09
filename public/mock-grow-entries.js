@@ -4,59 +4,89 @@ const growCollection =
     {
       id: '100',
       growName: 'Tangerine Dream',
-      startDate: '2018-01-15',
+      startDate: '2018-04-15',
       endDate: '',
       strain: 'indica',
       image: 'http://wesb.com/wp-content/uploads/2015/06/citral-cannabis-plant.jpg',
       entries: [
         {
           id: '34623',
-          date: '2018-04-15',
+          date: '2018-05-15',
+          week: '1',
           phase: 'vegetative',
           watered: true,
           fed: false,
+          nutrients: {},
           notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
         },
         {
           id: '56734',
-          date: '2018-04-18',
+          date: '2018-05-18',
+          week: '1',
           phase: 'vegetative',
           watered: false,
-          fed: true,
+          fed:
+            {
+              floraMicro: '1/4 tsp',
+              floraGrow: '1/8 tsp',
+              floraBloom: '1/8 tsp',
+              caliMagic: '1 tsp'
+            },
+            nutrients: {},
           notes: ''
         },
         {
           id: '34136',
-          date: '2018-04-20',
+          date: '2018-05-20',
+          week: '2',
           phase: 'vegetative',
           watered: true,
           fed: false,
+          nutrients: {},
           notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
           id: '674563',
-          date: '2018-04-23',
+          date: '2018-05-23',
+          week: '2',
           phase: 'vegetative',
           watered: false,
           fed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/8 tsp',
+              caliMagic: '1 tsp'
+            },
           notes: ''
         },
         {
           id: '456456',
-          date: '2018-04-26',
+          date: '2018-05-26',
+          week: '2',
           phase: 'vegetative',
           watered: true,
           fed: false,
+          nutrients: {},
           notes: ''
         },
         {
-          id: '453256',
-          date: '2018-04-29',
-          phase: 'flowering',
-          watered: false,
-          fed: true,
-          notes: ''
-        }
+         id: '453256',
+         date: '2018-05-29',
+         week: '3',
+         phase: 'flowering',
+         watered: false,
+         fed: true,
+         nutrients:
+           {
+             floraMicro: '1/2 tsp',
+             floraGrow: '1/2 tsp',
+             floraBloom: '1/2 tsp',
+             caliMagic: '1/2 tsp'
+           },
+         notes: ''
+       }
       ]
     },
     {
@@ -420,6 +450,8 @@ const oneGrow =
 
 let postAgrow;
 
+let postAentry;
+
 const deleteAgrow =
 {
   grows: [
@@ -444,8 +476,14 @@ const deleteAgrow =
           date: '01/20/18',
           phase: 'vegetative',
           watered: false,
-          fed: true,
-          notes: ''
+          fed:
+            {
+              floraMicro: '0',
+              floraGrow: '0',
+              floraBloom: '0',
+              caliMagic: '1 tsp'
+            },
+          notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
           id: '34136',
@@ -460,7 +498,13 @@ const deleteAgrow =
           date: '01/28/18',
           phase: 'vegetative',
           watered: false,
-          fed: true,
+          fed:
+            {
+              floraMicro: '',
+              floraGrow: '',
+              floraBloom: '',
+              caliMagic: ''
+            },
           notes: ''
         },
         {
@@ -476,7 +520,27 @@ const deleteAgrow =
           date: '02/05/18',
           phase: 'flowering',
           watered: false,
-          fed: true,
+          fed:
+            {
+            floraMicro: '',
+            floraGrow: '',
+            floraBloom: '',
+            caliMagic: ''
+            },
+          notes: ''
+        },
+        {
+          id: '453256',
+          date: '02/10/18',
+          phase: 'flowering',
+          watered: true,
+          fed:
+            {
+            floraMicro: '',
+            floraGrow: '',
+            floraBloom: '',
+            caliMagic: ''
+            },
           notes: ''
         }
       ]

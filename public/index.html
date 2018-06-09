@@ -6,13 +6,13 @@
 
     <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
     <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="grid.css">
 
   <!--fonts-->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Jura:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900" rel="stylesheet">
+
 
   </head>
 
@@ -20,18 +20,19 @@
 
     <!---collection of past and current grows-->
     <section id="grow-collection-page" class="page" role="region">
-        <header role="banner">
-          <h1>My Grows</h1>
-        </header>
-        <div id="grow-grid">
-          <!--dynamically generated-->
-        </div>
+      <header role="banner">
+        <h1>My Grows</h1>
+      </header>
+      <div id="grow-grid">
+        <!--dynamically generated-->
+      </div>
     </section>
 
     <!---timeline of past entries for this grow-->
     <section id="grow-entries-page" class="page hidden" role="region">
       <header role="banner">
-        <h1 id="grow-name"></h1>
+        <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+        <h1 id="grow-name"><i class="fa fa-caret-left back-arrow"></i></h1>
       </header>
       <div id="grow-timeline">
         <div id="left-side">
@@ -53,8 +54,10 @@
 
     <!---form for adding a new grow-->
     <section id="add-grow-page" class="page hidden" role="region">
-      <i class="ionicons ion-android-arrow-back"></i>
-      <h1 class="header" role="banner">Start a New Grow</h1>
+      <header role="banner">
+        <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+        <h1>Start a New Grow</h1>
+      </header>
       <form name="growSubmit">
       <div>
         <label for="new-grow-name">Name Your Grow </label>
@@ -78,42 +81,78 @@
 
     <!---form for adding a new grow-log entry-->
     <section id="add-entry-page" class="page hidden" role="region">
-      <div class="back-arrow">
-        <i class="ionicons ion-android-arrow-back"></i>
+      <header role="banner">
+        <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+        <h1>Entry <span class="entry-number"></span>
+        <img class="circle-icon" src="circle.svg" alt="decorative circle"/>
+        Week <span class="week-number"></span></h1>
+      </header>
+
+      <div id="water-feed-instruct">
+
+        <div id="water-instruct" class="hidden">
+          <div class="feed-water-img">
+            <img src="water.png"/>
+          </div>
+          <div class="water-feed-text">
+            <h3>Water your grow with plain water today. <br/> Give enough water for 10-20% runoff, <br/> and remember to remove the runoff.</h3>
+          </div>
+        </div>
+
+        <div id="feed-instruct" class="hidden">
+          <div id="feed-flex">
+            <div class="feed-water-img">
+              <img src="feed.png"/>
+            </div>
+            <div class="water-feed-text">
+              <h3>Feed your grow with the following nutrients today:</h3>
+              <ul id="nutrient-list">
+                <li>Flora Micro: <span id="flora-micro"></span></li>
+                <li>Flora Grow: <span id="flora-grow"></span></li>
+                <li>Flora Bloom: <span id="flora-bloom"></span></li>
+                <li>Cali Magic: <span id="cali-magic"></span></li>
+              </ul>
+            </div>
+          </div>
+          <div id="feed-note">
+            <div>
+              <img class="circle-icon" src="circle.svg" alt="decorative circle"/><h4>Remember</h4><img class="circle-icon" src="circle.svg" alt="decorative circle"/>
+            </div>
+            <ul>
+              <li>Never mix nutrients directly with each other</li>
+              <li>Add "Flora Micro" to water first</li>
+              <li>Add all nutrients before testing pH</li>
+              <li> Maintain pH of 5.5-6.5</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-    <!--since user has the option to back-date an entry,
-  i'm not sure what the most efficient way to design this is
-  have a form that the user submits the date with, then the server
-  returns the corresponding feeding/water schedule, and then the user
- checks it off and submits notes?-->
       <form>
-        <input id="entry-date" type="date">
-        <input id="submit-date" type="submit" value="submit"/>
-      </form>
+        <textarea row="8" cols="50" id="entry-notes" placeholder="notes"></textarea>
+        <label for="phase-switch">Switching to Flowering Stage? </label>
+        <input id="phase-switch" type="checkbox" value="flowering"/>
 
-  <!--user submits the date-->
-      <div class="water-feed-instruct">
-        <!--dynamically generated-->
-      </div>
-
-      <form>
-        <input id="entry-notes" type="text" value="notes"/>
         <input id="submit-entry" type="submit" value="submit"/>
       </form>
     </section>
 
     <!---page for viewing a past entry-->
     <section id="view-entry-page" class="page hidden" role="region">
-      <i class="ionicons ion-android-arrow-back back-arrow"></i>
-      <h2 id="past-entry-date"></h2>
-      <div id="feedOrWater">
-      <!---dynamically created icon indicating whether plant was fed or watered-->
-      </div>
-      <i class="ionicons ion-android-delete delete-icon"></i>
-      <i class="ionicons ion-edit edit-icon"></i>
-      <div class="posted-entry-notes">
-      <!--dynamically created from notes user posted -->
+      <header>
+        <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+        <i id="delete-entry" class="ionicons ion-android-delete delete-icon"></i>
+        <i id="edit-entry" class="ionicons ion-edit edit-icon"></i>
+        <h1>Entry <span class="entry-number"></span>
+        <img class="circle-icon" src="circle.svg" alt="decorative circle"/>
+        Week <span class="week-number"></span></h1>
+        <h2 id="past-entry-date"></h2>
+      </header>
+      <div>
+        <h2 id="phase"></h2>
+        <h3 id="fed" class="hidden">I fed <span class="my-grow"></span></h3>
+        <h3 id="watered" class="hidden">I watered <span class="my-grow"></span></h3>
+        <div id="notes"></div>
       </div>
     </section>
 
@@ -130,6 +169,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="mock-grow-entries.js"></script>
+    <script src="nutrient-schedule.js"></script>
     <script src="app.js"></script>
     <script src="moment.js"></script>
   </body>

@@ -9,42 +9,61 @@ body {
 h1 {
   font-size: 5rem;
   text-align: center;
-  padding: 1rem;
-  font-family: 'Jura', sans-serif;
-  font-weight: 400;
-  margin: 2% 0;
-}
-
-h2 {
-  font-size: 3.5rem;
-  text-align: center;
-  padding: 1rem;
   font-family: 'Jura', sans-serif;
   font-weight: 700;
 }
 
+h2 {
+  font-size: 4rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+  font-weight: 600;
+}
+
 h3 {
+  line-height: 3rem;
+  font-size: 3rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Jura', sans-serif;
+  font-weight: 500;
+}
+
+h4 {
   font-size: 2rem;
   text-align: center;
   padding: 1rem;
   font-family: 'Jura', sans-serif;
-  font-weight: 300;
-}
-
-h4 {
-  font-size: 1rem;
-  text-align: center;
-  padding: 1rem;
-  font-family: 'Jura', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 a {
   text-decoration: none;
 }
 
+form {
+  width: 50%;
+  margin: 5% auto;
+  line-height: 2rem;
+}
+
+label {
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+input {
+  font-size: 2rem;
+}
+
 .hidden {
   display: none;
+}
+
+.flex {
+  display: flex;
 }
 
 .page {
@@ -53,15 +72,31 @@ a {
   margin: 5vh 5vw;
 }
 
-.header {
-  display: block;
-  margin: 0 auto;
+.back-arrow {
+  float: left;
+  font-size: 3rem;
+}
+
+
+.circle-icon {
+  width: 3rem;
+}
+
+
+#add-grow-page #submit-grow,
+#add-entry-page #submit-entry {
+  float: right;
+  background-color: black;
+  color: white;
+  font-family: 'Jura', sans-serif;
+  font-weight: 300
 }
 
 /* grow-collection-page */
 #grow-collection-page #grow-grid {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
 #grow-collection-page .grow-links,
@@ -172,37 +207,95 @@ a {
 
 /* add-grow form page */
 
-#add-grow-page form {
-  width: 50%;
-  margin: 5% auto;
-  line-height: 2rem;
-}
-
 #add-grow-page form div {
   margin: 1rem;
 }
 
-
-#add-grow-page label {
-  font-family: 'Jura', sans-serif;
-  font-weight: 400;
-  font-size: 2rem;
-}
-
-#add-grow-page input {
-  font-size: 2rem;
-}
-
-#add-grow-page #submit-grow {
+ {
   float: right;
   background-color: black;
   color: white;
   font-family: 'Jura', sans-serif;
   font-weight: 300
 }
+/* add-entry-page */
+#water-feed-instruct {
+  width: 90%;
+  margin: 5% auto;
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+}
 
+#water-feed-instruct .feed-water-img {
+  width: 25vw;
+  height: 25vw;
+  border: .5rem solid black;
+  border-radius: 1rem;
+}
 
+.feed-water-img img {
+  height: 100%;
+  width: 100%;
+}
 
+#water-feed-instruct .water-feed-text {
+  width: 75vw;
+  margin: 0 2%;
+}
+
+#feed-instruct #feed-flex {
+  display: flex;
+}
+
+.water-feed-text h3 {
+  text-align: left;
+  padding: 0;
+  font-weight: 400;
+}
+
+.water-feed-text ul {
+  margin: 5% 30%;
+}
+
+#feed-note h4 {
+  font-size: 3rem;
+  display: inline;
+  font-weight: 500;
+}
+
+#feed-note ul {
+  margin: 0 auto;
+  width: 55%;
+}
+
+#feed-note > div:first-child {
+  display: flex;
+  justify-content: center;
+}
+
+#feed-note .circle-icon {
+  width: 2rem;
+  height: 2rem;
+  margin: 2rem 0rem;
+}
+
+#add-entry-page textarea {
+  margin: 0 auto;
+  font-size: 2rem;
+}
+
+#add-entry-page #phase-switch {
+  width: 1rem;
+  height: 1rem;
+}
+
+#view-entry-page #delete-entry,
+#view-entry-page #edit-entry
+ {
+  font-size: 2rem;
+  float: right;
+}
 
 
 /* Larger than mobile */
