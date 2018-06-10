@@ -25,14 +25,13 @@ const growCollection =
           week: '1',
           phase: 'vegetative',
           watered: false,
-          fed:
-            {
+          fed: true,
+          nutrients: {
               floraMicro: '1/4 tsp',
               floraGrow: '1/8 tsp',
               floraBloom: '1/8 tsp',
               caliMagic: '1 tsp'
-            },
-            nutrients: {},
+          },
           notes: ''
         },
         {

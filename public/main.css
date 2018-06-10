@@ -1,9 +1,10 @@
 html {
   font-size: 62.5% /* = 10px */
+  box-sizing: border-box;
 }
 
-body {
-  box-sizing: border-box;
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 h1 {
@@ -58,6 +59,10 @@ input {
   font-size: 2rem;
 }
 
+header {
+  margin-top: 2vw;
+}
+
 .hidden {
   display: none;
 }
@@ -69,7 +74,6 @@ input {
 .page {
   height: 100vh;
   width: 100vw;
-  margin: 5vh 5vw;
 }
 
 .back-arrow {
@@ -82,6 +86,11 @@ input {
   width: 3rem;
 }
 
+.nutrient-list {
+  font-family: 'Jura', sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+}
 
 #add-grow-page #submit-grow,
 #add-entry-page #submit-entry {
@@ -97,14 +106,15 @@ input {
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
+  margin: 3.1vw;
 }
 
 #grow-collection-page .grow-links,
  #grow-collection-page #add-a-grow {
   margin: .2vw .1vw;
   box-sizing: border-box;
-  width: 24.5vw;
-  height: 24.5vw;
+  width: 23vw;
+  height: 23vw;
 }
 
 #grow-collection-page .grow-links {
@@ -162,13 +172,19 @@ input {
 #grow-entries-page #grow-timeline {
   display: flex;
   width: 100%;
+  padding-top: 2.5rem;
 }
 
 #grow-timeline #left-side {
-  flex-grow: 2;
-  position: relative;
   display: flex;
+  flex-grow: 4;
+  position: relative;
   justify-content: flex-end;
+}
+
+#grow-timeline #right-side {
+  flex-grow: 4;
+  position: relative;
 }
 
 #timeline-middle {
@@ -190,18 +206,23 @@ input {
   margin: 25px auto;
 }
 
-#grow-timeline #right-side {
-  flex-grow: 2;
-  position: relative;
-}
-
 #grow-timeline .timeline-entry {
   height: 50px;
   position: absolute;
+  font-size: 2rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
 }
 
-#grow-timeline h2 {
-  font-size: 2em;
+.timeline-entry h2 {
+  font-size: 2rem;
+  padding: 0;
+}
+
+.timeline-entry img {
+  height: 2rem;
+  width: 2rem;
 }
 
 
@@ -290,11 +311,36 @@ input {
   height: 1rem;
 }
 
-#view-entry-page #delete-entry,
-#view-entry-page #edit-entry
- {
+#view-entry-page .delete-edit {
   font-size: 2rem;
   float: right;
+}
+
+#view-entry-page .nutrient-list {
+  width: 22%;
+  margin: 0 auto;
+}
+
+#view-entry-page #flowering-phase,
+#view-entry-page #vegetative-phase {
+  width: 4rem;
+  height: 4rem;
+}
+
+#view-entry-page #entry-subheading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#entry-subheading .delete-edit button {
+  font-size: 2rem;
+}
+
+#entry-subheading .delete-edit:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 

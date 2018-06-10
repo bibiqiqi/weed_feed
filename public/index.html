@@ -106,11 +106,11 @@
             </div>
             <div class="water-feed-text">
               <h3>Feed your grow with the following nutrients today:</h3>
-              <ul id="nutrient-list">
-                <li>Flora Micro: <span id="flora-micro"></span></li>
-                <li>Flora Grow: <span id="flora-grow"></span></li>
-                <li>Flora Bloom: <span id="flora-bloom"></span></li>
-                <li>Cali Magic: <span id="cali-magic"></span></li>
+              <ul class="nutrient-list">
+                <li>Flora Micro: <span class="flora-micro"></span></li>
+                <li>Flora Grow: <span class="flora-grow"></span></li>
+                <li>Flora Bloom: <span class="flora-bloom"></span></li>
+                <li>Cali Magic: <span class="cali-magic"></span></li>
               </ul>
             </div>
           </div>
@@ -141,17 +141,32 @@
     <section id="view-entry-page" class="page hidden" role="region">
       <header>
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
-        <i id="delete-entry" class="ionicons ion-android-delete delete-icon"></i>
-        <i id="edit-entry" class="ionicons ion-edit edit-icon"></i>
+        <div class="delete-edit">
+          <button id="delete-entry">
+            <i class="ionicons ion-android-delete delete-icon"></i>
+          </button>
+          <button id="edit-entry">
+            <i class="ionicons ion-edit edit-icon"></i>
+          </button>
+        </div>
         <h1>Entry <span class="entry-number"></span>
         <img class="circle-icon" src="circle.svg" alt="decorative circle"/>
         Week <span class="week-number"></span></h1>
-        <h2 id="past-entry-date"></h2>
+        <div id="entry-subheading">
+          <img id="flowering-phase" class="hidden" src="flowering.png"/>
+          <img id="vegetative-phase" class="hidden" src="vegetative.png"/>
+          <h2 id="past-entry-date"></h2>
+        </div>
       </header>
       <div>
-        <h2 id="phase"></h2>
-        <h3 id="fed" class="hidden">I fed <span class="my-grow"></span></h3>
-        <h3 id="watered" class="hidden">I watered <span class="my-grow"></span></h3>
+        <h3 id="fed" class="hidden">I fed <span class="my-grow"></span>:</h3>
+        <ul class="nutrient-list hidden">
+          <li>Flora Micro: <span class="flora-micro"></span></li>
+          <li>Flora Grow: <span class="flora-grow"></span></li>
+          <li>Flora Bloom: <span class="flora-bloom"></span></li>
+          <li>Cali Magic: <span class="cali-magic"></span></li>
+        </ul>
+        <h3 id="watered" class="hidden">I watered <span class="my-grow"></span>.</h3>
         <div id="notes"></div>
       </div>
     </section>

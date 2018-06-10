@@ -172,7 +172,7 @@ function postEntry(callback, postObject) {
   setTimeout(function(){callback(postEntry)}, 100);
 }
 
-function deleteThings (callback, id) {
+function deleteGrow (callback, id) {
 //  const settings = {
 //      url: GROW_ENTRIES_JSON/${id},
 //      dataType: 'json',
@@ -185,7 +185,20 @@ function deleteThings (callback, id) {
   deleteAgrow.splice(index, 1);
 }
 
-function putThings(callback, putObject, index, id) {
+function deleteEntry (callback, id) {
+//  const settings = {
+//      url: GROW_ENTRIES_JSON/${id},
+//      dataType: 'json',
+//      type: 'DELETE',
+//      success: function(result) {
+//      }
+//  });
+//$.ajax(settings);
+  setTimeout(function(){callback(deleteAgrow)}, 100);
+  deleteAgrow.splice(index, 1);
+}
+
+function putEntry(callback, putObject, index, id) {
 //  const settings = {
 //    url:  GROW_ENTRIES_JSON/${id},
 //    dataType: 'json',
@@ -259,8 +272,8 @@ function goBack(currentPageId, returningPageId, newPageName, selector) {
 function renderImageGrid(item, index) {
   const imageHtml = `
     <a href="#" id="grow-${index}" class="grow-links" role="button">
-      <h2>${appData.allGrows.grows[index].growName}</h2>
-      <h4>Started: ${appData.allGrows.grows[index].startDate}</h4>
+      <h3>${appData.allGrows.grows[index].growName}</h3>
+      <h4>Started:<br>${appData.allGrows.grows[index].startDate}</h4>
     </a>
   `;
     return imageHtml;
@@ -269,7 +282,7 @@ function renderImageGrid(item, index) {
 function renderAddGrow() {
   const addGrowHtml = `
   <a href="#" class="grid-images hidden" id="add-a-grow">
-    <h2>+ Add<br>a Grow</h2>
+    <h3>+ Add<br>a Grow</h3>
   </a>
   `;
     return addGrowHtml;
@@ -289,7 +302,8 @@ function onGrowClick() {
   const growLinks = document.querySelector('.grow-links');
   growLinks.addEventListener('click', function () {
     const imageId = this.getAttribute('id');
-    appData.currentGrowIndex = Number(imageId.slice(4, imageId.length));
+    appData.currentGrowIndex = Number(imageId.slice(5, imageId.length));
+    console.log(appData.currentGrowIndex);
     appData.page = "timeline";
     main();
     console.log("onGrowClick ran");
@@ -307,12 +321,42 @@ function addGrowClick() {
 }
 
 function renderTimelineEntry(index, side, topPosition) {
-  const entryHtml= `
-  <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
-    <h2>${appData.allGrows.grows[appData.currentGrowIndex].entries[index].date}</h2>
-  </div>
-  `
-  return entryHtml;
+  const theseEntries = appData.allGrows.grows[appData.currentGrowIndex].entries;
+   if (theseEntries[index].phase === "flowering" && side === "left") {
+    const entryHtml= `
+    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
+      <h2>${theseEntries[index].date}</h2>
+      <img src="flowering.png"/>
+    </div>
+    `;
+    return entryHtml;
+  } else if (theseEntries[index].phase === "vegetative" && side === "left") {
+    const entryHtml= `
+    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
+      <h2>${theseEntries[index].date}</h2>
+      <img src="vegetative.png" style="transform:scaleX(-1);
+          filter: FlipH;"/>
+    </div>
+    `;
+    return entryHtml;
+  } else if (theseEntries[index].phase === "flowering" && side === "right") {
+    const entryHtml= `
+    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
+      <img src="flowering.png" style="transform:scaleX(-1);
+          filter: FlipH;"/>
+      <h2>${theseEntries[index].date}</h2>
+    </div>
+    `;
+    return entryHtml;
+  } else if (theseEntries[index].phase === "vegetative" && side === "right") {
+    const entryHtml= `
+    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
+      <img src="vegetative.png"/>
+      <h2>${theseEntries[index].date}</h2>
+    </div>
+    `;
+    return entryHtml;
+  }
 }
 
 function whichSide(arrayLength) {
@@ -340,9 +384,9 @@ function renderFullTimeline() {
     const firstEntryDate = moment(theseEntries[0].date);
     const todaysDate = moment();
     const timeLineDays = todaysDate.diff(firstEntryDate, 'days');
-    const timelineHeight = timeLineDays * 20;
+    const timelineHeight = timeLineDays * 20; //20px per day
     document.getElementById('timeline-line').setAttribute("style",`height:${timelineHeight}px`);
-    document.getElementById('grow-timeline').setAttribute("style",`height:${timelineHeight/.9}px`);
+    //document.getElementById('grow-timeline').setAttribute("style",`height:${timelineHeight/.9}px`);
     //1 line unit represents 1 day on the timeline
     let leftSideHtml = '';
     let rightSideHtml = '';
@@ -361,9 +405,9 @@ function renderFullTimeline() {
           //determine whether the index is odd or even to determine
           //which side of the timeline to place the entry
             if (x % 2 == 0) {
-              leftSideHtml += renderTimelineEntry(x, "left", i*12);
+              leftSideHtml += renderTimelineEntry(x, "left", i*20);
             } else if (x % 2 != 0) {
-              rightSideHtml += renderTimelineEntry(x, "right", i*12);
+              rightSideHtml += renderTimelineEntry(x, "right", i*20);
             }
             x++;
           }
@@ -514,18 +558,30 @@ function displayEntry() {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
     console.log(appData.currentGrowIndex);
     const thisEntry = thisGrow.entries[appData.currentEntryIndex];
+    console.log(appData.currentEntryIndex);
     const thisEntryDate = moment(thisEntry.date);
     const weekNumberClass = document.querySelectorAll("#view-entry-page .week-number");
     weekNumberClass[0].innerHTML = thisEntry.week;
     const entryNumberClass = document.querySelectorAll("#view-entry-page .entry-number");
     entryNumberClass[0].innerHTML = appData.entryNumber;
     document.getElementById('past-entry-date').innerHTML = thisEntryDate.format("M.D.YY");
-    document.getElementById('phase').innerHTML = thisEntry.phase;
+    if (thisEntry.phase === "vegetative"){
+      removeClass(document.getElementById("vegetative-phase"),'hidden');
+    }
+    else if (thisEntry.phase === "flowering") {
+      removeClass(document.getElementById("flowering-phase"),'hidden');
+    }
     if (thisEntry.watered === true) {
       removeClass(document.getElementById("watered"),'hidden');
     }
     else {
       removeClass(document.getElementById("fed"),'hidden');
+      removeClass(document.querySelectorAll("#view-entry-page .nutrient-list"),'hidden');
+      console.log(thisEntry.nutrients);
+      document.querySelectorAll("#view-entry-page .flora-micro")[0].innerHTML = thisEntry.nutrients.floraMicro;
+      document.querySelectorAll("#view-entry-page .flora-grow")[0].innerHTML = thisEntry.nutrients.floraGrow;
+      document.querySelectorAll("#view-entry-page .flora-bloom")[0].innerHTML = thisEntry.nutrients.floraBloom;
+      document.querySelectorAll("#view-entry-page .cali-magic")[0].innerHTML = thisEntry.nutrients.caliMagic;
     }
     const myGrows = Array.from(document.getElementsByClassName("my-grow"));
     myGrows.forEach(
@@ -577,10 +633,10 @@ function displayEntryInstructs(trueOrFalse) {
     entryNumberClass[0].innerHTML = appData.entryNumber;
     if (trueOrFalse) {
       removeClass(document.getElementById("feed-instruct"),'hidden');
-      document.getElementById("flora-micro").innerHTML = appData.entrySubmit.nutrients.floraMicro;
-      document.getElementById("flora-grow").innerHTML = appData.entrySubmit.nutrients.floraGrow;
-      document.getElementById("flora-bloom").innerHTML = appData.entrySubmit.nutrients.floraBloom;
-      document.getElementById("cali-magic").innerHTML = appData.entrySubmit.nutrients.caliMagic;
+      document.querySelectorAll("#add-entry-page .flora-micro")[0].innerHTML = appData.entrySubmit.nutrients.floraMicro;
+      document.querySelectorAll("#add-entry-page .flora-grow")[0].innerHTML = appData.entrySubmit.nutrients.floraGrow;
+      document.querySelectorAll("#add-entry-page .flora-bloom")[0].innerHTML = appData.entrySubmit.nutrients.floraBloom;
+      document.querySelectorAll("#add-entry-page .cali-magic")[0].innerHTML = appData.entrySubmit.nutrients.caliMagic;
     } else {
       removeClass(document.getElementById("water-instruct"),'hidden');
       addClass(document.getElementById("water-instruct"),'flex');
@@ -619,36 +675,13 @@ function onSubmitEntryClick() {
   });
 }
 
-//listens for user to select option to delete a past grow
-//function deleteGrowPage() {
-  //$().on("click", function(event) {
-//  $('#grow-entries-page').addClass('hidden');
-//  $('#delete-entry-page').removeClass('hidden');
-//  deleteGrow(index);
-  //});
-//}
-//listens for user to confirm their option to delete a past grow
-//function deleteGrow(index) {
-//  $('#delete-confirm').on("click", function(event) {
-  //deleteThings(afterDeleteTest, index);
-//  deleteThings(afterDeleteTest, 0);
-//  });
-//}
+function onDeleteEntry() {
+  const deleteEntry = document.getElementById("delete-entry");
+  submitEntry.addEventListener('click', function () {
+    turnPage("grow-collection-page", "add-grow-page");
 
-//function deleteThings(callback, id) {
-//  const settings = {
-//      url: GROW_ENTRIES_JSON/${id},
-//      dataType: 'json',
-//      type: 'DELETE',
-//      success: function(result) {
-//      }
-//  });
-//$.ajax(settings);
-//  setTimeout(function(){callback(deleteAgrow)}, 100);
-//  deleteAgrow.splice(index, 1);
-//}
-
-
+  });
+}
 
 function main() {
   if (appData.page === "" || appData.page === "grows" ){
@@ -694,11 +727,7 @@ function main() {
   } else if (appData.page === "view-entry") {
     displayEntry().then(function(resolve){
       console.log("a " + resolve);
-      //return displayEntryInstructs();
-    //}).then(function(resolve){
-    //   console.log("b " + resolve);
-    //  onSubmitEntryClick();
-    //  goBack("add-entry-page", "grow-entries-page", "timeline", "#add-entry-page button");
+      goBack("view-entry-page", "grow-entries-page", "timeline", "#view-entry-page button");
     });
   }
 }
