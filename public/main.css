@@ -39,6 +39,12 @@ h4 {
   font-weight: 400;
 }
 
+p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
 a {
   text-decoration: none;
 }
@@ -312,8 +318,11 @@ header {
 }
 
 #view-entry-page .delete-edit {
-  font-size: 2rem;
   float: right;
+}
+
+#view-entry-page #delete-entry {
+  font-size: 2rem;
 }
 
 #view-entry-page .nutrient-list {
@@ -338,11 +347,68 @@ header {
 }
 
 #entry-subheading .delete-edit:after {
-    content: '';
-    display: block;
-    clear: both;
+  content: '';
+  display: block;
+  clear: both;
 }
 
+#view-entry-page #notes-box {
+  border: .1rem solid black;
+  width: 50%;
+  margin: 1rem auto;
+  padding: .5rem;
+  min-height: 2rem;
+}
+
+#view-entry-page #edit-entry {
+  float: right;
+  font-size: 1rem;
+}
+
+#view-entry-page form {
+  width: 60%;
+  margin: 0 auto;
+}
+
+#entry-edit #notes-box-edit {
+  border: .1rem solid black;
+  width: 80%;
+  margin: 1rem auto;
+  padding: .5rem;
+  height: 7rem;
+}
+
+#entry-edit #exit-edit {
+  float: right;
+  font-size: 1rem;
+}
+
+#entry-edit #edit-notes {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  width: 95%;
+  height: 95%;
+  display: block;
+  margin: auto;
+}
+
+#entry-edit #submit-edit {
+  float: right;
+  background-color: black;
+  color: white;
+  font-family: 'Jura', sans-serif;
+  font-weight: 300;
+}
+
+#delete-entry-page div {
+  margin: 0 auto;
+  width: 36%;
+}
+
+#delete-entry-page h2 {
+  line-height: 4rem;
+}
 
 /* Larger than mobile */
 @media (min-width: 400px) {}

@@ -110,21 +110,10 @@ function getAllEntries() {
   });
 }
 
-function getEntry(id) {
-  //  const settings = {
-  //    url: GROW_ENTRIES_JSON/${id},
-  //    dataType: 'json',
-  //    type: 'GET',
-  //    success: callback
-  //  };
-  //  $.ajax(settings);
-  setTimeout(function(){callback(oneGrow)}, 100);
-}
-
 function postGrow(postObject) {
   return new Promise ((resolve, reject) => {
   //  const settings = {
-  //    url: GROW_ENTRIES_JSON/${id},
+  //    url: GROW_ENTRIES_JSON,
   //    dataType: 'json',
   //    type: 'POST',
   //    data: postObject,
@@ -140,11 +129,10 @@ function postGrow(postObject) {
  });
 }
 
-
 function postEntry(postObject) {
   return new Promise ((resolve, reject) => {
   //  const settings = {
-  //    url: GROW_ENTRIES_JSON/${id},
+  //    url: GROW_ENTRIES_JSON,
   //    dataType: 'json',
   //    type: 'POST',
   //    data: postObject,
@@ -160,56 +148,42 @@ function postEntry(postObject) {
  });
 }
 
-function postEntry(callback, postObject) {
+function putEntry(putObject, id) {
+  return new Promise ((resolve, reject) => {
+    const settings = {
+      url: GROW_ENTRIES_JSON,
+      dataType: 'json',
+      type: 'PUT',
+      data: putObject,
+      success: callback
+    };
+    $.ajax(settings);
+    putAnEntry = putObject;
+    if (putAnEntry === putObject) {
+      resolve("edited an entry");
+    } else {
+      reject("didn't edit an entry");
+    }
+  });
+}
+
+function deleteEntry() {
+  return new Promise ((resolve, reject) => {
   //  const settings = {
   //    url: GROW_ENTRIES_JSON/${id},
   //    dataType: 'json',
-  //    type: 'POST',
+  //    type: 'DELETE',
   //    data: postObject,
   //    success: callback
   //  };
   //  $.ajax(settings);
-  setTimeout(function(){callback(postEntry)}, 100);
-}
-
-function deleteGrow (callback, id) {
-//  const settings = {
-//      url: GROW_ENTRIES_JSON/${id},
-//      dataType: 'json',
-//      type: 'DELETE',
-//      success: function(result) {
-//      }
-//  });
-//$.ajax(settings);
-  setTimeout(function(){callback(deleteAgrow)}, 100);
-  deleteAgrow.splice(index, 1);
-}
-
-function deleteEntry (callback, id) {
-//  const settings = {
-//      url: GROW_ENTRIES_JSON/${id},
-//      dataType: 'json',
-//      type: 'DELETE',
-//      success: function(result) {
-//      }
-//  });
-//$.ajax(settings);
-  setTimeout(function(){callback(deleteAgrow)}, 100);
-  deleteAgrow.splice(index, 1);
-}
-
-function putEntry(callback, putObject, index, id) {
-//  const settings = {
-//    url:  GROW_ENTRIES_JSON/${id},
-//    dataType: 'json',
-//    type: 'PUT',
-//    data: putObject,
-//    success: function(result) {
-//    }
-//});
-//$.ajax(settings);
-  setTimeout(function(){callback(putGrow)}, 100);
-  putGrow.splice(index, 0, putObject);
+   deleteAnEntry = '';
+   if (deleteAnEntry === '') {
+     resolve("deleted an entry");
+   } else {
+     reject("didn't delete an entry");
+   }
+ });
 }
 
 ////addClass, removeClass, and turnPage function that calls addClass
@@ -538,18 +512,16 @@ function makeEntryPost() {
 }
 
 function onEntryClick() {
-  Array.from(document.getElementsByClassName("past-entry")).forEach(
-    function(element) {
-      element.addEventListener('click', function () {
-        const entryId = this.getAttribute('id');
-        appData.currentEntryIndex = Number(entryId.slice(6, entryId.length));
-        appData.entryNumber = appData.currentEntryIndex + 1;
-        appData.page = "view-entry";
-        main();
-        console.log("onEntryClick ran");
-      });
-    }
-  );
+  Array.from(document.getElementsByClassName("past-entry")).forEach(function(element) {
+    element.addEventListener('click', function () {
+      const entryId = this.getAttribute('id');
+      appData.currentEntryIndex = Number(entryId.slice(6, entryId.length));
+      appData.entryNumber = appData.currentEntryIndex + 1;
+      appData.page = "view-entry";
+      main();
+      console.log("onEntryClick ran");
+    });
+  });
 }
 
 function displayEntry() {
@@ -560,10 +532,8 @@ function displayEntry() {
     const thisEntry = thisGrow.entries[appData.currentEntryIndex];
     console.log(appData.currentEntryIndex);
     const thisEntryDate = moment(thisEntry.date);
-    const weekNumberClass = document.querySelectorAll("#view-entry-page .week-number");
-    weekNumberClass[0].innerHTML = thisEntry.week;
-    const entryNumberClass = document.querySelectorAll("#view-entry-page .entry-number");
-    entryNumberClass[0].innerHTML = appData.entryNumber;
+    document.querySelectorAll("#view-entry-page .week-number")[0].innerHTML = thisEntry.week;
+    document.querySelectorAll("#view-entry-page .entry-number")[0].innerHTML = appData.entryNumber;
     document.getElementById('past-entry-date').innerHTML = thisEntryDate.format("M.D.YY");
     if (thisEntry.phase === "vegetative"){
       removeClass(document.getElementById("vegetative-phase"),'hidden');
@@ -589,8 +559,26 @@ function displayEntry() {
         element.innerHTML = thisGrow.growName;
       }
     );
+    const entryNotes = document.getElementById("notes");
+    entryNotes.innerHTML = thisEntry.notes;
     resolve("displayed entry");
     reject("didn't display entry");
+  });
+}
+
+function goBackFromEntry() {
+  const backArrow = document.querySelectorAll("#view-entry-page button");
+  backArrow[0].addEventListener('click', function () {
+    turnPage("view-entry-page", "grow-entries-page");
+    turnPage("entry-edit", "notes-box");
+    addClass(document.getElementById("vegetative-phase"),'hidden');
+    addClass(document.getElementById("flowering-phase"),'hidden');
+    addClass(document.getElementById("watered"),'hidden');
+    addClass(document.getElementById("fed"),'hidden');
+    addClass(document.querySelectorAll("#view-entry-page .nutrient-list"),'hidden');
+    appData.page = "timeline";
+    main();
+    console.log("goBackFromEntry ran");
   });
 }
 
@@ -627,10 +615,8 @@ function displayEntryInstructs(trueOrFalse) {
   return new Promise ((resolve, reject) => {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
     const theseEntries = thisGrow.entries;
-    const weekNumberClass = document.querySelectorAll("#add-entry-page .week-number");
-    weekNumberClass[0].innerHTML = appData.entrySubmit.week;
-    const entryNumberClass = document.querySelectorAll("#add-entry-page .entry-number");
-    entryNumberClass[0].innerHTML = appData.entryNumber;
+    document.querySelectorAll("#add-entry-page .week-number")[0].innerHTML = appData.entrySubmit.week;
+    document.querySelectorAll("#add-entry-page .entry-number")[0].innerHTML = appData.entryNumber;
     if (trueOrFalse) {
       removeClass(document.getElementById("feed-instruct"),'hidden');
       document.querySelectorAll("#add-entry-page .flora-micro")[0].innerHTML = appData.entrySubmit.nutrients.floraMicro;
@@ -665,7 +651,7 @@ function onSubmitEntryClick() {
       appData.currentEntryIndex = '';
       appData.entrySubmit = '';
       console.log("a " + resolve);
-      return getGrow(appData.currentGrowIndex);
+      return getAllGrows();
     }).then(function(resolve){
       console.log("c " + resolve);
       turnPage("add-entry-page", "grow-entries-page");
@@ -676,10 +662,49 @@ function onSubmitEntryClick() {
 }
 
 function onDeleteEntry() {
-  const deleteEntry = document.getElementById("delete-entry");
-  submitEntry.addEventListener('click', function () {
-    turnPage("grow-collection-page", "add-grow-page");
+  const thisEntry = appData.allGrows.grows[appData.currentGrowIndex].entries[appData.currentEntryIndex];
+  const deleteThisEntry = document.getElementById("delete-entry");
+  deleteThisEntry.addEventListener('click', function () {
+    turnPage("view-entry-page", "delete-entry-page");
+    const deleteConfirm = document.getElementById("delete-confirm");
+    deleteConfirm.addEventListener('click', function () {
+      deleteEntry().then(function(resolve){
+      console.log("a " + resolve);
+      return getAllGrows();
+    }).then(function(resolve){
+       console.log("b " + resolve);
+       turnPage("delete-entry-page", "grow-entries-page");
+      });
+    });
+    const deleteDeny = document.getElementById("delete-deny");
+    deleteDeny.addEventListener('click', function () {
+      turnPage("delete-entry-page", "view-entry-page");
+    });
+  });
+}
 
+function onEditEntry() {
+  const thisEntry = appData.allGrows.grows[appData.currentGrowIndex].entries[appData.currentEntryIndex];
+  const editEntry = document.getElementById("edit-entry");
+  editEntry.addEventListener('click', function () {
+    turnPage("notes-box", "entry-edit");
+    document.getElementById("edit-notes").innerHTML = thisEntry.notes;
+    document.getElementById('post-id').setAttribute('value', thisEntry.id);
+    const submitEdit = document.getElementById("submit-edit");
+    submitEdit.addEventListener('click', function () {
+      const editNotes = document.getElementById("edit-notes").value;
+      putEntry(editNotes, thisEntry.id).then(function(resolve){
+          console.log("a " + resolve);
+          return getAllGrows();
+      }).then(function(resolve){
+          console.log("b " + resolve);
+          turnPage("entry-edit", "notes-box");
+      });
+    });
+    const exitEdit = document.getElementById("exit-edit");
+    exitEdit.addEventListener('click', function () {
+      turnPage("entry-edit", "notes-box");
+    });
   });
 }
 
@@ -727,7 +752,9 @@ function main() {
   } else if (appData.page === "view-entry") {
     displayEntry().then(function(resolve){
       console.log("a " + resolve);
-      goBack("view-entry-page", "grow-entries-page", "timeline", "#view-entry-page button");
+      onDeleteEntry();
+      onEditEntry();
+      goBackFromEntry();
     });
   }
 }

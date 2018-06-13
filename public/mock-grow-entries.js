@@ -681,3 +681,7 @@ const putGrow =
     }
   ]
 };
+
+let putAnEntry = putGrow.entries[0];
+
+let deleteAnEntry = putGrow.entries[1];
