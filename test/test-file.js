@@ -15,13 +15,30 @@ const {testData} = require('./test-data');
 
 function seedGrowData() {
   console.log('Seeding grow data');
-  console.log(testData);
-  return Grow.insertMany(testData);
+  //console.log(testData);
+  const seedData = [];
+  seedData.push({
+    name: 'Brain Melt',
+    startDate: '2018-05-01',
+    endDate: '2018-05-28',
+    strain: 'indica'
+  });
+  seedData.push({
+    name: "Dude Where's My Car",
+    startDate: '2018-04-02',
+    endDate: '2018-04-27',
+    strain: 'indica'
+  })
+  return Grow.insertMany(seedData);
 }
 
 function tearDownDb() {
-  console.warn('Deleting database');
-  return mongoose.connection.dropDatabase();
+  return new Promise((resolve, reject) => {
+    console.warn('Deleting database');
+    mongoose.connection.dropDatabase()
+      .then(result => resolve(result))
+      .catch(err => reject(err));
+  });
 }
 
 before(function() {
@@ -34,7 +51,7 @@ before(function() {
  });
 
  afterEach(function() {
-   //return tearDownDb();
+   return tearDownDb();
  });
 
  after(function() {
@@ -51,18 +68,17 @@ describe('GET endpoint', function() {
 
   it('should return all existing grows', function() {
     let res;
-    console.log("i'm here");
     return chai.request(app)
-    .get('/grows')
-    .then(function(_res) {
-      console.log(res);
-      res = _res;
-      expect(res).to.have.status(200);
-      expect(res.body.grows).to.have.lengthOf.at.least(1);
-         return Grow.count();
-       })
-       .then(function(count) {
-         expect(res.body.grows).to.have.lengthOf(count);
+      .get('/grows')
+      .then(_res => {
+        res = _res;
+        //console.log({res})
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.lengthOf.at.least(1);
+        return Grow.count();
+      })
+      .then(count => {
+          expect(res.body).to.have.lengthOf(count);
        });
     });
 
