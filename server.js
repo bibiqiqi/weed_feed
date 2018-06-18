@@ -1,9 +1,17 @@
+/*jshint esversion: 6*/
+'use strict';
+
 const express = require('express');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+const { PORT, DATABASE_URL} = require('./config');
+const { Grow } = require('./models');
+
 const app = express();
-
+app.use(express.json());
 app.use(express.static('public'));
-
-module.exports = app;
 
 let server;
 
@@ -35,6 +43,6 @@ function closeServer() {
 
 if (require.main === module) {
   runServer().catch(err => console.error(err));
-};
+}
 
 module.exports = {app, runServer, closeServer};
