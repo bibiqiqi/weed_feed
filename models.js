@@ -25,6 +25,14 @@ const growSchema = mongoose.Schema({
   }]
 });
 
+growSchema.methods.serialize = function() {
+  return {
+    name: this.name,
+    startDate: this.startDate,
+    endDate: this.endDate,
+    strain: this.strain
+  }
+}
 
 const Grow = mongoose.model('Grow', growSchema);
 
