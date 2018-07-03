@@ -7,7 +7,8 @@ const growSchema = mongoose.Schema({
   name: {type: String, required: true},
   startDate: {type: String, required: true},
   endDate: String,
-  strain: String,
+  strain: String
+  /*,
   entries: [{
     number: Number,
     date: String,
@@ -23,6 +24,7 @@ const growSchema = mongoose.Schema({
     },
     notes: String
   }]
+  */
 });
 
 growSchema.methods.serialize = function() {
