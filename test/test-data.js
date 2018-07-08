@@ -4,8 +4,7 @@ const testDataOne =
     name: 'Tangerine Dream',
     startDate: '2018-04-15',
     endDate: '',
-    strain: 'indica'
-    /*,
+    strain: 'indica',
     entries: [
       {
         number: 1,
@@ -100,17 +99,14 @@ const testDataOne =
        notes: ''
      }
    ]
-   */
  };
-
 
   const testDataTwo =
   {
     name: 'Green Crack',
     startDate: '2018-02-3',
     endDate: '2018-03-01',
-    strain: 'sativa'
-    /*,
+    strain: 'sativa',
     entries: [
       {
         number: 1,
@@ -248,8 +244,6 @@ const testDataOne =
         notes: ''
       }
     ]
-    */
   };
 
-const testData = [testDataOne, testDataTwo];
-module.exports = {testData};
+module.exports = {testDataOne, testDataTwo};

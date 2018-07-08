@@ -1,14 +1,11 @@
+/*jshint esversion: 6*/
 'use strict';
 
 const express = require('express');
 const mongoose = require('mongoose');
 
-// Mongoose internally uses a promise-like object,
-// but its better to make Mongoose use built in es6 promises
 mongoose.Promise = global.Promise;
 
-// config.js is where we control constants for entire
-// app like PORT and DATABASE_URL
 const { PORT, DATABASE_URL } = require('./config');
 const { Grow } = require('./models');
 
@@ -18,8 +15,12 @@ app.use(express.json());
 app.get('/grows', (req, res) => {
   Grow
     .find()
+    .limit(10)
     .then(grows => {
-      res.json(grows.map(grow => grow.serialize()));
+      res.json({
+        grows: grows.map(
+          (grow) => grow.serialize())
+      });
     })
     .catch(err => {
       console.error(err);
@@ -37,87 +38,123 @@ app.get('/grows/:id', (req, res) => {
     });
 });
 
-// app.post('/grows', (req, res) => {
-//   const requiredFields = ['title', 'content', 'author'];
-//   for (let i = 0; i < requiredFields.length; i++) {
-//     const field = requiredFields[i];
-//     if (!(field in req.body)) {
-//       const message = `Missing \`${field}\` in request body`;
-//       console.error(message);
-//       return res.status(400).send(message);
-//     }
-//   }
+ app.post('/grows', (req, res) => {
+   const requiredFields = ['name', 'startDate', 'strain'];
+   for (let i = 0; i < requiredFields.length; i++) {
+     const field = requiredFields[i];
+     if (!(field in req.body)) {
+       const message = `Missing \`${field}\` in request body`;
+       console.error(message);
+       return res.status(400).send(message);
+     }
+   }
+   Grow
+     .create({
+       name: req.body.name,
+       startDate: req.body.startDate,
+       endDate: '',
+       strain: req.body.strain,
+       entries: []
+     })
+     .then(grow => res.status(201).json(grow.serialize()))
+     .catch(err => {
+       console.error(err);
+       res.status(500).json({ error: 'Something went wrong' });
+     });
+ });
 
-//   Grows
-//     .create({
-//       title: req.body.title,
-//       content: req.body.content,
-//       author: req.body.author
-//     })
-//     .then(blogPost => res.status(201).json(blogPost.serialize()))
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: 'Something went wrong' });
-//     });
+ app.post('/entries/:grow-id', (req, res) => {
+   console.log(`growId received from request: ${req.body.growId}`);
+   const requiredFields = ['number','date', 'week', 'phase', 'wasWatered', 'wasFed', 'nutrients', 'notes'];
+   for (let i = 0; i < requiredFields.length; i++) {
+     const field = requiredFields[i];
+     if (!(field in req.body)) {
+       const message = `Missing \`${field}\` in request body`;
+       return res.status(400).send(message);
+     }
+   }
+  Grow.findByIdAndUpdate(
+    req.body.growId,
+    {$push: {entries:
+      {number: req.body.number,
+      date: req.body.date,
+      week: req.body.week,
+      phase: req.body.phase,
+      wasWatered: req.body.wasWatered,
+      wasFed: req.body.wasFed,
+      nutrients: {
+       floraMicro: req.body.nutrients.floraMicro,
+       floraGrow: req.body.nutrients.floraGrow,
+       floraBloom: req.body.nutrients.floraBloom,
+       caliMagic: req.body.nutrients.caliMagic
+       },
+      notes: req.body.notes}}},
+    {'new': true},
+    function(err, grow){
+      if (err) {
+        console.log(err.message);
+      }
+      else {
+        console.log(`it worked! and this the added entry: ${grow.entries[grow.entries.length-1]}`);
+      }
+    })
+  .then(grow => res.status(201).json(grow.serialize()))
+  .catch(err => {
+    console.error(err);
+    res.status(500).json({ error: 'Something went wrong' });
+  });
+})
 
-// });
+   app.put('/entries/:id', (req, res) => {
+     if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+       res.status(400).json({
+         error: 'Request path id and request body id values must match'
+       });
+     }
+     const updated = {};
+     const updateableFields = ['notes'];
+     updateableFields.forEach(field => {
+       if (field in req.body) {
+         updated[field] = req.body[field];
+       }
+    });
 
+    Grow
+      .findOneAndUpdate({_id : req.body.growId, "entries._id" : req.body.id }, { "entries.$.notes" : req.body.notes }, {'new': true},
+      function(err, product){
+        if (err) {
+          console.log('it didnt work');
+        }
+        else {
+          console.log(`it worked! and this is the product: ${product}`);
+        }
+      })
+       .then(restaurant => res.status(204).end())
+       .catch(err => res.status(500).json({ message: 'Something went wrong' }));
+      });
 
-// app.delete('/grows/:id', (req, res) => {
-//   BlogPost
-//     .findByIdAndRemove(req.params.id)
-//     .then(() => {
-//       res.status(204).json({ message: 'success' });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: 'something went terribly wrong' });
-//     });
-// });
+app.delete('/entries/:id', (req, res) => {
+  Grow
+  .findOneAndUpdate({_id : req.body.growId}, {$pull: {entries: {_id: req.body.id }}}, { 'new': true }, function(err, doc){
+        if(err) {
+          return res.status(500).json({'error' : 'error in deleting address'});
+        }
+        else {
+        console.log(`it worked and this is what was deleted: ${doc}`);
+        }
+       })
+    .then(() => {
+      console.log(`Deleted entry with id \`${req.body.id}\``);
+      res.status(204).end();
+    });
+ });
 
-
-// app.put('/posts/:id', (req, res) => {
-//   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-//     res.status(400).json({
-//       error: 'Request path id and request body id values must match'
-//     });
-//   }
-
-//   const updated = {};
-//   const updateableFields = ['title', 'content', 'author'];
-//   updateableFields.forEach(field => {
-//     if (field in req.body) {
-//       updated[field] = req.body[field];
-//     }
-//   });
-
-//   BlogPost
-//     .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-//     .then(updatedPost => res.status(204).end())
-//     .catch(err => res.status(500).json({ message: 'Something went wrong' }));
-// });
-
-
-// app.delete('/:id', (req, res) => {
-//   BlogPost
-//     .findByIdAndRemove(req.params.id)
-//     .then(() => {
-//       console.log(`Deleted blog post with id \`${req.params.id}\``);
-//       res.status(204).end();
-//     });
-// });
-
-
-// catch-all endpoint if client makes request to non-existent endpoint
 app.use('*', function (req, res) {
   res.status(404).json({ message: 'Not Found' });
 });
-// closeServer needs access to a server object, but that only
-// gets created when `runServer` runs, so we declare `server` here
-// and then assign a value to it in run
+
 let server;
 
-// this function connects to our database, then starts the server
 function runServer(databaseUrl = DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
@@ -136,8 +173,6 @@ function runServer(databaseUrl = DATABASE_URL, port = PORT) {
   });
 }
 
-// this function closes the server, and returns a promise. we'll
-// use it in our integration tests later.
 function closeServer() {
   return mongoose.disconnect().then(() => {
     return new Promise((resolve, reject) => {
@@ -152,10 +187,8 @@ function closeServer() {
   });
 }
 
-// if server.js is called directly (aka, with `node server.js`), this block
-// runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
-  runServer().catch(err => console.error(err));
+  runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
 module.exports = { runServer, app, closeServer };

@@ -18,8 +18,8 @@ const appData = {
    entrySubmit: {
      week: "",
      phase: '',
-     watered: "",
-     fed: "",
+     wasWatered: "",
+     wasFed: "",
      nutrients: {},
      notes: ""
    },
@@ -88,24 +88,6 @@ function getGrow(id) {
       resolve("got a grow");
     } else {
       reject("didn't get a grow");
-    }
-  });
-}
-
-function getAllEntries() {
-  return new Promise ((resolve, reject) => {
-    //    const settings = {
-    //    url: GROW_ENTRIES_JSON,
-    //    dataType: 'json',
-    //    type: 'GET',
-    //    success: callback
-    //  };
-    //  $.ajax(settings);
-    appData.entries = growCollection;
-    if (appData.entries == growCollection) {
-      resolve("got all grows");
-    } else {
-      reject("didn't get all grows");
     }
   });
 }
@@ -246,7 +228,7 @@ function goBack(currentPageId, returningPageId, newPageName, selector) {
 function renderImageGrid(item, index) {
   const imageHtml = `
     <a href="#" id="grow-${index}" class="grow-links" role="button">
-      <h3>${appData.allGrows.grows[index].growName}</h3>
+      <h3>${appData.allGrows.grows[index].name}</h3>
       <h4>Started:<br>${appData.allGrows.grows[index].startDate}</h4>
     </a>
   `;
@@ -406,7 +388,7 @@ function renderFullTimeline() {
 function displayGrowTimeline() {
   return new Promise ((resolve, reject) => {
     turnPage('grow-collection-page', 'grow-entries-page');
-    document.getElementById("grow-name").innerHTML = appData.allGrows.grows[appData.currentGrowIndex].growName;
+    document.getElementById("grow-name").innerHTML = appData.allGrows.grows[appData.currentGrowIndex].name;
     document.getElementById("left-side").innerHTML = appData.timelineHtml.leftSideHtml;
     document.getElementById("right-side").innerHTML = appData.timelineHtml.rightSideHtml;
     resolve("displayed grow timeline");
@@ -484,10 +466,8 @@ function onSubmitGrowClick() {
 
 function makeGrowPost() {
   const post = {
-    id: '',
-    growName: appData.growSubmit.name,
+    name: appData.growSubmit.name,
     startDate: appData.growSubmit.date,
-    endDate: '',
     strain: appData.growSubmit.strain,
   };
   return post;
@@ -498,8 +478,9 @@ function makeEntryPost() {
     date: moment(),
     week: appData.currentWeek,
     phase: appData.entrySubmit.phase,
-    watered: appData.entrySubmit.watered,
-    fed:
+    wasWatered: appData.entrySubmit.wasWatered,
+    wasFed: appData.entrySubmit.wasFed,
+    nutrients:
       {
         floraMicro: appData.entrySubmit.nutrients.floraMicro,
         floraGrow: appData.entrySubmit.nutrients.floraGrow,
@@ -541,7 +522,7 @@ function displayEntry() {
     else if (thisEntry.phase === "flowering") {
       removeClass(document.getElementById("flowering-phase"),'hidden');
     }
-    if (thisEntry.watered === true) {
+    if (thisEntry.wasWatered === true) {
       removeClass(document.getElementById("watered"),'hidden');
     }
     else {
@@ -556,7 +537,7 @@ function displayEntry() {
     const myGrows = Array.from(document.getElementsByClassName("my-grow"));
     myGrows.forEach(
       function(element) {
-        element.innerHTML = thisGrow.growName;
+        element.innerHTML = thisGrow.name;
       }
     );
     const entryNotes = document.getElementById("notes");
@@ -600,12 +581,12 @@ function calculateInstructs() {
   const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
   appData.entryNumber = thisGrow.entries.length + 1;
   if (appData.entryNumber % 2 == 0) {
-    appData.entrySubmit.watered = true;
-    appData.entrySubmit.fed = false;
+    appData.entrySubmit.wasWatered = true;
+    appData.entrySubmit.wasFed = false;
     return false;
   } else if (appData.entryNumber % 2 != 0) {
-    appData.entrySubmit.watered = false;
-    appData.entrySubmit.fed = true;
+    appData.entrySubmit.wasWatered = false;
+    appData.entrySubmit.wasFed = true;
     return true;
   }
   console.log("a");
