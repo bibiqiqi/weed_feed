@@ -2,18 +2,19 @@
   "name": "weed-growing-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "public/app.js",
   "dependencies": {
-    "chai": "^4.1.2",
-    "chai-http": "^4.0.0",
     "express": "^4.16.3",
-    "mocha": "^5.1.1",
-    "mongo": "^0.1.0",
     "mongoose": "^5.1.5",
     "morgan": "^1.9.0",
     "octicons": "^7.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0"
+  },
   "scripts": {
     "start": "node server.js",
     "test": "mocha --exit"

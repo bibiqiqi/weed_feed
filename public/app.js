@@ -57,24 +57,16 @@ function getNutrientInstructs() {
 }
 
 function getAllGrows() {
-  return new Promise ((resolve, reject) => {
-    //    const settings = {
-    //    url: GROW_ENTRIES_JSON,
-    //    dataType: 'json',
-    //    type: 'GET',
-    //    success: callback
-    //  };
-    //  $.ajax(settings);
-    appData.allGrows = growCollection;
-    if (appData.allGrows == growCollection) {
-      resolve("got all grows");
-    } else {
-      reject("didn't get all grows");
-    }
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open('GET', '/grows');
+    req.onload = () => req.status === 200 ? resolve(req.response) : reject(Error(req.statusText));
+    req.onerror = (e) => reject(Error(`Network Error: ${e}`));
+    req.send();
   });
 }
 
-function getGrow(id) {
+function getGrow(url, id) {
   return new Promise ((resolve, reject) => {
     //  const settings = {
     //    url: GROW_ENTRIES_JSON/${id},
@@ -244,8 +236,15 @@ function renderAddGrow() {
     return addGrowHtml;
 }
 
-function displayImageGrid() {
+function displayImageGrid(data) {
   return new Promise ((resolve, reject) => {
+    // TODO: add in something that displays a message when there are no grows in the database
+    // TODO: do I really need to assign the grows from the first ajax call to a local global var, or can i wire these up to pass
+    // the data around from function to function
+    //appData.allGrows.grows = data.grows;
+    debugger;
+    appData.allGrows.grows = JSON.parse(data.grows);
+    console.log(`${appData.allGrows.grows} was passed to displayImageGrid`);
     const imageGrid = appData.allGrows.grows.map((item, index) => renderImageGrid(item, index)) + renderAddGrow();
     document.getElementById("grow-grid").innerHTML = imageGrid;
     removeClass(document.getElementById('add-a-grow'),'hidden');
@@ -692,8 +691,8 @@ function onEditEntry() {
 function main() {
   if (appData.page === "" || appData.page === "grows" ){
     getAllGrows().then(function(resolve){
-        console.log("a " + resolve);
-        return displayImageGrid();
+        //console.log("a " + resolve);
+        return displayImageGrid(resolve);
     }).then(function(resolve){
       console.log("b " + resolve);
       onGrowClick();

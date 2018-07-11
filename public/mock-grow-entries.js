@@ -1,31 +1,36 @@
-const growCollection =
 {
   grows: [
     {
-      id: '100',
-      growName: 'Tangerine Dream',
+      id: 'G817S',
+      name: 'Tangerine Dream',
       startDate: '2018-04-15',
       endDate: '',
       strain: 'indica',
-      image: 'http://wesb.com/wp-content/uploads/2015/06/citral-cannabis-plant.jpg',
       entries: [
         {
-          id: '34623',
+          id: 'YQILP',
+          number: 1,
           date: '2018-05-15',
           week: '1',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
-          nutrients: {},
+          wasWatered: true,
+          wasFed: false,
+          nutrients: {
+            floraMicro: '',
+            floraGrow: '',
+            floraBloom: '',
+            caliMagic: ''
+          },
           notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
         },
         {
-          id: '56734',
+          id: '07JR9',
+          number: 2,
           date: '2018-05-18',
           week: '1',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
           nutrients: {
               floraMicro: '1/4 tsp',
               floraGrow: '1/8 tsp',
@@ -35,22 +40,29 @@ const growCollection =
           notes: ''
         },
         {
-          id: '34136',
+          id: 'GD0VP',
+          number: 3,
           date: '2018-05-20',
           week: '2',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
-          nutrients: {},
+          wasWatered: true,
+          wasFed: false,
+          nutrients: {
+            floraMicro: '',
+            floraGrow: '',
+            floraBloom: '',
+            caliMagic: ''
+          },
           notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
-          id: '674563',
+          id: 'I9SLP',
+          number: 4,
           date: '2018-05-23',
           week: '2',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
           nutrients:
             {
               floraMicro: '1/2 tsp',
@@ -61,22 +73,29 @@ const growCollection =
           notes: ''
         },
         {
-          id: '456456',
+          id: 'L5TLM',
+          number: 5,
           date: '2018-05-26',
           week: '2',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
-          nutrients: {},
+          wasWatered: true,
+          wasFed: false,
+          nutrients: {
+            floraMicro: '',
+            floraGrow: '',
+            floraBloom: '',
+            caliMagic: ''
+          },
           notes: ''
         },
         {
-         id: '453256',
+         id: '5G4OC',
+         number: 6,
          date: '2018-05-29',
          week: '3',
          phase: 'flowering',
-         watered: false,
-         fed: true,
+         wasWatered: false,
+         wasFed: true,
          nutrients:
            {
              floraMicro: '1/2 tsp',
@@ -89,599 +108,552 @@ const growCollection =
       ]
     },
     {
-      id: '200',
-      growName: 'Green Crack',
+      id: 'JRIO9',
+      name: 'Green Crack',
       startDate: '2018-02-3',
       endDate: '',
       strain: 'sativa',
-      image: 'https://magazine.grasscity.com/wp-content/uploads/2016/02/How-To-Harvest-Outdoor-Marijuana-Plants-720x480@2x.jpg',
       entries: [
         {
-          id: '45645',
+          id: 'HAAV3',
+          number: 1,
           date: '2018/02/5',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
         },
         {
-          id: '47843',
+          id: 'BGZ26',
+          number: 2,
           date: '2018/02/10',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '96785',
+          id: 'ZV715',
+          number: 3,
           date: '2018/02/14',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
-          id: '07567',
+          id: 'BN13F',
+          number: 4,
           date: '2018/02/17',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '24547',
+          id: 'DAKXB',
+          number: 5,
           date: '2018/02/20',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '45634',
+          id: 'L3A6Z',
+          number: 6,
           date: '2018/02/23',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '34177',
+          id: '5M3V4',
+          number: 7,
           date: '2018/02/25',
           phase: 'flowering',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet.'
         },
         {
-          id: '45630',
+          id: 'OY82X',
+          number: 8,
           date: '2018/02/27',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         }
       ]
     },
     {
-      id: '300',
-      growName: 'Deep Sleep',
+      id: 'PVO4K',
+      name: 'Deep Sleep',
       startDate: '2018-02-3',
       endDate: '',
       strain: 'indica',
-      image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Young_cannabis_plant_in_the_vegetative_stage_01.jpg',
       entries: [
         {
-          id: '45645',
+          id: '15SGS',
+          number: 1,
           date: '2018/02/5',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
         },
         {
-          id: '47843',
+          id: '8RN9N',
+          number: 2,
           date: '2018/02/10',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '96785',
+          id: 'H57PQ',
+          number: 3,
           date: '2018/02/14',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
-          id: '07567',
+          id: '2LIW1',
+          number: 4,
           date: '2018/02/17',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '24547',
+          id: 'O72U8',
+          number: 5,
           date: '2018/02/20',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '45634',
+          id: '528HT',
+          number: 6,
           date: '2018/02/23',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '34177',
+          id: 'LUSA1',
+          number: 7,
           date: '2018/02/25',
           phase: 'flowering',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet.'
         },
         {
-          id: '45630',
+          id: 'XLCV5',
+          number: 8,
           date: '2018/02/27',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         }
       ]
     },
     {
-      id: '400',
-      growName: 'Acapulco Gold',
+      id: 'CS3KN',
+      name: 'Acapulco Gold',
       startDate: '2018-02-3',
       endDate: '',
       strain: 'sativa',
-      image: 'https://www.growweedeasy.com/wp-content/uploads/2013/03/fat-smelly-cannabis-cola.jpg',
       entries: [
         {
-          id: '45645',
+          id: 'S5R97',
+          number: 1,
           date: '2018/02/5',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
         },
         {
-          id: '47843',
+          id: 'IWZID',
+          number: 2,
           date: '2018/02/10',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '96785',
+          id: '5CHZB',
+          number: 3,
           date: '2018/02/14',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
-          id: '07567',
+          id: '19XSA',
+          number: 4,
           date: '2018/02/17',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '24547',
+          id: 'ZBDIT',
+          number: 5,
           date: '2018/02/20',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '45634',
+          id: 'Q75IH',
+          number: 6,
           date: '2018/02/23',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '34177',
+          id: 'JN5LA',
+          number: 7,
           date: '2018/02/25',
           phase: 'flowering',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet.'
         },
         {
-          id: '45630',
+          id: '29KFH',
+          number: 8,
           date: '2018/02/27',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         }
       ]
     },
     {
-      id: '500',
-      growName: 'Acapulco Gold',
+      id: 'FF3VY',
+      name: 'Acapulco Gold',
       startDate: '2018-02-3',
       endDate: '',
       strain: 'sativa',
-      image: 'https://www.growweedeasy.com/wp-content/uploads/2010/05/ultimate-supercrop-bending-lst-example.jpg',
       entries: [
         {
-          id: '45645',
+          id: '6OU0V',
+          number: 1,
           date: '2018/02/5',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
         },
         {
-          id: '47843',
+          id: '5MJAW',
+          number: 2,
           date: '2018/02/10',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '96785',
+          id: 'ENEGF',
+          number: 3,
           date: '2018/02/14',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet, labitur.'
         },
         {
-          id: '07567',
+          id: '24WQU',
+          number: 4,
           date: '2018/02/17',
           phase: 'vegetative',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '24547',
+          id: '28GDE',
+          number: 5,
           date: '2018/02/20',
           phase: 'vegetative',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '45634',
+          id: '0DHHX',
+          number: 6,
           date: '2018/02/23',
           phase: 'flowering',
-          watered: false,
-          fed: true,
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: ''
         },
         {
-          id: '34177',
+          id: 'E54QN',
+          number: 7,
           date: '2018/02/25',
           phase: 'flowering',
-          watered: true,
-          fed: false,
+          wasWatered: true,
+          wasFed: false,
+          nutrients:
+            {
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
+            },
           notes: 'Lorem ipsum dolor sit amet.'
         },
         {
-          id: '45630',
+          id: 'UBRZB',
+          number: 8,
           date: '2018/02/27',
           phase: 'flowering',
-          watered: false,
-          fed: true,
-          notes: ''
-        }
-      ]
-    }
-  ]
-};
-
-const oneGrow =
-{
-  id: '100',
-  growName: 'Tangerine Dream',
-  startDate: '2018/01/12',
-  endDate: '',
-  strain: 'indica',
-  image: 'https://dummyimage.com/300x300/0b8f1f/fff',
-  entries: [
-    {
-      id: '34623',
-      date: '01/16/18',
-      phase: 'vegetative',
-      watered: true,
-      fed: false,
-      notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
-    },
-    {
-      id: '56734',
-      date: '01/20/18',
-      phase: 'vegetative',
-      watered: false,
-      fed: true,
-      notes: ''
-    },
-    {
-      id: '34136',
-      date: '01/23/18',
-      phase: 'vegetative',
-      watered: true,
-      fed: false,
-      notes: 'Lorem ipsum dolor sit amet, labitur.'
-    },
-    {
-      id: '674563',
-      date: '01/28/18',
-      phase: 'vegetative',
-      watered: false,
-      fed: true,
-      notes: ''
-    },
-    {
-      id: '456456',
-      date: '02/02/18',
-      phase: 'vegetative',
-      watered: true,
-      fed: false,
-      notes: ''
-    },
-    {
-      id: '453256',
-      date: '02/05/18',
-      phase: 'flowering',
-      watered: false,
-      fed: true,
-      notes: ''
-    }
-  ]
-};
-
-let postAgrow;
-
-let postAentry;
-
-const deleteAgrow =
-{
-  grows: [
-    {
-      id: '100',
-      growName: 'Tangerine Dream',
-      startDate: '2018/01/12',
-      endDate: '',
-      strain: 'indica',
-      image: 'https://dummyimage.com/300x300/0b8f1f/fff',
-      entries: [
-        {
-          id: '34623',
-          date: '01/16/18',
-          phase: 'vegetative',
-          watered: true,
-          fed: false,
-          notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
-        },
-        {
-          id: '56734',
-          date: '01/20/18',
-          phase: 'vegetative',
-          watered: false,
-          fed:
+          wasWatered: false,
+          wasFed: true,
+          nutrients:
             {
-              floraMicro: '0',
-              floraGrow: '0',
-              floraBloom: '0',
-              caliMagic: '1 tsp'
-            },
-          notes: 'Lorem ipsum dolor sit amet, labitur.'
-        },
-        {
-          id: '34136',
-          date: '01/23/18',
-          phase: 'vegetative',
-          watered: true,
-          fed: false,
-          notes: 'Lorem ipsum dolor sit amet, labitur.'
-        },
-        {
-          id: '674563',
-          date: '01/28/18',
-          phase: 'vegetative',
-          watered: false,
-          fed:
-            {
-              floraMicro: '',
-              floraGrow: '',
-              floraBloom: '',
-              caliMagic: ''
-            },
-          notes: ''
-        },
-        {
-          id: '456456',
-          date: '02/02/18',
-          phase: 'vegetative',
-          watered: true,
-          fed: false,
-          notes: ''
-        },
-        {
-          id: '453256',
-          date: '02/05/18',
-          phase: 'flowering',
-          watered: false,
-          fed:
-            {
-            floraMicro: '',
-            floraGrow: '',
-            floraBloom: '',
-            caliMagic: ''
-            },
-          notes: ''
-        },
-        {
-          id: '453256',
-          date: '02/10/18',
-          phase: 'flowering',
-          watered: true,
-          fed:
-            {
-            floraMicro: '',
-            floraGrow: '',
-            floraBloom: '',
-            caliMagic: ''
+              floraMicro: '1/2 tsp',
+              floraGrow: '1/2 tsp',
+              floraBloom: '1/2 tsp',
+              caliMagic: '1/2 tsp'
             },
           notes: ''
         }
       ]
-    },
-    {
-      id: '200',
-      growName: 'Green Crack',
-      startDate: '01/12/18',
-      endDate: '',
-      strain: 'sativa',
-      image: 'https://dummyimage.com/300x300/0b8f1f/fff',
-      entries: [
-        {
-          id: '45645',
-          date: '01/16/18',
-          phase: 'vegetative',
-          watered: true,
-          fed: false,
-          notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
-        },
-        {
-          id: '47843',
-          date: '01/20/18',
-          phase: 'vegetative',
-          watered: false,
-          fed: true,
-          notes: ''
-        },
-        {
-          id: '96785',
-          date: '01/23/18',
-          phase: 'vegetative',
-          watered: true,
-          fed: false,
-          notes: 'Lorem ipsum dolor sit amet, labitur.'
-        },
-        {
-          id: '07567',
-          date: '01/28/18',
-          phase: 'vegetative',
-          watered: false,
-          fed: true,
-          notes: ''
-        },
-        {
-          id: '24547',
-          date: '02/02/18',
-          phase: 'vegetative',
-          watered: true,
-          fed: false,
-          notes: ''
-        },
-        {
-          id: '45634',
-          date: '02/05/18',
-          phase: 'flowering',
-          watered: false,
-          fed: true,
-          notes: ''
-        },
-        {
-          id: '34177',
-          date: '02/09/18',
-          phase: 'flowering',
-          watered: true,
-          fed: false,
-          notes: 'Lorem ipsum dolor sit amet.'
-        },
-        {
-          id: '45630',
-          date: '02/12/18',
-          phase: 'flowering',
-          watered: false,
-          fed: true,
-          notes: ''
-        }
-      ]
     }
   ]
 };
-
-
-const putGrow =
-{
-  id: '100',
-  growName: 'Tangerine Dream',
-  startDate: '2018/01/12',
-  endDate: '',
-  strain: 'indica',
-  image: 'https://dummyimage.com/300x300/0b8f1f/fff',
-  entries: [
-    {
-      id: '34623',
-      date: '01/16/18',
-      phase: 'vegetative',
-      watered: true,
-      fed: false,
-      notes: 'Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis.'
-    },
-    {
-      id: '56734',
-      date: '01/20/18',
-      phase: 'vegetative',
-      watered: false,
-      fed: true,
-      notes: ''
-    },
-    {
-      id: '34136',
-      date: '01/23/18',
-      phase: 'vegetative',
-      watered: true,
-      fed: false,
-      notes: 'Lorem ipsum dolor sit amet, labitur.'
-    },
-    {
-      id: '674563',
-      date: '01/28/18',
-      phase: 'vegetative',
-      watered: false,
-      fed: true,
-      notes: ''
-    },
-    {
-      id: '456456',
-      date: '02/02/18',
-      phase: 'vegetative',
-      watered: true,
-      fed: false,
-      notes: ''
-    },
-    {
-      id: '453256',
-      date: '02/05/18',
-      phase: 'flowering',
-      watered: false,
-      fed: true,
-      notes: ''
-    }
-  ]
-};
-
-let putAnEntry = putGrow.entries[0];
-
-let deleteAnEntry = putGrow.entries[1];

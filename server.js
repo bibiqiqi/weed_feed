@@ -10,12 +10,12 @@ const { PORT, DATABASE_URL } = require('./config');
 const { Grow } = require('./models');
 
 const app = express();
+app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/grows', (req, res) => {
   Grow
     .find()
-    .limit(10)
     .then(grows => {
       res.json({
         grows: grows.map(
@@ -155,9 +155,11 @@ app.use('*', function (req, res) {
 
 let server;
 
-function runServer(databaseUrl = DATABASE_URL, port = PORT) {
+function runServer(databaseUrl, port = PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl, err => {
+    console.log(process.env);
+    console.log(encodeURI(databaseUrl));
+    mongoose.connect(encodeURI(databaseUrl), err => {
       if (err) {
         return reject(err);
       }
