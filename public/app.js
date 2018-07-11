@@ -60,7 +60,11 @@ function getAllGrows() {
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest();
     req.open('GET', '/grows');
-    req.onload = () => req.status === 200 ? resolve(req.response) : reject(Error(req.statusText));
+    req.onload = () => {
+      const parsedData = JSON.parse(req.response);
+      appData.allGrows = parsedData.grows;
+      return (req.status === 200 ? resolve(req.response) : reject(Error(req.statusText)));
+    }
     req.onerror = (e) => reject(Error(`Network Error: ${e}`));
     req.send();
   });
@@ -236,16 +240,12 @@ function renderAddGrow() {
     return addGrowHtml;
 }
 
-function displayImageGrid(data) {
+function displayImageGrid() {
   return new Promise ((resolve, reject) => {
     // TODO: add in something that displays a message when there are no grows in the database
-    // TODO: do I really need to assign the grows from the first ajax call to a local global var, or can i wire these up to pass
-    // the data around from function to function
-    //appData.allGrows.grows = data.grows;
-    debugger;
-    appData.allGrows.grows = JSON.parse(data.grows);
-    console.log(`${appData.allGrows.grows} was passed to displayImageGrid`);
-    const imageGrid = appData.allGrows.grows.map((item, index) => renderImageGrid(item, index)) + renderAddGrow();
+    // // TODO: do I really need to assign the grows from the first ajax call to a local global var
+    //const parsedData = JSON.parse(data);
+    const imageGrid = appData.allGrows.map((item, index) => renderImageGrid(item, index)) + renderAddGrow();
     document.getElementById("grow-grid").innerHTML = imageGrid;
     removeClass(document.getElementById('add-a-grow'),'hidden');
     resolve("displayed image grid");
@@ -691,8 +691,8 @@ function onEditEntry() {
 function main() {
   if (appData.page === "" || appData.page === "grows" ){
     getAllGrows().then(function(resolve){
-        //console.log("a " + resolve);
-        return displayImageGrid(resolve);
+        console.log("a " + resolve);
+        return displayImageGrid();
     }).then(function(resolve){
       console.log("b " + resolve);
       onGrowClick();
