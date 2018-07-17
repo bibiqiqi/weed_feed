@@ -5,13 +5,13 @@ const mongoose = require('mongoose');
 
 const expect = chai.expect;
 
-const {Grow} = require('../models');
+const {Grow, Schedule} = require('../models');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
-const {testDataOne, testDataTwo} = require('./test-data');
+const {testDataOne, testDataTwo, nutrientSchedule} = require('./test-data');
 
 function generateFakeGrow() {
   return {
@@ -49,6 +49,11 @@ function seedGrowData() {
   return Grow.insertMany(seedData);
 }
 
+function seedNutrientData() {
+  console.log('Seeding nutrient schedule data');
+  return Schedule.insertMany(nutrientSchedule);
+}
+
 function tearDownDb() {
   return new Promise((resolve, reject) => {
     console.warn('Deleting database');
@@ -66,7 +71,11 @@ before(function() {
    return seedGrowData();
  });
 
- afterEach(function() {
+ beforeEach(function() {
+   return seedNutrientData();
+ });
+
+afterEach(function() {
   return tearDownDb();
  });
 
@@ -134,6 +143,33 @@ describe('GET endpoint', function() {
         });
     });
 });
+
+describe('GET endpoint', function() {
+    // strategy:
+    //  1. Get an existing grow from db
+    //  2. Make a PUT request to update the notes field of an entry
+    // in that db
+    //  3. Prove the entry returned by request contains data we sent
+    //  4. Prove the entry in db is correctly updated
+    it('should get the appropriate nutrient schedule', function() {
+      let scheduleName;
+      return Schedule
+        .findOne()
+        .then(function(schedule) {
+          console.log(schedule);
+          scheduleName = schedule.name;
+          return chai.request(app)
+          .get(`/nutrient-schedules/${scheduleName}`)
+        })
+        .then(function(res) {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          console.log(res.body);
+          expect(res.body).to.include.keys(
+            'name', 'schedule');
+        });
+    });
+  });
 
 describe('POST Grow endpoint', function() {
   // strategy:
@@ -270,7 +306,6 @@ describe('POST Entries endpoint', function() {
             return Grow.findOne({_id : deleteEntry.growId});
           })
           .then(function(grow) {
-            console.log(grow);
             expect(grow.entries.id(deleteEntry.id)).to.be.null;
       });
      })

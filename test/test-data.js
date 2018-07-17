@@ -246,4 +246,258 @@ const testDataOne =
     ]
   };
 
-module.exports = {testDataOne, testDataTwo};
+  const nutrientSchedule =
+  {
+  name: 'basic',
+  schedule: [
+    {
+      week: 1,
+      phase: 'vegetative',
+      stage: 'seeding',
+      nutrients: [
+        {
+          floraMicro: '1/4 tsp'
+        },
+        {
+          floraGrow: '1/4 tsp'
+        },
+        {
+          floraBloom: '1/4 tsp'
+        },
+        {
+          caliMagic: '1 tsp'
+        }
+      ]
+    },
+    {
+      week: 2,
+      phase: 'vegetative',
+      stage: 'vegetative',
+      nutrients: [
+        {
+          floraMicro: '1/2 tsp'
+        },
+        {
+          floraGrow: '1/2 tsp'
+        },
+        {
+          floraBloom: '1/2 tsp'
+        },
+        {
+          caliMagic: '1 tsp'
+        }
+      ]
+    },
+    {
+      week: 3,
+      phase: 'vegetative',
+      stage: 'vegetative',
+      nutrients: [
+        {
+          floraMicro: '1/2 tsp'
+        },
+        {
+          floraGrow: '1/2 tsp'
+        },
+        {
+          floraBloom: '1/2 tsp'
+        },
+        {
+          caliMagic: '1 tsp'
+        }
+      ]
+    },
+    {
+      week: 4,
+      phase: 'flowering',
+      stage: 'transition',
+      nutrients: [
+        {
+          floraMicro: '1 tsp'
+        },
+        {
+          floraGrow: '1 tsp'
+        },
+        {
+          floraBloom: '1 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 5,
+      phase: 'flowering',
+      stage: 'early bloom',
+      nutrients: [
+        {
+          floraMicro: '1 tsp'
+        },
+        {
+          floraGrow: '1 tsp'
+        },
+        {
+          floraBloom: '1 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 6,
+      phase: 'flowering',
+      stage: 'early bloom',
+      nutrients: [
+        {
+          floraMicro: '1 tsp'
+        },
+        {
+          floraGrow: '1/2 tsp'
+        },
+        {
+          floraBloom: '1 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 7,
+      phase: 'flowering',
+      stage: 'mid bloom',
+      nutrients: [
+        {
+          floraMicro: '1 tsp'
+        },
+        {
+          floraGrow: '1/2 tsp'
+        },
+        {
+          floraBloom: '1 1/2 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 8,
+      phase: 'flowering',
+      stage: 'mid bloom',
+      nutrients: [
+        {
+          floraMicro: '1 tsp'
+        },
+        {
+          floraGrow: '1/2'
+        },
+        {
+          floraBloom: '1 1/2 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 9,
+      phase: 'flowering',
+      stage: 'late bloom',
+      nutrients: [
+        {
+          floraMicro: '1 tsp'
+        },
+        {
+          floraGrow: '0'
+        },
+        {
+          floraBloom: '1 1/2 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 10,
+      phase: 'flowering',
+      stage: 'late bloom',
+      nutrients: [
+        {
+          floraMicro: '1/2 tsp'
+        },
+        {
+          floraGrow: '0'
+        },
+        {
+          floraBloom: '1 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 11,
+      phase: 'flowering',
+      stage: 'ripen',
+      nutrients: [
+        {
+          floraMicro: '1/2 tsp'
+        },
+        {
+          floraGrow: '0'
+        },
+        {
+          floraBloom: '1 tsp'
+        },
+        {
+          caliMagic: '1/2 tsp'
+        }
+      ]
+    },
+    {
+      week: 12,
+      phase: 'flowering',
+      stage: 'flush',
+      nutrients: [
+        {
+          floraMicro: '0'
+        },
+        {
+          floraGrow: '0'
+        },
+        {
+          floraBloom: '0'
+        },
+        {
+          caliMagic: '0'
+        }
+      ]
+    },
+    {
+      week: 13,
+      phase: 'flowering',
+      stage: 'flush',
+      nutrients: [
+        {
+          floraMicro: '0'
+        },
+        {
+          floraGrow: '0'
+        },
+        {
+          floraBloom: '0'
+        },
+        {
+          caliMagic: '0'
+        }
+      ]
+    }
+  ]
+};
+
+module.exports = {testDataOne, testDataTwo, nutrientSchedule};
