@@ -3,7 +3,6 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-
 const shortid = require('shortid');
 
 const { PORT, DATABASE_URL } = require('./config');
@@ -30,10 +29,9 @@ app.get('/grows', (req, res) => {
     });
 });
 
-app.get( '/nutrient-schedules/:name', (req, res) => {
-  console.log(`${req} was received by endpoint`);
+app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
   Schedule
-    .findOne({name: req.params.name})
+    .findOne({name:req.params.nutrientSchedule})
     .then(schedule => res.json(schedule.serialize()))
     .catch(err => {
       console.error(err);
@@ -42,8 +40,7 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
 });
 
  app.post('/grows', (req, res) => {
-   console.log(req.body);
-   const requiredFields = ['name', 'startDate', 'strain'];
+   const requiredFields = ['name', 'startDate', 'strain', 'growType'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
      if (!(field in req.body)) {
@@ -52,13 +49,15 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
        return res.status(400).send(message);
      }
    }
+   // TODO: returning a post without growType
    Grow
      .create({
-       id: shortid.generate(),
+       shortId: shortid.generate(),
        name: req.body.name,
        startDate: req.body.startDate,
        endDate: '',
        strain: req.body.strain,
+       growType: req.body.growType,
        entries: []
      })
      .then(grow => res.status(201).json(grow.serialize()))
@@ -68,7 +67,7 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
      });
  });
 
- app.post('/entries/:grow-id', (req, res) => {
+ app.post('/entries/:growId', (req, res) => {
    const requiredFields = ['number','date', 'week', 'phase', 'wasWatered', 'wasFed', 'nutrients', 'notes'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
@@ -77,12 +76,12 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
        return res.status(400).send(message);
      }
    }
-  Grow.findByIdAndUpdate(
-    req.body.growId,
+  Grow.findOneAndUpdate(
+    {shortId:req.params.growId},
     {$push: {
       entries:
         {
-        id: shortid.generate(),
+        shortId: shortid.generate(),
         number: req.body.number,
         date: req.body.date,
         week: req.body.week,
@@ -112,12 +111,7 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
   });
 })
 
-   app.put('/entries/:grow-id/:entries-id', (req, res) => {
-     if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-       res.status(400).json({
-         error: 'Request path id and request body id values must match'
-       });
-     }
+   app.put('/entries/:growId/:entryId', (req, res) => {
      const updated = {};
      const updateableFields = ['notes'];
      updateableFields.forEach(field => {
@@ -127,7 +121,7 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
     });
 
     Grow
-      .findOneAndUpdate({_id : req.body.growId, "entries._id" : req.body.id }, { "entries.$.notes" : req.body.notes }, {'new': true})
+      .findOneAndUpdate({shortId : req.params.growId, "entries.shortId" : req.params.entryId }, { "entries.$.notes" : req.body.notes }, {'new': true})
       // function(err, product){
       //   if (err) {
       //     console.log('it didnt work');
@@ -136,12 +130,29 @@ app.get( '/nutrient-schedules/:name', (req, res) => {
       //     console.log(`it worked! and this is the product: ${product}`);
       //   }
       // })
-       .then(restaurant => res.status(204).end())
+       .then(response => res.status(204).end())
        .catch(err => res.status(500).json({ message: 'Something went wrong' }));
       });
 
+  app.delete('/grows/:growId', (req, res) => {
+    Grow
+    .findOneAndRemove({shortId : req.params.growId})
+    //.findOneAndUpdate({shortId : req.params.growId}, {$pull: {entries: {shortId: req.params.entryId }}}, { 'new': true })
+    // function(err, doc){
+    //       if(err) {
+    //         return res.status(500).json({'error' : 'error in deleting address'});
+    //       }
+    //       else {
+    //       console.log(`it worked and this is what was deleted: ${doc}`);
+    //       }
+    //      })
+      .then(() => {
+        //console.log(`Deleted entry with id \`${req.body.id}\``);
+        res.status(204).end();
+      });
+   });
+
 app.delete('/entries/:grow-id/:entries-id', (req, res) => {
-  console.log(req.params.growId);
   Grow
   .findOneAndUpdate({shortId : req.params.growId}, {$pull: {entries: {shortId: req.params.entryId }}}, { 'new': true })
   // function(err, doc){
@@ -166,8 +177,6 @@ let server;
 
 function runServer(databaseUrl, port = PORT) {
   return new Promise((resolve, reject) => {
-    //console.log(DATABASE_URL);
-    //console.log(encodeURI(databaseUrl));
     mongoose.connect(encodeURI(databaseUrl), err => {
       if (err) {
         return reject(err);

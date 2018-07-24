@@ -2,6 +2,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const entrySchema = mongoose.Schema({
   shortId: String,
@@ -23,10 +24,10 @@ const entrySchema = mongoose.Schema({
 const growSchema = mongoose.Schema({
   shortId: String,
   name: {type: String, required: true},
-  // TODO: look up the required param
   startDate: {type: String, required: true},
   endDate: String,
   strain: {type: String, required: true},
+  growType: {type: String, required: true},
   entries: [entrySchema]
 });
 
@@ -47,7 +48,7 @@ entrySchema.methods.serialize = function() {
     id: this._id,
     shortId: this.shortId,
     number: this.number,
-    date: this.date,
+    date: moment(this.date).format('YYYY-MM-DD'),
     week: this.week,
     phase: this.phase,
     wasWatered: this.wasWatered,
@@ -67,9 +68,10 @@ growSchema.methods.serialize = function() {
     id: this._id,
     shortId: this.shortId,
     name: this.name,
-    startDate: this.startDate,
-    endDate: this.endDate,
+    startDate: moment(this.startDate).format('YYYY-MM-DD'),
+    endDate: moment(this.endDate).format('YYYY-MM-DD'),
     strain: this.strain,
+    growType: this.growType,
     entries: this.entries
   };
 };

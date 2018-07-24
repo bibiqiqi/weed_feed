@@ -20,11 +20,16 @@
 
     <!---cover-page-->
     <section id="cover-page" class="page" role="region">
-      <canvas id="weed-canvas" class="page">
-        <p>
-          your browser doesn't support this
-        </p>
-      </canvas>
+      <!-- TODO: add alternate text for browsers that don't support canvas -->
+      <div id="title">
+        <h1>Grow your own weed...
+          for medicine or fun.
+        </h1>
+        <a id="enter-button"><h2>Enter</h2></a>
+        <h2>Use this app to keep track of your watering and feeding times
+          <br/>
+          ...so your weed will "grow like a weed".</h2>
+      </div>
     </section>
 
     <!---collection of past and current grows-->
@@ -37,10 +42,25 @@
       </div>
     </section>
 
+    <!---add first grow-->
+    <section id="first-entry-page" class="page hidden" role="region">
+      <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+      <a id="first-entry-hover">
+        <h1 id="add-first-entry">Add your first entry?</h1>
+        <img src="images/add-first-entry.jpeg"/>
+      </a>
+
+    </section>
+
     <!---timeline of past entries for this grow-->
     <section id="grow-entries-page" class="page hidden" role="region">
       <header role="banner">
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+        <div class="delete-edit">
+          <button id="delete-grow">
+            <i class="ionicons ion-android-delete delete-icon"></i>
+          </button>
+        </div>
         <h1 id="grow-name"><i class="fa fa-caret-left back-arrow"></i></h1>
       </header>
       <div id="grow-timeline">
@@ -61,21 +81,39 @@
       </div>
     </section>
 
+    <!--delete grow confirmation page-->
+    <section id="delete-grow-page" class="delete-confirm page hidden" role="region">
+      <form id="delete-grow-conf" action="#">
+        <h2>are you sure you want to delete this grow?</h2>
+        <div>
+          <button id="delete-grow-confirm" type="button"><h3>yes</h3></button>
+          <button id="delete-grow-deny" type="button"><h3>no</h3></button>
+        </div>
+      </form>
+    </section>
+
     <!---form for adding a new grow-->
     <section id="add-grow-page" class="page hidden" role="region">
       <header role="banner">
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
         <h1>Start a New Grow</h1>
       </header>
-      <form id="grow-submit" action="/" name="growSubmit" method="post">
+      <form id="grow-submit" name="growSubmit" action="#">
       <div>
         <label for="new-grow-name">Name Your Grow </label>
         <input type="string" id="new-grow-name" name="name" form="grow-submit">
       </div>
       <div>
-        <label for="germination-date">Date of Germination </label>
+        <label for="germination-date">Date Seed Was Planted </label>
         <input type="string" id="germination-date" name="startDate" placeholder="YYYY-DD-MM" form="grow-submit">
       </div>
+      <fieldset id="grow-type">
+        <legend>Grow Type</legend>
+        <input type="radio" name="grow-type" id="coco-grow" class="grow-type" value="Coco Coir" form="grow-submit"/>
+        <label class="grow-type" for="coco-grow">Coco Coir</label><br/>
+        <input type="radio" name="grow-type" id="hydro-grow" class="grow-type" value="Hydroponics" form="grow-submit"/>
+        <label class="grow-type" for="hydro-grow">Hydroponics</label><br/>
+      </fieldset>
       <fieldset id="strain-group">
         <legend>Strain Group</legend>
         <input type="radio" name="strain" id="indica-strain" class="strain" value="indica" form="grow-submit"/>
@@ -90,11 +128,12 @@
     </section>
 
     <!---form for adding a new grow-log entry-->
+    <!-- TODO: add an option for user to end the grow -->
     <section id="add-entry-page" class="page hidden" role="region">
       <header role="banner">
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
         <h1>Entry <span class="entry-number"></span>
-        <img class="circle-icon" src="circle.svg" alt="decorative circle"/>
+        <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
         Week <span class="week-number"></span></h1>
       </header>
 
@@ -102,7 +141,7 @@
 
         <div id="water-instruct" class="hidden">
           <div class="feed-water-img">
-            <img src="water.png"/>
+            <img src="images/water.png"/>
           </div>
           <div class="water-feed-text">
             <h3>Water your grow with plain water today. <br/> Give enough water for 10-20% runoff, <br/> and remember to remove the runoff.</h3>
@@ -112,7 +151,7 @@
         <div id="feed-instruct" class="hidden">
           <div id="feed-flex">
             <div class="feed-water-img">
-              <img src="feed.png"/>
+              <img src="images/feed.png"/>
             </div>
             <div class="water-feed-text">
               <h3>Feed your grow with the following nutrients today:</h3>
@@ -126,7 +165,7 @@
           </div>
           <div id="feed-note">
             <div>
-              <img class="circle-icon" src="circle.svg" alt="decorative circle"/><h4>Remember</h4><img class="circle-icon" src="circle.svg" alt="decorative circle"/>
+              <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/><h4>Remember</h4><img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
             </div>
             <ul>
               <li>Never mix nutrients directly with each other</li>
@@ -138,7 +177,7 @@
         </div>
       </div>
 
-      <form id="entry-submit" name="entrySubmit" action="#" method="post">
+      <form id="entry-submit" name="entrySubmit" action="#">
         <textarea row="8" cols="50" id="entry-notes" placeholder="notes"></textarea>
         <label for="phase-switch">Switching to Flowering Stage? </label>
         <input id="phase-switch" type="checkbox" value="flowering" form="entry-submit"/>
@@ -146,6 +185,7 @@
       </form>
     </section>
 
+<!-- TODO: add name of grow as header at top -->
     <!---page for viewing a past entry-->
     <section id="view-entry-page" class="page hidden" role="region">
       <header>
@@ -156,11 +196,11 @@
           </button>
         </div>
         <h1>Entry <span class="entry-number"></span>
-        <img class="circle-icon" src="circle.svg" alt="decorative circle"/>
+        <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
         Week <span class="week-number"></span></h1>
         <div id="entry-subheading">
-          <img id="flowering-phase" class="hidden" src="flowering.png"/>
-          <img id="vegetative-phase" class="hidden" src="vegetative.png"/>
+          <img id="flowering-phase" class="hidden" src="images/flowering.png"/>
+          <img id="vegetative-phase" class="hidden" src="images/vegetative.png"/>
           <h2 id="past-entry-date"></h2>
         </div>
       </header>
@@ -180,8 +220,8 @@
           <p id="notes"></p>
         </div>
       </div>
-      <!--form is hidden unless user selects the edit entry icon -->
-      <form id="entry-edit" class="hidden" name="entryEdit" action="/" method="post">
+      <!--form is hidden unless user selects the edit-entry icon -->
+      <form id="entry-edit" class="hidden" name="entryEdit" action="#">
         <div id="notes-box-edit">
           <button id="exit-edit">
             <i class="fa fa-times"></i>
@@ -196,23 +236,17 @@
     </section>
 
 <!--delete entry confirmation page-->
-<section id="delete-entry-page" class="page hidden" role="region">
-  <form action="/" id="delete-confirmation" method="post">
+<section id="delete-entry-page" class="delete-confirm page hidden" role="region">
+  <form id="delete-entry-conf" action="#">
     <h2>are you sure you want to delete this entry?</h2>
     <div>
-      <button id="delete-confirm" type="button"><h3>yes</h3></button>
-      <button id="delete-deny" type="button"><h3>no</h3></button>
+      <button id="delete-entry-confirm" type="button"><h3>yes</h3></button>
+      <button id="delete-entry-deny" type="button"><h3>no</h3></button>
     </div>
-
-    <!--does this work? deleteID value would be dynamically generated by user -->
-    <input type="hidden" id="delete-method" name="_method" value="delete"/>
-    <input type="hidden" id="delete-id" name="deleteId">
   </form>
 </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="mock-grow-entries.js"></script>
-    <script src="nutrient-schedule.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
     <script src="app.js"></script>
     <script src="moment.js"></script>
   </body>

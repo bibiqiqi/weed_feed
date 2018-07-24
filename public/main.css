@@ -1,5 +1,5 @@
 html {
-  font-size: 62.5% /* = 10px */
+  font-size: 62.5%; /* = 10px */
   box-sizing: border-box;
 }
 
@@ -50,14 +50,15 @@ a {
 }
 
 form {
-  width: 50%;
+  width: 55%;
   margin: 5% auto;
   line-height: 2rem;
 }
 
-label {
+label,
+legend {
   font-family: 'Jura', sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 2rem;
 }
 
@@ -70,7 +71,7 @@ header {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .flex {
@@ -85,8 +86,8 @@ header {
 .back-arrow {
   float: left;
   font-size: 3rem;
+  cursor: pointer;
 }
-
 
 .circle-icon {
   width: 3rem;
@@ -98,13 +99,98 @@ header {
   font-size: 2rem;
 }
 
-#add-grow-page #submit-grow,
-#add-entry-page #submit-entry {
+.delete-edit {
   float: right;
-  background-color: black;
+  cursor: pointer;
+}
+
+.delete-edit button {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.delete-confirm div {
+  margin: 0 auto;
+  width: 36%;
+}
+
+.delete-confirm h2 {
+  line-height: 4rem;
+}
+
+/*cover-page */
+#cover-page #title {
+  position: relative;
+  width: 75vw;
+  height: 75vh;
+  margin: 0 auto;
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
+  border-radius: 1rem;
   color: white;
-  font-family: 'Jura', sans-serif;
-  font-weight: 300
+}
+
+#cover-page #title h2 {
+  padding: 0;
+}
+
+#cover-page a {
+  border: .5vw solid orange;
+  display: block;
+  width: 11rem;
+  margin: 0 auto;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#cover-page a:active {
+  background-color: orange;
+  border-color: orange;
+}
+
+#cover-page a h2 {
+  color: white;
+  padding: 0;
+}
+
+#cover-page #defaultCanvas0 {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  background-color: white;
+}
+
+/* add-first-entry page */
+#first-entry-page a {
+  display: block;
+  position: relative;
+  margin-left: 25vw;
+  margin-right: 25vw;
+  cursor: pointer;
+}
+
+#first-entry-page a img {
+  display: block;
+  width: 50vw;
+  margin: auto;
+}
+
+#first-entry-page a h1 {
+  color: white;
+  width: 50vw;
+  height: 100%;
+  background-color: rgba(34, 33, 33, 0.8);
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 10rem 0rem;
+  margin: auto;
+  visibility: hidden;
+}
+
+#first-entry-page a:hover #add-first-entry {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* grow-collection-page */
@@ -153,28 +239,23 @@ header {
   padding: 5% 0%;
 }
 
-/* unvisited link */
 #add-a-grow:link {
     color: black;
 }
 
-/* visited link */
 #add-a-grow:visited {
     color: black;
 }
 
-/* mouse over link */
 #add-a-grow:hover {
     color: white;
 }
 
-/* selected link */
 #add-a-grow:active {
     color: white;
 }
 
 /* grow-entries-page */
-
 #grow-entries-page #grow-timeline {
   display: flex;
   width: 100%;
@@ -219,6 +300,7 @@ header {
   padding: 1rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .timeline-entry h2 {
@@ -233,7 +315,6 @@ header {
 
 
 /* add-grow form page */
-
 #add-grow-page form div {
   margin: 1rem;
 }
@@ -245,6 +326,17 @@ header {
   font-family: 'Jura', sans-serif;
   font-weight: 300
 }
+
+#add-grow-page #submit-grow,
+#add-entry-page #submit-entry {
+  float: right;
+  background-color: black;
+  color: white;
+  font-family: 'Jura', sans-serif;
+  font-weight: 300;
+  cursor: pointer;
+}
+
 /* add-entry-page */
 #water-feed-instruct {
   width: 90%;
@@ -317,14 +409,6 @@ header {
   height: 1rem;
 }
 
-#view-entry-page .delete-edit {
-  float: right;
-}
-
-#view-entry-page #delete-entry {
-  font-size: 2rem;
-}
-
 #view-entry-page .nutrient-list {
   width: 22%;
   margin: 0 auto;
@@ -342,27 +426,18 @@ header {
   align-items: center;
 }
 
-#entry-subheading .delete-edit button {
-  font-size: 2rem;
-}
-
-#entry-subheading .delete-edit:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
 #view-entry-page #notes-box {
   border: .1rem solid black;
   width: 50%;
   margin: 1rem auto;
   padding: .5rem;
-  min-height: 2rem;
+  min-height: 3rem;
 }
 
 #view-entry-page #edit-entry {
   float: right;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 #view-entry-page form {
@@ -401,15 +476,7 @@ header {
   font-weight: 300;
 }
 
-#delete-entry-page div {
-  margin: 0 auto;
-  width: 36%;
-}
-
-#delete-entry-page h2 {
-  line-height: 4rem;
-}
-
+/* TODO: make responsive for mobile */
 /* Larger than mobile */
 @media (min-width: 400px) {}
 

@@ -26,6 +26,7 @@ function generateFakeGrow() {
 function generateFakeEntry() {
   return {
     growId: '',
+    shortId: 'sas54545',
     number: 1,
     date: '2018-06-5',
     week: 1,
@@ -219,7 +220,7 @@ describe('POST Entries endpoint', function() {
       .then(function(grow) {
         newEntry.growId = grow.id;
         return chai.request(app)
-          .post('/entries/grow-id')
+          .post('/entries/growId')
           .send(newEntry)
           .then(function(res) {
             const addedEntry = res.body.entries[res.body.entries.length-1];
