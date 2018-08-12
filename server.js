@@ -141,7 +141,6 @@ app.put('/grows/:growId', (req, res) => {
     Grow
     .findOneAndRemove({shortId : req.params.growId})
       .then(() => {
-        //console.log(`Deleted entry with id \`${req.body.id}\``);
         res.status(204).end();
       });
    });
