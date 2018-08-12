@@ -29,9 +29,9 @@ app.get('/grows', (req, res) => {
     });
 });
 
-app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
+app.get( '/nutrient-schedules', (req, res) => {
   Schedule
-    .findOne({name:req.params.nutrientSchedule})
+    .findOne()
     .then(schedule => res.json(schedule.serialize()))
     .catch(err => {
       console.error(err);
@@ -40,7 +40,7 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
 });
 
  app.post('/grows', (req, res) => {
-   const requiredFields = ['name', 'startDate', 'strain', 'growType'];
+   const requiredFields = ['name', 'startDate', 'strain'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
      if (!(field in req.body)) {
@@ -49,15 +49,13 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
        return res.status(400).send(message);
      }
    }
-   // TODO: returning a post without growType
    Grow
      .create({
        shortId: shortid.generate(),
        name: req.body.name,
        startDate: req.body.startDate,
-       endDate: '',
+       endDate: null,
        strain: req.body.strain,
-       growType: req.body.growType,
        entries: []
      })
      .then(grow => res.status(201).json(grow.serialize()))
@@ -68,7 +66,8 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
  });
 
  app.post('/entries/:growId', (req, res) => {
-   const requiredFields = ['number','date', 'week', 'phase', 'wasWatered', 'wasFed', 'nutrients', 'notes'];
+   console.log(req);
+   const requiredFields = ['number','date', 'week', 'phaseProgress', 'wasWatered', 'wasFed', 'nutrients', 'notes'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
      if (!(field in req.body)) {
@@ -77,7 +76,7 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
      }
    }
   Grow.findOneAndUpdate(
-    {shortId:req.params.growId},
+    {shortId: req.params.growId},
     {$push: {
       entries:
         {
@@ -85,7 +84,12 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
         number: req.body.number,
         date: req.body.date,
         week: req.body.week,
-        phase: req.body.phase,
+        phaseProgress: {
+            phase: req.body.phaseProgress.phase,
+            phaseStartDate: req.body.phaseProgress.phaseStartDate,
+            stage: req.body.phaseProgress.stage,
+            week: req.body.phaseProgress.week,
+        },
         wasWatered: req.body.wasWatered,
         wasFed: req.body.wasFed,
         nutrients: {
@@ -96,20 +100,27 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
          },
         notes: req.body.notes}}},
     {'new': true})
-    // function(err, grow){
-    //   if (err) {
-    //     console.log(err.message);
-    //   }
-    //   else {
-    //     console.log(`it worked! and this the added entry: ${grow.entries[grow.entries.length-1]}`);
-    //   }
-    // })
   .then(grow => res.status(201).json(grow.serialize()))
   .catch(err => {
     console.error(err);
     res.status(500).json({ error: 'Something went wrong' });
   });
-})
+});
+
+app.put('/grows/:growId', (req, res) => {
+  console.log(req.body);
+  const updated = {};
+  const updateableFields = ['endDate'];
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      updated[field] = req.body[field];
+    }
+ });
+ Grow
+   .findOneAndUpdate({shortId : req.params.growId }, { endDate : req.body.endDate }, {'new': true})
+    .then(response => res.status(204).end())
+    .catch(err => res.status(500).json({ message: 'Something went wrong' }));
+   });
 
    app.put('/entries/:growId/:entryId', (req, res) => {
      const updated = {};
@@ -122,14 +133,6 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
 
     Grow
       .findOneAndUpdate({shortId : req.params.growId, "entries.shortId" : req.params.entryId }, { "entries.$.notes" : req.body.notes }, {'new': true})
-      // function(err, product){
-      //   if (err) {
-      //     console.log('it didnt work');
-      //   }
-      //   else {
-      //     console.log(`it worked! and this is the product: ${product}`);
-      //   }
-      // })
        .then(response => res.status(204).end())
        .catch(err => res.status(500).json({ message: 'Something went wrong' }));
       });
@@ -137,34 +140,16 @@ app.get( '/nutrient-schedules/:nutrientSchedule', (req, res) => {
   app.delete('/grows/:growId', (req, res) => {
     Grow
     .findOneAndRemove({shortId : req.params.growId})
-    //.findOneAndUpdate({shortId : req.params.growId}, {$pull: {entries: {shortId: req.params.entryId }}}, { 'new': true })
-    // function(err, doc){
-    //       if(err) {
-    //         return res.status(500).json({'error' : 'error in deleting address'});
-    //       }
-    //       else {
-    //       console.log(`it worked and this is what was deleted: ${doc}`);
-    //       }
-    //      })
       .then(() => {
         //console.log(`Deleted entry with id \`${req.body.id}\``);
         res.status(204).end();
       });
    });
 
-app.delete('/entries/:grow-id/:entries-id', (req, res) => {
+app.delete('/entries/:growId/:entryId', (req, res) => {
   Grow
   .findOneAndUpdate({shortId : req.params.growId}, {$pull: {entries: {shortId: req.params.entryId }}}, { 'new': true })
-  // function(err, doc){
-  //       if(err) {
-  //         return res.status(500).json({'error' : 'error in deleting address'});
-  //       }
-  //       else {
-  //       console.log(`it worked and this is what was deleted: ${doc}`);
-  //       }
-  //      })
     .then(() => {
-      //console.log(`Deleted entry with id \`${req.body.id}\``);
       res.status(204).end();
     });
  });

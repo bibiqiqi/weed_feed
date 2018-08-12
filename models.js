@@ -1,6 +1,8 @@
 /*jshint esversion: 6*/
 'use strict';
 
+// TODO: add phase progress into data structure
+
 const mongoose = require('mongoose');
 const moment = require('moment');
 
@@ -9,7 +11,14 @@ const entrySchema = mongoose.Schema({
   number: Number,
   date: String,
   week: Number,
+  phaseProgress: {
+    phase: String,
+    phaseStartDate: String,
+    stage: String,
+    week: Number
+  },
   phase: String,
+  stage: String,
   wasWatered: Boolean,
   wasFed: Boolean,
   nutrients: {
@@ -25,17 +34,20 @@ const growSchema = mongoose.Schema({
   shortId: String,
   name: {type: String, required: true},
   startDate: {type: String, required: true},
-  endDate: String,
+  endDate: mongoose.Schema.Types.Mixed,
   strain: {type: String, required: true},
-  growType: {type: String, required: true},
   entries: [entrySchema]
 });
 
 const nutrientSchema = mongoose.Schema({
-  week: String,
   phase: String,
   stage: String,
-  nutrients: Array
+  nutrients: {
+    floraMicro: String,
+    floraGrow: String,
+    floraBloom: String,
+    caliMagic: String
+  },
 });
 
 const scheduleSchema = mongoose.Schema({
@@ -50,7 +62,13 @@ entrySchema.methods.serialize = function() {
     number: this.number,
     date: moment(this.date).format('YYYY-MM-DD'),
     week: this.week,
-    phase: this.phase,
+    phaseProgress: {
+      phase: this.phaseProgress.phase,
+      phaseStartDate: moment(this.phaseProgress.phaseStartDate).format('YYYY-MM-DD'),
+      stage: this.phaseProgress.stage,
+      week: this.phaseProgress.week
+    },
+    stage: this.stage,
     wasWatered: this.wasWatered,
     wasFed: this.wasFed,
     nutrients: {
@@ -69,26 +87,28 @@ growSchema.methods.serialize = function() {
     shortId: this.shortId,
     name: this.name,
     startDate: moment(this.startDate).format('YYYY-MM-DD'),
-    endDate: moment(this.endDate).format('YYYY-MM-DD'),
+    endDate: this.endDate,
     strain: this.strain,
-    growType: this.growType,
     entries: this.entries
   };
 };
 
 nutrientSchema.methods.serialize = function() {
   return {
-    id: this._id,
-    shortId: this.shortId,
-    week: this.week,
     phase: this.phase,
     stage: this.phase,
-    nutrients: this.nutrients
+    nutrients: {
+      floraMicro: this.nutrients.floraMicro,
+      floraGrow: this.nutrients.floraGrow,
+      floraBloom: this.nutrients.floraBloom,
+      caliMagic: this.nutrients.caliMagic,
+    }
   };
 };
 
 scheduleSchema.methods.serialize = function() {
   return {
+    id: this._id,
     name: this.name,
     schedule: this.schedule
   };

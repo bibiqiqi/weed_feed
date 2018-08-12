@@ -5,22 +5,24 @@ const appData = {
   allGrows: "",
   currentGrowIndex: "",
   currentEntryIndex: "",
+  entryDeets: {}
 };
 
 //ajax call functions
-function getNutrientInstructs(objectToAddTo) {
-  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
-  const nutrientSchedule = thisGrow.growType;
+function getNutrientInstructs(entryDeets) {
+  const stage = entryDeets.phaseProgress.stage;
   return new Promise ((resolve, reject) => {
-    console.log(`getNutrientInstructs() is making a request to this endpoint: /nutrient-schedules/${nutrientSchedule}`);
+    console.log(`getNutrientInstructs() is making a request to this endpoint: /nutrient-schedules`);
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `/nutrient-schedules/${nutrientSchedule}`);
+    xhr.open('GET', `/nutrient-schedules`);
     xhr.onload = () => {
       const parsedData = JSON.parse(xhr.response);
-      const index = objectToAddTo.week - 1;
-      const nutrientInstructs = parsedData.schedule[index].nutrients;
-      objectToAddTo.nutrients = nutrientInstructs;
-      return (xhr.status === 200 ? resolve(objectToAddTo) : reject(Error(xhr.statusText)));
+      parsedData.schedule.forEach(function(elem){
+        if (elem.stage === stage ) {
+          entryDeets.nutrients = elem.nutrients;
+        }
+      });
+      return (xhr.status === 200 ? resolve(entryDeets) : reject(Error(xhr.statusText)));
     };
     xhr.send();
   });
@@ -34,7 +36,7 @@ function getAllGrows() {
     xhr.onload = () => {
       const parsedData = JSON.parse(xhr.response);
       appData.allGrows = parsedData;
-      console.log('appData.allGrows has all the grows from the db now:', appData.allGrows);
+      console.log('getAllGrows assigned all the grows in the db to appData.allGrows:', appData.allGrows);
       return (xhr.status === 200 ? resolve(parsedData) : reject(Error(xhr.statusText)));
     };
     xhr.send();
@@ -59,16 +61,30 @@ function postGrow(grow) {
 function postEntry(entry) {
   return new Promise((resolve, reject) => {
     const growId = appData.allGrows.grows[appData.currentGrowIndex].shortId;
-    console.log('postEntry() is making a request with', entry, 'to this endpoint: /entries', growId, '/', entryId);
+    console.log('postEntry() is making a request with', entry, 'to this endpoint: /entries/', growId);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/entries/${growId}`, true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onload = () => {
-      console.log(xhr.response);
       const parsedResp = JSON.parse(xhr.response);
       return (xhr.status === 201 ? resolve(parsedResp) : reject(Error(xhr.statusText)));
     };
     xhr.send(JSON.stringify(entry));
+   });
+}
+
+function putGrow(edit) {
+  return new Promise ((resolve, reject) => {
+    const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+    const growId = thisGrow.shortId;
+    console.log('putGrow() is making a request with', edit, 'to this endpoint: /entries/', growId);
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', `/grows/${growId}`, true);
+    xhr.setRequestHeader("Content-type", "application/json", "charset=utf-8");
+    xhr.onload = () => {
+      return (xhr.status === 204 ? resolve(console.log("putGrow edited your content")) : reject(Error(xhr.statusText)));
+    };
+    xhr.send(JSON.stringify(edit));
    });
 }
 
@@ -82,7 +98,7 @@ function putEntry(edit) {
     xhr.open('PUT', `/entries/${growId}/${entryId}`, true);
     xhr.setRequestHeader("Content-type", "application/json", "charset=utf-8");
     xhr.onload = () => {
-      return (xhr.status === 204 ? resolve(console.log("your content wad edited")) : reject(Error(xhr.statusText)));
+      return (xhr.status === 204 ? resolve(console.log("putEntry edited your content")) : reject(Error(xhr.statusText)));
     };
     xhr.send(JSON.stringify(edit));
    });
@@ -95,7 +111,7 @@ function deleteGrow() {
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", `grows/${growId}/`, true);
     xhr.onload = () => {
-      return (xhr.status === 204 ? resolve(console.log(`${growName} was deleted`)) : reject(Error(xhr.statusText)));
+      return (xhr.status === 204 ? resolve(console.log(`deleteGrow() deleted ${growName}`)) : reject(Error(xhr.statusText)));
     };
     xhr.send(null);
   });
@@ -109,7 +125,7 @@ function deleteEntry() {
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", `entries/${growId}/${entryId}`, true);
     xhr.onload = () => {
-      return (xhr.status === 204 ? resolve(console.log(`Entry ${entryNumber} of ${growName} was deleted`)) : reject(Error(xhr.statusText)));
+      return (xhr.status === 204 ? resolve(console.log(`deleteEntry deleted ${entryNumber} of ${growName}`)) : reject(Error(xhr.statusText)));
     };
     xhr.send(null);
   });
@@ -146,38 +162,83 @@ function removeClass(elements, myClass) {
 function turnPage(previousPage, newPage, newPageName = 0) {
   addClass(document.getElementById(previousPage),'hidden');
   removeClass(document.getElementById(newPage),'hidden');
-  console.log('turning page from', previousPage, 'to', newPage);
+  console.log('turnPage() is turning page from', previousPage, 'to', newPage);
   if (newPageName !== 0) {
     appData.page = newPageName;
-    console.log('appData.page = ', appData.page);
+    console.log('turnPage() set appData.page equal to ', appData.page);
     main();
   }
 }
 
 ///goBack function (event listener that's on most pages)
-function goBack(currentPageId, returningPageId, newPageName, selector) {
+function goBack(currentPageId, returningPageId, selector, newPageName = 0) {
   const backArrow = document.querySelectorAll(selector);
   backArrow[0].onclick =  function () {
     turnPage(currentPageId, returningPageId, newPageName);
   };
 }
 
-function goBackFromEntry() {
-  turnPage("entry-edit", "notes-box");
-  addClass(document.getElementById("vegetative-phase"),'hidden');
-  addClass(document.getElementById("flowering-phase"),'hidden');
-  addClass(document.getElementById("watered"),'hidden');
-  addClass(document.getElementById("fed"),'hidden');
-  addClass(document.querySelectorAll("#view-entry-page .nutrient-list"),'hidden');
-  goBack("view-entry-page", "grow-entries-page", "timeline", "#view-entry-page button");
+function goBackFromEntry(resolveObj) {
+  if (resolveObj.number === 1 ) {
+    const backArrow = document.querySelector('#add-entry-page .back-arrow');
+    backArrow.onclick = function () {
+      hideEntryInstructs();
+      hidePhaseIcon("add-entry-page", "grow-collection-page", "grows");
+      };
+  } else if (appData.page === "get-first-entry-stage") {
+    const backArrow = document.querySelector('#add-entry-page .back-arrow');
+    backArrow.onclick = function () {
+      addClass(document.getElementById("grow-progression"), 'hidden');
+      addClass(document.getElementById("to-seedling"), 'hidden');
+      hidePhaseIcon("add-entry-page", "grow-collection-page", "grows");
+      };
+  } else if (appData.page === "get-entry-stage") {
+    const backArrow = document.querySelector('#add-entry-page .back-arrow');
+    backArrow.onclick = function () {
+      addClass(document.getElementById(resolveObj.parentId), 'hidden');
+      hidePhaseIcon("add-entry-page", "grow-entries-page", "timeline");
+      };
+    } else if (appData.page === "add-entry") {
+      const backArrow = document.querySelector('#add-entry-page .back-arrow');
+      backArrow.onclick = function () {
+        hideEntryInstructs();
+        hidePhaseIcon("add-entry-page", "grow-entries-page", "timeline");
+      };
+    } else if (appData.page === "view-entry") {
+      const backArrow = document.querySelector('#view-entry-page .back-arrow');
+      backArrow.onclick = function () {
+        addClass(document.getElementById("watered"),'hidden');
+        addClass(document.getElementById("fed"),'hidden');
+        addClass(document.querySelector('#view-entry-page .nutrient-list'),'hidden');
+        removeClass(document.getElementById("delete-entry"), 'hidden');
+        removeClass(document.getElementById("edit-entry"), 'hidden');
+        turnPage("entry-edit", "notes-box");
+        hidePhaseIcon("view-entry-page", "grow-entries-page", "timeline");
+      };
+    }
+  }
+
+function hideEntryInstructs() {
+  addClass(document.getElementById("entry-submission"),'hidden');
+  addClass(document.getElementById("water-feed-instruct"),'hidden');
+  addClass(document.getElementById("water-instruct"),'hidden');
+  addClass(document.getElementById("feed-instruct"),'hidden');
 }
 
+function hidePhaseIcon(currentPageId, newPageId, newPageName) {
+  addClass(document.querySelector(`#${currentPageId} .vegetative-phase`),'hidden');
+  addClass(document.querySelector(`#${currentPageId} .flowering-phase`),'hidden');
+  addClass(document.querySelector(`#${currentPageId} .seedling-stage`),'hidden');
+  turnPage(currentPageId, newPageId, newPageName);
+}
 ///drawing cover-page canvas wallpaper
-// TODO: should i cite the website I got this from?
-//https://neworgans.net/
 
-  let mobile;
-  const loadedImageArray = [];
+let loadedImageArray = [];
+let weeds = [];
+let weedImg;
+// = getRandomImage();
+let c;
+//, mobile;
 
 function makeImagePathArray() {
   const imageArray = [];
@@ -189,12 +250,6 @@ function makeImagePathArray() {
   return imageArray;
 }
 
-function isMobile() {
-  var check = false;
-  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
-  return check;
-}
-
 function preload() {
   const imagePathArray = makeImagePathArray();
   imagePathArray.forEach(function(e){
@@ -203,51 +258,30 @@ function preload() {
 }
 
 function setup() {
-  const c = createCanvas(windowWidth, windowHeight);
+  c = createCanvas(windowWidth, windowHeight);
   c.parent('cover-page');
-  mobile = isMobile();
   imageMode(CENTER);
 }
 
 function getRandomImage() {
   return new Promise ((resolve, reject) => {
     const min = Math.ceil(0);
-    console.log(min);
     const max = Math.floor(loadedImageArray.length-1);
-    console.log(max);
     const num = Math.floor(Math.random() * (max - min + 1));
     const img = loadedImageArray[num];
+    weedImg = img;
     resolve(img);
   });
 }
 
 function draw() {
-  if (mobile) {
-    drawZoomyWeeds();
-  } else {
-    getRandomImage().then(function(img) {
-      console.log('getRandomImage() is passing', img, 'to drawWeed');
-      return drawWeed(img);
-    });
-  }
+  getRandomImage().then(function(img) {
+   //console.log('getRandomImage() is passing', img, 'to drawWeed');
+   return drawWeed(img);
+   });
 }
 
-function drawZoomyWeeds() {
-  let weeds = [];
-  weeds = weeds.sort(function(a, b) {
-    return b.w - a.w;
-  });
-
-  for (var i = 0; i < weeds.length; i++) {
-    weeds[i].draw();
-  }
-
-  if (weeds.length < 200 && frameCount % 10 == 0) {
-    weeds.push(new weed());
-  }
-}
-
-function drawWeed(weedImg) {
+function drawWeed() {
     var w = random(10, 200);
     var h = w / weedImg.width * weedImg.height;
     var r = random(-0.5, 0.5);
@@ -302,19 +336,32 @@ weed.prototype.draw = function() {
 
 //render html functions
 function renderGrowHtml(item, index) {
-  const imageHtml = `
-    <a href="#" id="grow-${index}" class="grow-links" role="button">
-      <h3>${item.name}</h3>
-      <h4>Started:<br>${item.startDate}</h4>
+let imageHtml;
+  if (item.endDate === null) {
+    imageHtml = `
+      <a href="#" id="grow-${index}" class="grow-links" role="button">
+        <h2>${item.name}</h2>
+        <br><br>
+        <h3>Started:<br>${item.startDate}</h3>
+      </a>
+    `;
+  } else {
+    imageHtml = `
+    <a href="#" id="grow-${index}" class="grow-links finished-grow" role="button">
+      <h2>${item.name}</h2>
+      <br><br>
+      <h3>Started:<br>${item.startDate}</h3>
+      <h3>Ended:<br>${item.endDate}</h3>
     </a>
   `;
+}
     return imageHtml;
 }
 
 function renderAddGrow() {
   const addGrowHtml = `
   <a href="#" class="grid-images hidden" id="add-a-grow">
-    <h3>+ Add<br>a Grow</h3>
+    <h2>+ Add<br>a Grow</h2>
   </a>
   `;
     return addGrowHtml;
@@ -322,50 +369,30 @@ function renderAddGrow() {
 
 function renderAddEntry(side, topPosition) {
   const addEntryHtml= `
-  <div class="timeline-entry ${side}" id="add-entry" style="top:${topPosition}px">
-    <h2>Add An Entry</h2>
+  <div class="timeline-entry ${side}" id="add-entry" style="top:${topPosition}vw">
+    <h4>Add An Entry</h4>
   </div>
-  `
+  `;
   return addEntryHtml;
 }
 
-function renderTimelineEntry(index, side, topPosition) {
+function renderLeftTimelineEntry(index, topPosition, imageSrc, style = "transform: none") {
   const theseEntries = appData.allGrows.grows[appData.currentGrowIndex].entries;
-   if (theseEntries[index].phase === "flowering" && side === "left") {
-    const entryHtml= `
-    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
-      <h2>${theseEntries[index].date}</h2>
-      <img src="images/flowering.png"/>
-    </div>
-    `;
-    return entryHtml;
-  } else if (theseEntries[index].phase === "vegetative" && side === "left") {
-    const entryHtml= `
-    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
-      <h2>${theseEntries[index].date}</h2>
-      <img src="images/vegetative.png" style="transform:scaleX(-1);
-          filter: FlipH;"/>
-    </div>
-    `;
-    return entryHtml;
-  } else if (theseEntries[index].phase === "flowering" && side === "right") {
-    const entryHtml= `
-    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
-      <img src="images/flowering.png" style="transform:scaleX(-1);
-          filter: FlipH;"/>
-      <h2>${theseEntries[index].date}</h2>
-    </div>
-    `;
-    return entryHtml;
-  } else if (theseEntries[index].phase === "vegetative" && side === "right") {
-    const entryHtml= `
-    <div class="timeline-entry past-entry ${side}" id="entry-${index}" style="top:${topPosition}px">
-      <img src="images/vegetative.png"/>
-      <h2>${theseEntries[index].date}</h2>
-    </div>
-    `;
-    return entryHtml;
-  }
+  return `
+  <div class="timeline-entry past-entry left" id="entry-${index}" style="top:${topPosition}vw">
+    <h4>${moment(theseEntries[index].date).format('YYYY-MM-DD')}</h4>
+    <img src="${imageSrc}" style=${style}/>
+  </div>
+  `;
+}
+
+function renderRightTimelineEntry(index, topPosition, imageSrc, style = "transform: none") {
+  const theseEntries = appData.allGrows.grows[appData.currentGrowIndex].entries;
+  return `
+    <div class="timeline-entry past-entry right" id="entry-${index}" style="top:${topPosition}vw">
+      <img src="${imageSrc}" style="${style}"/>
+      <h4>${moment(theseEntries[index].date).format('YYYY-MM-DD')}</h4>
+    </div>`;
 }
 
 function renderFullTimeline() {
@@ -373,37 +400,44 @@ function renderFullTimeline() {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
     const theseEntries = thisGrow.entries;
     const firstEntryDate = moment(theseEntries[0].date);
+    let timelineDays;
     const todaysDate = moment();
-    const timeLineDays = todaysDate.diff(firstEntryDate, 'days');
-    const timelineHeight = timeLineDays * 20; //20px per day
-    document.getElementById('timeline-line').setAttribute("style",`height:${timelineHeight}px`);
+    if (todaysDate.diff(firstEntryDate, 'days') < 1) {
+      timelineDays = 1;
+    }
+    else {
+      timelineDays = todaysDate.diff(firstEntryDate, 'days');
+    }
+    const timelineHeight = (timelineDays + 4) * 2;
+    document.getElementById('timeline-line').setAttribute("style",`height:${timelineHeight}vw`);
     let leftSideHtml = '';
     let rightSideHtml = '';
     let timelineMoment = firstEntryDate;
-    let x = 0;
-    let i;
-      for (i = 0; i < timeLineDays; i++){
+    let x = 0; //x tracks the entries. i tracks the timeline days
+      for (i = 0; i <= timelineDays; i++){
         if ( x < theseEntries.length) {
           if (timelineMoment.isSame(theseEntries[x].date, 'day')){
-            if (x % 2 == 0) {
-              leftSideHtml += renderTimelineEntry(x, "left", i*20);
-            } else if (x % 2 != 0) {
-              rightSideHtml += renderTimelineEntry(x, "right", i*20);
+            if (x % 2 === 0) {
+              leftSideHtml += calculateTimeLineEntry(x, "left", i * 2);
+            } else if (x % 2 !== 0) {
+              rightSideHtml += calculateTimeLineEntry(x, "right", i * 2);
             }
             x++;
           }
-        timelineMoment = timelineMoment.add(1, 'd');
+        timelineMoment = timelineMoment.add(1, 'day');
       }
     }
-    if (whichSide(theseEntries.length) == "left") {
-      leftSideHtml += renderAddEntry("left", timelineHeight);
-    } else if (whichSide(theseEntries.length) == "right") {
-      rightSideHtml += renderAddEntry("right", timelineHeight);
+    if (thisGrow.endDate === null) {
+      if (whichSide(theseEntries.length) === "left") {
+        leftSideHtml += renderAddEntry("left", timelineHeight);
+      } else if (whichSide(theseEntries.length) === "right") {
+        rightSideHtml += renderAddEntry("right", timelineHeight);
+      }
     }
     const timelineHtml = {
       leftSide: leftSideHtml,
       rightSide: rightSideHtml
-    }
+    };
     resolve(timelineHtml);
     reject("didnt render the timeline");
   });
@@ -411,69 +445,73 @@ function renderFullTimeline() {
 
 //display functions
 function displayGrowGrid(data) {
-  return new Promise ((resolve, reject) => {
     const imageGrid = data.grows.map((item, index) => renderGrowHtml(item, index)) + renderAddGrow();
     document.getElementById("grow-grid").innerHTML = imageGrid;
     removeClass(document.getElementById('add-a-grow'),'hidden');
-    resolve(console.log('displayed grow grid'));
-  });
 }
 
 function displayGrowTimeline(timelineHtml) {
   return new Promise ((resolve, reject) => {
-    document.getElementById("grow-name").innerHTML = appData.allGrows.grows[appData.currentGrowIndex].name;
+    document.querySelectorAll("#grow-entries-page .grow-name")[0].innerHTML = appData.allGrows.grows[appData.currentGrowIndex].name;
     document.getElementById("left-side").innerHTML = timelineHtml.leftSide;
     document.getElementById("right-side").innerHTML = timelineHtml.rightSide;
-    resolve(console.log("displayed grow timeline"));
+    resolve(console.log("displayGrowTimeline() successfully ran"));
   });
 }
+
 function displayEntryInstructs(entryInstructs) {
   return new Promise ((resolve, reject) => {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
     const theseEntries = thisGrow.entries;
-    document.querySelectorAll("#add-entry-page .week-number")[0].innerHTML = entryInstructs.week;
-    document.querySelectorAll("#add-entry-page .entry-number")[0].innerHTML = entryInstructs.number;
+    removeClass(document.getElementById("entry-submission"),'hidden');
+    removeClass(document.getElementById("water-feed-instruct"),'hidden');
     if (entryInstructs.wasFed) {
       removeClass(document.getElementById("feed-instruct"),'hidden');
-      // TODO: convert my document.querySelectorAlls.....innerHTMLs to a function
-      document.querySelectorAll("#add-entry-page .flora-micro")[0].innerHTML = entryInstructs.nutrients.floraMicro;
-      document.querySelectorAll("#add-entry-page .flora-grow")[0].innerHTML = entryInstructs.nutrients.floraGrow;
-      document.querySelectorAll("#add-entry-page .flora-bloom")[0].innerHTML = entryInstructs.nutrients.floraBloom;
-      document.querySelectorAll("#add-entry-page .cali-magic")[0].innerHTML = entryInstructs.nutrients.caliMagic;
+      document.querySelector("#add-entry-page .flora-micro").innerHTML = entryInstructs.nutrients.floraMicro;
+      document.querySelector("#add-entry-page .flora-grow").innerHTML = entryInstructs.nutrients.floraGrow;
+      document.querySelector("#add-entry-page .flora-bloom").innerHTML = entryInstructs.nutrients.floraBloom;
+      document.querySelector("#add-entry-page .cali-magic").innerHTML = entryInstructs.nutrients.caliMagic;
     } else {
       removeClass(document.getElementById("water-instruct"),'hidden');
-      addClass(document.getElementById("water-instruct"),'flex');
-    }
-    const lastEntry = theseEntries[theseEntries.length - 1];
-    if (entryInstructs.week > 2 && lastEntry.phase === "vegetative") {
-      removeClass(document.getElementById("phase-switch"),'hidden');
     }
     resolve(entryInstructs);
     reject("didn't display entry instructs");
   });
 }
 
+function displayEntryHeader(page, entryDeets) {
+  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+  let entry;
+  if (page === "#view-entry-page") {
+    entry = thisGrow.entries[appData.currentEntryIndex];
+  }
+  else {
+    entry = entryDeets;
+  }
+  document.querySelectorAll(`${page} .grow-name`)[0].innerHTML = thisGrow.name;
+  document.querySelectorAll(`${page} .week-number`)[0].innerHTML = entry.week;
+  document.querySelectorAll(`${page} .entry-number`)[0].innerHTML = entry.number;
+  document.querySelectorAll(`${page} .entry-date`)[0].innerHTML = moment(entry.date).format('YYYY-MM-DD');
+  if (entry.phaseProgress.stage === "seedling"){
+    removeClass(document.querySelector(`${page} .seedling-stage`),'hidden');
+  } else if (entry.phaseProgress.stage !== "seedling" && entry.phaseProgress.phase === "vegetative"){
+    removeClass(document.querySelector(`${page} .vegetative-phase`),'hidden');
+  } else if (entry.phaseProgress.phase === "flowering") {
+    removeClass(document.querySelector(`${page} .flowering-phase`),'hidden');
+  }
+}
+
 function displayEntry() {
-  return new Promise ((resolve, reject) => {
-    const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
-    const thisEntry = thisGrow.entries[appData.currentEntryIndex];
-    const thisEntryDate = moment(thisEntry.date);
-    document.querySelectorAll("#view-entry-page .week-number")[0].innerHTML = thisEntry.week;
-    const entryNumber = appData.currentEntryIndex + 1;
-    document.querySelectorAll("#view-entry-page .entry-number")[0].innerHTML = entryNumber;
-    document.getElementById('past-entry-date').innerHTML = thisEntryDate.format("M.D.YY");
-    if (thisEntry.phase === "vegetative"){
-      removeClass(document.getElementById("vegetative-phase"),'hidden');
-    }
-    else if (thisEntry.phase === "flowering") {
-      removeClass(document.getElementById("flowering-phase"),'hidden');
-    }
+  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+  const thisEntry = thisGrow.entries[appData.currentEntryIndex];
+  console.log('displayEntry() is passing "#view-entry-page" to displayEntryHeader');
+  displayEntryHeader('#view-entry-page');
     if (thisEntry.wasWatered === true) {
       removeClass(document.getElementById("watered"),'hidden');
     }
     else {
       removeClass(document.getElementById("fed"),'hidden');
-      removeClass(document.querySelectorAll("#view-entry-page .nutrient-list"),'hidden');
+      removeClass(document.querySelector("#view-entry-page .nutrient-list"),'hidden');
       document.querySelectorAll("#view-entry-page .flora-micro")[0].innerHTML = thisEntry.nutrients.floraMicro;
       document.querySelectorAll("#view-entry-page .flora-grow")[0].innerHTML = thisEntry.nutrients.floraGrow;
       document.querySelectorAll("#view-entry-page .flora-bloom")[0].innerHTML = thisEntry.nutrients.floraBloom;
@@ -487,112 +525,313 @@ function displayEntry() {
     );
     const entryNotes = document.getElementById("notes");
     entryNotes.innerHTML = thisEntry.notes;
-    resolve(thisEntry);
-    reject("didn't display entry");
+}
+
+
+function displayGrowProgressQuestion(resolveObj) {
+  return new Promise ((resolve, reject) => {
+    console.log('displayGrowProgressQuestion()');
+    removeClass(document.getElementById("grow-progression"),'hidden');
+    removeClass(document.getElementById(resolveObj.parentId),'hidden');
+    resolve(resolveObj);
   });
 }
 
-//form validation functions
+function displayEntryInstructsHeader(resolveObj) {
+  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+  displayEntryHeader('#add-entry-page', resolveObj.entryDeets);
+  document.querySelectorAll(`#${resolveObj.parentId} .grow-name`)[0].innerHTML = thisGrow.name;
+  console.log('displayEntryInstructsHeader() is passing', resolveObj, 'to');
+  onProgressConfirm(resolveObj); //if user clicks, onProgressConfirm returns an alterned entryDeets
+  onProgressDeny(resolveObj);
+}
+
+
+//functions to receive and validate user input
+
+function onProgressDeny(resolveObj) {
+    const userDeny = document.querySelector(`#${resolveObj.parentId} .progress-deny`);
+    userDeny.onclick = function() {
+      console.log('onProgressDeny()');
+      addClass(document.getElementById("grow-progression"), 'hidden');
+      addClass(document.getElementById(resolveObj.parentId), 'hidden');
+      appData.entryDeets = resolveObj.entryDeets;
+      console.log('onProgressDeny() set appData.entryDeets equal to', appData.page);
+      appData.page = "add-entry";
+      console.log('onProgressDeny() set appData.page equal to', appData.page, 'now');
+      main();
+    };
+}
+
+function onProgressConfirm(resolveObj) {
+  const phaseProgress = resolveObj.entryDeets.phaseProgress;
+  const userConfirms = document.querySelector(`#${resolveObj.parentId} .progress-confirm`);
+  userConfirms.onclick = function () {
+    console.log('onProgressConfirm()');
+    if (resolveObj.parentId === "to-seedling") {
+      resolveObj.entryDeets.phaseProgress.stage = "seedling";
+    } else if (resolveObj.parentId === "to-vegetative") {
+      phaseProgress.stage = "vegetative";
+    } else if (resolveObj.parentId === "to-flowering") {
+      phaseProgress.phase = "flowering";
+      phaseProgress.stage = "early bloom";
+      phaseProgress.week = 1;
+    } else if (resolveObj.parentId === "to-peak-bloom") {
+      phaseProgress.stage = "peak bloom";
+    } else if (resolveObj.parentId === "to-late-bloom") {
+      phaseProgress.stage = "late bloom";
+    } else if (resolveObj.parentId === "to-flush") {
+      phaseProgress.stage = "flush";
+    } else if (resolveObj.parentId === "to-end") {
+      phaseProgress.stage = "end";
+    }
+    addClass(document.getElementById("grow-progression"), 'hidden');
+    addClass(document.getElementById(resolveObj.parentId), 'hidden');
+    if (phaseProgress.stage === "end") {
+      const edit = {endDate: moment().format('YYYY-MM-DD')};
+      console.log('User ended the grow and onProgressConfirm() is passing', edit, 'to putGrow');
+      putGrow(edit).then(function(resolve){
+        appData.allGrows = '';
+        console.log('onProgressConfirm set appData.allGrows equal to an empty string now');
+        turnPage("add-entry-page", "grow-collection-page", "grows");
+      });
+    }
+    else {
+      appData.entryDeets = resolveObj.entryDeets;
+      console.log('onProgressConfirm() set appData.entryDeets equal to', appData.entryDeets);
+      appData.page = "add-entry";
+      console.log('onProgressConfirm() set appData.page equal to', appData.page);
+      main();
+    }
+  };
+}
+
 function validateGrowSubmit() {
   return new Promise ((resolve, reject) => {
+    debugger;
     const growSubmit = {};
     const nameField = document.getElementById("new-grow-name").value;
-    if (nameField == "") {
+    if (nameField === "") {
       alert("You have to give your grow a name.");
-    }
-    else {
+    } else {
       growSubmit.name = nameField;
     }
-    //growType validation
-    let growTypeField;
-    //getting the value of the radio element, if checked
-    const growTypeRadios = document.getElementsByName("grow-type");
-    growTypeRadios.forEach(function(element){
-      if (element.checked) {
-        growTypeField = element.value;
-      }
-    });
-    //varifying whether a value was checked
-    if (growTypeField != null) {
-      growSubmit.growType = growTypeField;
-    }
-    else {
-      alert("You have to select a strain type.");
-    }
-    //strain validation
     let strainField;
-    //getting the value of the radio element, if checked
     const strainTypeRadios = document.getElementsByName("strain");
     strainTypeRadios.forEach(function(element){
       if (element.checked) {
         strainField = element.value;
       }
     });
-    //varifying whether a value was checked
-    if (strainField != null) {
+    if (strainField !== undefined) {
       growSubmit.strain = strainField;
-    }
-    else {
+    } else {
       alert("You have to select a strain type.");
     }
-    //date validation
     let dateField = document.getElementById("germination-date").value;
-    if (dateField == "") {
+    if (dateField === "") {
       growSubmit.startDate = moment().format('YYYY-MM-DD');
-    }
-    else if (moment(dateField).isValid()) {
+    } else if (moment(dateField).isValid()) {
       growSubmit.startDate = moment(dateField).format('YYYY-MM-DD');
-    }
-    else {
+    } else {
       alert("Not a valid date.");
     }
-    if (growSubmit.name !== "" && growSubmit.strain !== "" && growSubmit.growType !== "" && growSubmit.startDate !== "") {
+    if (growSubmit.name !== undefined && growSubmit.strain !== undefined && growSubmit.startDate !== undefined) {
       resolve(growSubmit);
     } else {
-      reject("grow submission was not validated. calling submitGrow() again");
+      reject(console.log("grow submission was not validated. calling submitGrow() again"));
       onSubmitGrowClick();
     }
   });
 }
 
+function onSubmitGrowClick() {
+  const submitGrow = document.getElementById("submit-grow");
+  submitGrow.onclick = function () {
+    event.preventDefault();
+    validateGrowSubmit().then(function(resolve){
+      return postGrow(resolve);
+    }).then(function(resolve){
+      appData.allGrows = '';
+      console.log('onSubmitGrowClick() set appData.allGrows to an empty string');
+      return getAllGrows(resolve);
+    }).then(function(resolve){
+      console.log('onSubmitGrowClick() called getAllGrows():', resolve);
+      appData.currentGrowIndex = resolve.grows.length-1;
+      console.log('onSubmitGrowClick() set appData.currentGrowIndex to', appData.currentGrowIndex);
+      turnPage("add-grow-page", "first-entry-page", "add-first-entry");
+    });
+  };
+}
+
+function onSubmitEntryClick(entrySubmit) {
+  const submitEntry = document.getElementById("submit-entry");
+  submitEntry.onclick = function () {
+    event.preventDefault();
+    entrySubmit.notes = document.getElementById("entry-notes").value;
+    console.log('onSubmitEntryClick is passing:', entrySubmit, 'to postEntry()');
+    postEntry(entrySubmit).then(function(){
+      appData.allGrows = '';
+      console.log('onSubmitEntryClick() set appData.allGrows to an empty string');
+      appData.currentEntryIndex = '';
+      console.log('onSubmitEntryClick() set appData.currentEntryIndex to an empty string');
+      appData.entryDeets = '';
+      console.log('onSubmitEntryClick() set appData.entryDeets to an empty string now');
+      return getAllGrows();
+    }).then(function(resolve){
+      console.log('onSubmitEntryClick called getAllGrows:', resolve);
+      hideEntryInstructs();
+      hidePhaseIcon("add-entry-page", "grow-entries-page", "timeline");
+    });
+  };
+}
+
+function onEditEntryClick() {
+  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+  const thisEntry = thisGrow.entries[appData.currentEntryIndex];
+  const editEntry = document.getElementById("edit-entry");
+  editEntry.onclick = function () {
+    console.log("edit-entry button was clicked");
+    turnPage("notes-box", "entry-edit");
+    onSubmitEditClick();
+    const exitEdit = document.getElementById("exit-edit");
+    exitEdit.onclick = function () {
+      turnPage("entry-edit", "notes-box", "view-entry");
+    };
+  };
+}
+
+function onSubmitEditClick() {
+  const submitEdit = document.getElementById("submit-edit");
+  submitEdit.onclick = function () {
+    event.preventDefault();
+    const edit = {};
+    edit.notes = document.getElementById("edit-notes").value;
+    console.log('onSubmitEditClick() is passing:', edit, 'to putEntry()');
+    putEntry(edit).then(function(){
+        appData.allGrows = '';
+        console.log('onSubmitEditClick() is setting appData.allGrows to an empty string now');
+        return getAllGrows();
+    }).then(function(resolve){
+      console.log('onSubmitEditClick() called getAllGrows():', resolve);
+      turnPage("view-entry-page", "grow-entries-page", "timeline");
+    });
+  };
+}
+
+
 //calculation functions
+
+function calculateNeededUserInput() {
+  return new Promise((resolve, reject) => {
+    const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+    const lastEntry = thisGrow.entries[thisGrow.entries.length-1];
+    const lastPhaseProgress = lastEntry.phaseProgress;
+    const lastPhase = lastPhaseProgress.phase;
+    const lastStage = lastPhaseProgress.stage;
+    const resolveObj = {};
+    resolveObj.entryDeets = {};
+    const entryDeets = resolveObj.entryDeets;
+    entryDeets.number = lastEntry.number + 1;
+    entryDeets.date = moment();
+    const startDate = moment(thisGrow.startDate);
+    entryDeets.week = entryDeets.date.diff(startDate, 'weeks') + 1;
+    entryDeets.phaseProgress = {};
+    entryDeets.phaseProgress.phase = lastPhaseProgress.phase;
+    entryDeets.phaseProgress.phaseStartDate = lastPhaseProgress.phaseStartDate;
+    entryDeets.phaseProgress.stage = lastPhaseProgress.stage;
+    const currentWeekOfCurrentPhase = entryDeets.date.diff(lastPhaseProgress.phaseStartDate, 'weeks') + 1;
+    entryDeets.phaseProgress.week = currentWeekOfCurrentPhase;
+    if (lastStage === "before sprout") {
+      resolveObj.parentId = "to-seedling";
+    } else if (lastStage === "seedling") {
+      resolveObj.parentId = "to-vegetative";
+    } else if (currentWeekOfCurrentPhase > 2 && lastStage === "vegetative") {
+      resolveObj.parentId = "to-flowering";
+    } else if (currentWeekOfCurrentPhase > 1 && lastStage === "early bloom") {
+      resolveObj.parentId = "to-peak-bloom";
+    } else if (currentWeekOfCurrentPhase > 3 && lastStage === "peak bloom") {
+      resolveObj.parentId = "to-late-bloom";
+    } else if (currentWeekOfCurrentPhase > 4 && lastStage === "late bloom") {
+      resolveObj.parentId = "to-flush";
+    } else if (currentWeekOfCurrentPhase > 6 && lastStage === "flush") {
+      resolveObj.parentId = "to-end";
+    }
+    appData.entryDeets = entryDeets;
+    console.log('calculateNeededUserInput() set appData.entryDeets equal to', appData.entryDeets);
+    resolve(resolveObj);
+  });
+}
+
+function calculateStartingPhase() {
+  return new Promise ((resolve, reject) => {
+    const resolveObj = {};
+    resolveObj.entryDeets = {};
+    resolveObj.entryDeets.number = 1;
+    resolveObj.entryDeets.week = 1;
+    resolveObj.entryDeets.phaseProgress = {};
+    resolveObj.entryDeets.phaseProgress.week = 1;
+    resolveObj.entryDeets.phaseProgress.stage = "before sprout";
+    resolveObj.entryDeets.phaseProgress.phase = "vegetative";
+    resolveObj.entryDeets.date = moment().format('YYYY-MM-DD');
+    resolveObj.entryDeets.phaseProgress.phaseStartDate = moment().format('YYYY-MM-DD');
+    resolveObj.parentId = "to-seedling";
+    removeClass(document.getElementById("grow-progression"),'hidden');
+    removeClass(document.getElementById("to-seedling"),'hidden');
+    resolve(resolveObj);
+  });
+}
+
+function calculateTimeLineEntry(index, side, topPosition) {
+  const thisEntry = appData.allGrows.grows[appData.currentGrowIndex].entries[index];
+  let entryHtml;
+  if (thisEntry.phaseProgress.stage === "before sprout" || thisEntry.phaseProgress.stage === "seedling" && side === "left") {  //before sprout stage
+    entryHtml = renderLeftTimelineEntry(index, topPosition, 'images/seedling.png'); //before sprout and left-side seedling
+  } else if (thisEntry.phaseProgress.stage === "seedling" && side === "right") {  //right-side seedling
+    entryHtml = renderRightTimelineEntry(index, topPosition, 'images/seedling.png');
+  } else if (thisEntry.phaseProgress.phase === "vegetative" && thisEntry.phaseProgress.stage !== "seedling" && side === "left") {
+    entryHtml = renderLeftTimelineEntry(index, topPosition, 'images/vegetative.png', 'transform:scaleX(-1); filter: FlipH;');
+  } else if (thisEntry.phaseProgress.phase === "vegetative" && thisEntry.phaseProgress.stage !== "seedling" && side === "right") {
+    entryHtml = renderRightTimelineEntry(index, topPosition, 'images/vegetative.png');
+  } else if (thisEntry.phaseProgress.phase === "flowering" && side === "left") {
+    entryHtml = renderLeftTimelineEntry(index, topPosition, 'images/flowering.png');
+  } else if (thisEntry.phaseProgress.phase === "flowering" && side === "right") {
+    entryHtml = renderRightTimelineEntry(index, topPosition, 'images/flowering.png', 'transform:scaleX(-1); filter: FlipH;');
+  }
+  return entryHtml;
+}
+
 function calculateInstructs() {
   return new Promise ((resolve, reject) => {
-    const entryInstructs = {};
-    const todaysDate = moment();
-    const startDate = moment(appData.allGrows.grows[appData.currentGrowIndex].startDate);
-    entryInstructs.week = todaysDate.diff(startDate, 'weeks') + 1;
-    const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
-    entryInstructs.number = thisGrow.entries.length + 1;
-    if (entryInstructs.number % 2 == 0) {
-      entryInstructs.wasWatered = true;
-      entryInstructs.wasFed = false;
-    } else if (entryInstructs.number % 2 != 0) {
-      entryInstructs.wasWatered = false;
-      entryInstructs.wasFed = true;
+    const entryDeets = appData.entryDeets;
+    if (entryDeets.number % 2 === 0 || entryDeets.phaseProgress.stage === 'flush') {
+      entryDeets.wasWatered = false;
+      entryDeets.wasFed = true;
+    } else if (entryDeets.number % 2 != 0) {
+      entryDeets.wasWatered = true;
+      entryDeets.wasFed = false;
     }
-    resolve(entryInstructs);
-    reject('instructions were not calculated');
+    resolve(entryDeets);
   });
 }
 
 function populateEmptyInstructs(entry) {
   return new Promise ((resolve, reject) => {
     entry.nutrients = {};
-    entry.nutrients.floraMicro = '';
-    entry.nutrients.floraGrow = '';
-    entry.nutrients.floraBloom = '';
-    entry.nutrients.caliMagic = '';
+    entry.nutrients.floraMicro = '0';
+    entry.nutrients.floraGrow = '0';
+    entry.nutrients.floraBloom = '0';
+    entry.nutrients.caliMagic = '0';
     resolve(entry);
     reject('populateEmptyInstructs() failed.');
   });
 }
 
 function whichSide(arrayLength) {
-  if (arrayLength % 2 == 0) {
+  if (arrayLength % 2 === 0) {
     return "left";
   }
-  else if (arrayLength % 2 != 0) {
+  else if (arrayLength % 2 !== 0) {
     return "right";
   }
 }
@@ -602,19 +841,20 @@ function whichSide(arrayLength) {
 function onEnterClick() {
   const enterButton = document.getElementById("enter-button");
     enterButton.onclick = function() {
-      turnPage("cover-page", "grow-collection-page", "grows");
       noLoop();
+      turnPage("cover-page", "grow-collection-page", "grows");
     };
 }
 
 function onGrowClick() {
   const growLinks = Array.from(document.getElementsByClassName("grow-links")).forEach(function(element) {
     element.onclick =  function () {
+      console.log('grow was clicked');
       const imageId = this.getAttribute('id');
       appData.currentGrowIndex = Number(imageId.slice(5, imageId.length));
-      console.log('appData.currentGrowIndex = ', appData.currentGrowIndex);
+      console.log('onGrowClick() set appData.currentGrowIndex to ', appData.currentGrowIndex);
       const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
-      if (thisGrow.entries.length == 0) {
+      if (thisGrow.entries.length < 1) {
         turnPage("grow-collection-page", "first-entry-page", "add-first-entry");
       } else {
         turnPage("grow-collection-page", "grow-entries-page", "timeline");
@@ -631,95 +871,15 @@ function onAddClick(selector, previousPage, nextPage, newPageName) {
 }
 
 function onEntryClick() {
+  console.log('onEntryClick() is running');
   Array.from(document.getElementsByClassName("past-entry")).forEach(function(element) {
     element.onclick = function () {
       const entryId = this.getAttribute('id');
       appData.currentEntryIndex = Number(entryId.slice(6, entryId.length));
-      console.log('appData.currentEntryIndex = ', appData.currentEntryIndex);
+      console.log('onEntryClick() set appData.currentEntryIndex equal to ', appData.currentEntryIndex);
       turnPage("grow-entries-page", "view-entry-page", "view-entry");
     };
   });
-}
-
-function onSubmitGrowClick() {
-  const submitGrow = document.getElementById("submit-grow");
-  submitGrow.onclick = function () {
-    event.preventDefault();
-    appData.allGrows = '';
-    console.log('appData.allGrows is an empty string now');
-    validateGrowSubmit().then(function(resolve){
-      return postGrow(resolve);
-    }).then(function(resolve){
-      appData.allGrows = '';
-      console.log('appData.allGrows is an empty string now');
-      return getAllGrows(resolve);
-    }).then(function(resolve){
-      console.log('getAllGrows got all the grows:', resolve);
-      appData.currentGrowIndex = resolve.grows.length-1;
-      turnPage("add-grow-page", "first-entry-page", "add-first-entry");
-    });
-  };
-}
-
-function onSubmitEntryClick(entrySubmit) {
-  const submitEntry = document.getElementById("submit-entry");
-  submitEntry.onclick = function () {
-    event.preventDefault();
-    const phaseSwitch = document.getElementById('phase-switch').checked;
-    if (phaseSwitch) {
-      entrySubmit.phase = 'flowering';
-    }
-    else {
-      entrySubmit.phase = 'vegetative';
-    }
-    entrySubmit.date = moment();
-    entrySubmit.notes = document.getElementById("entry-notes").value;
-    console.log('onSubmitEntryClick is passing:', entrySubmit, 'to postEntry()');
-    postEntry(entrySubmit).then(function(){
-      appData.allGrows = '';
-      console.log('appData.allGrows is an empty string now');
-      appData.currentEntryIndex = '';
-      console.log('appData.currentEntryIndex is an empty string now');
-      return getAllGrows();
-    }).then(function(resolve){
-      console.log('getAllGrows got all the grows:', resolve);
-      turnPage("add-entry-page", "grow-entries-page", "timeline");
-    });
-  };
-}
-
-function onEditEntryClick() {
-  const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
-  const thisEntry = thisGrow.entries[appData.currentEntryIndex];
-  const editEntry = document.getElementById("edit-entry");
-  editEntry.onclick = function () {
-    turnPage("notes-box", "entry-edit");
-    document.getElementById("edit-notes").innerHTML = thisEntry.notes;
-    const exitEdit = document.getElementById("exit-edit");
-    exitEdit.onclick = function () {
-      turnPage("entry-edit", "notes-box");
-    };
-  };
-  onSubmitEditClick();
-}
-
-function onSubmitEditClick() {
-  const submitEdit = document.getElementById("submit-edit");
-  submitEdit.onclick = function () {
-    event.preventDefault();
-    const editNotes = document.getElementById("edit-notes").value;
-    const putObject = {};
-    putObject.notes = editNotes;
-    console.log('onEditEntryClick() is passing:', putObject, 'to putEntry()');
-    putEntry(putObject).then(function(){
-        appData.allGrows = '';
-        console.log('appData.allGrows is an empty string now');
-        return getAllGrows();
-    }).then(function(resolve){
-      console.log('getAllGrows got all the grows:', resolve);
-      turnPage("view-entry-page", "grow-entries-page", "timeline");
-    });
-  };
 }
 
 function onDeleteClick(selector, previousPage, newPage, newPageName) {
@@ -735,9 +895,8 @@ function onDeleteConfirm(selector, previousPage, newPage, newPageName, deleteFun
     console.log('delete confirm was clicked');
     deleteFunction().then(function(){
       return getAllGrows();
-    }).then(function(resolve){
-     console.log('getAllGrows() got all the grows:', resolve);
-     turnPage(previousPage, newPage, newPageName);
+    }).then(function(){
+      turnPage(previousPage, newPage, newPageName);
     });
   };
 }
@@ -751,61 +910,96 @@ function onDeleteDeny(selector, previousPage, newPage, newPageName){
 
 //////main()//////
 function main() {
+
   if (appData.page === "" || appData.page === "cover" ){
     onEnterClick();
   } else if (appData.page === "grows" ){
     getAllGrows().then(function(resolve){
-        console.log('getAllGrows() is passing', resolve, 'to displayGrowGrid()');
-        return displayGrowGrid(resolve);
-    }).then(function(){
+      console.log('getAllGrows() is passing', resolve, 'to displayGrowGrid()');
+      displayGrowGrid(resolve);
       onGrowClick();
       onAddClick('add-a-grow', 'grow-collection-page', 'add-grow-page', 'add-grow');
     });
   } else if (appData.page === "add-first-entry") {
-    onAddClick('first-entry-hover', 'first-entry-page', 'add-entry-page', 'add-entry');
-    goBack("first-entry-page", "grow-collection-page", "grows", "#first-entry-page button");
-  } else if (appData.page === "timeline") {
+    onAddClick('first-entry-hover', 'first-entry-page', 'add-entry-page', 'get-first-entry-stage');
+    goBack("first-entry-page", "grow-collection-page", "#first-entry-page button", "grows");
+  } else if (appData.page === "get-first-entry-stage") {
+    calculateStartingPhase().then(function(resolve){
+      console.log('getStartingPhaseProgress is passing', resolve, 'to displayEntryInstructsHeader() and goBackFromEntry()');
+      displayEntryInstructsHeader(resolve); //calls two event listeners (onProgressConfirm and onProgressDeny)
+      goBackFromEntry(resolve);
+    }); //that will add key/value pairs to entryDeets, depending on which one user clicks;
+  }  else if (appData.page === "timeline") {
     renderFullTimeline().then(function(resolve){
-      console.log('renderFullTimeline is passing', resolve, 'to displayGrowTimeline()');
+      //console.log('renderFullTimeline is passing', resolve, 'to displayGrowTimeline()');
       return displayGrowTimeline(resolve);
     }).then(function(){
+      const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+      const lastEntryTime = moment(thisGrow.entries[thisGrow.entries.length-1].date);
+      const now = moment();
+      if (now.diff(lastEntryTime, 'days') < 1) {
+        onAddClick("add-entry", "grow-entries-page", "no-more-entries");
+        goBack("no-more-entries", "grow-entries-page", "#no-more-entries button");
+      } else if (now.diff(lastEntryTime, 'days') >= 1 && thisGrow.endDate === null) {
+        onAddClick("add-entry", "grow-entries-page", "add-entry-page", "get-entry-stage");
+      }
       onEntryClick();
-      onAddClick('add-entry', "grow-entries-page", "add-entry-page", "add-entry");
       onDeleteClick("delete-grow", "grow-entries-page", "delete-grow-page", "delete-grow");
-      goBack("grow-entries-page", "grow-collection-page", "grows", "#grow-entries-page button");
+      goBack("grow-entries-page", "grow-collection-page", "#grow-entries-page button", "grows");
     });
   } else if (appData.page === "add-grow") {
     onSubmitGrowClick();
-    goBack("add-grow-page", "grow-collection-page", "grows", "#add-grow-page button");
+    goBack("add-grow-page", "grow-collection-page", "#add-grow-page button", "grows");
+  } else if (appData.page === "get-entry-stage") {
+    calculateNeededUserInput().then(function(resolve){
+      console.log('calculateNeededUserInput() is passing', resolve, "to:");
+      if ('parentId' in resolve) {
+        displayGrowProgressQuestion(resolve).then(function(resolve){
+          console.log('displayGrowProgressQuestion is passing', resolve, 'to displayEntryInstructsHeader() and goBackFromEntry()');
+          displayEntryInstructsHeader(resolve); //calls two event listeners (onProgressConfirm and onProgressDeny) //entryDeets are passed to appData by both event listeners
+          goBackFromEntry(resolve);
+        });
+      } else {
+        appData.page = "add-entry";
+        console.log('main() set appData.page to ', appData.page);
+        main();
+      }
+    });
   } else if (appData.page === "add-entry") {
       calculateInstructs().then(function(resolve){
         console.log('calculateInstructs() is passing', resolve, 'to:');
         if (resolve.wasFed === true) {
+            console.log('getNutrientInstructs()');
             getNutrientInstructs(resolve).then(function(resolve){
-              console.log('getNutrientInstructs(), and getNutrientInstructs() is passing:', resolve, 'to displayEntryInstructs()');
+              console.log('getNutrientInstructs() is passing:', resolve, 'to displayEntryInstructs()');
               return displayEntryInstructs(resolve);
           }).then(function(resolve){
-            console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick()');
+            console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick() and goBackFromEntry()');
             onSubmitEntryClick(resolve);
-            goBack("add-entry-page", "grow-entries-page", "timeline", "#add-entry-page button");
+            goBackFromEntry(resolve);
           });
         } else {
           populateEmptyInstructs(resolve).then(function(resolve){
             console.log('populateEmptyInstructs(), and populateEmptyInstructs() is passing', resolve, 'to displayEntryInstructs()');
             return displayEntryInstructs(resolve);
           }).then(function(resolve){
-            console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick()');
+            console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick() and goBackFromEntry()');
             onSubmitEntryClick(resolve);
-            goBack("add-entry-page", "grow-entries-page", "timeline", "#add-entry-page button");
+            goBackFromEntry(resolve);
           });
         }
       });
   } else if (appData.page === "view-entry") {
-      displayEntry().then(function(){
-      onDeleteClick("delete-entry", "view-entry-page", "delete-entry-page", "delete-entry");
-      onEditEntryClick();
+      displayEntry();
       goBackFromEntry();
-    });
+      const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
+      if (thisGrow.endDate === null) {
+        onDeleteClick("delete-entry", "view-entry-page", "delete-entry-page", "delete-entry");
+        onEditEntryClick();
+      } else {
+        addClass(document.getElementById("delete-entry"), 'hidden');
+        addClass(document.getElementById("edit-entry"), 'hidden');
+      }
   } else if (appData.page === "delete-entry") {
       onDeleteConfirm("delete-entry-confirm", "delete-entry-page", "grow-entries-page", "timeline", deleteEntry);
       onDeleteDeny("delete-entry-deny", "delete-entry-page", "grow-entries-page", "timeline");

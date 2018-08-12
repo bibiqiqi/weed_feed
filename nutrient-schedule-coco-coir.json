@@ -2,147 +2,81 @@
 	"name": "coco coir",
 	"schedule": [
 		{
-		  "week": 0,
 			"phase": "vegetative",
 			"stage": "before sprout",
-			"nutrients": [
-				{"floraMicro": "0"},
-				{"floraGrow": "0"},
-				{"floraBloom": "0"},
-				{"caliMagic": "1 tsp"}
-			]
+			"nutrients":
+				{
+					"floraMicro": "0",
+					"floraGrow": "0",
+					"floraBloom": "0",
+					"caliMagic": "1 tsp"
+				}
 		},
 		{
-			"week": 1,
 			"phase": "vegetative",
 			"stage": "seedling",
-			"nutrients": [
-				{"floraMicro": "1/4 tsp"},
-				{"floraGrow": "1/8 tsp"},
-				{"floraBloom": "1/8 tsp"},
-				{"caliMagic": "1 tsp"}
-			]
+			"nutrients":
+				{
+					"floraMicro": "1/4 tsp",
+					"floraGrow": "1/8 tsp",
+					"floraBloom": "1/8 tsp",
+					"caliMagic": "1 tsp"
+				}
 		},
 		{
-			"week": 2,
 			"phase": "vegetative",
 			"stage": "vegetative",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/2 tsp"},
-				{"floraBloom": "1/8 tsp"},
-				{"caliMagic": "1 tsp"}
-			]
+			"nutrients":
+				{
+					"floraMicro": "1/2 tsp",
+					"floraGrow": "1/2 tsp",
+					"floraBloom": "1/4 tsp",
+					"caliMagic": "1 tsp"
+				}
 		},
 		{
-			"week": 3,
-			"phase": "vegetative",
-			"stage": "vegetative",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/2 tsp"},
-				{"floraBloom": "1/4 tsp"},
-				{"caliMagic": "1 tsp"}
-			]
-		},
-		{
-			"week": 4,
-			"phase": "flowering",
-			"stage": "transition",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/2 tsp"},
-				{"floraBloom": "1/2 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
-		},
-		{
-			"week": 5,
 			"phase": "flowering",
 			"stage": "early bloom",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/4 tsp"},
-				{"floraBloom": "1/2 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
+			"nutrients":
+				{
+					"floraMicro": "1/2 tsp",
+					"floraGrow": "1/4 tsp",
+					"floraBloom": "1/2 tsp",
+					"caliMagic": "1/2 tsp"
+				}
 		},
 		{
-			"week": 6,
 			"phase": "flowering",
-			"stage": "early bloom",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/4 tsp"},
-				{"floraBloom": "1/2 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
+			"stage": "peak bloom",
+			"nutrients":
+				{
+					"floraMicro": "1/2 tsp",
+					"floraGrow": "1/8 tsp",
+					"floraBloom": "1/2 tsp",
+					"caliMagic": "1/2 tsp"
+				}
 		},
 		{
-			"week": 7,
-			"phase": "flowering",
-			"stage": "mid bloom",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/8"},
-				{"floraBloom": "1/2 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
-		},
-		{
-			"week": 8,
-			"phase": "flowering",
-			"stage": "mid bloom",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "1/8"},
-				{"floraBloom": "1/2 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
-		},
-		{
-			"week": 9,
 			"phase": "flowering",
 			"stage": "late bloom",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "0"},
-				{"floraBloom": "3/4 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
+			"nutrients":
+				{
+					"floraMicro": "1/2 tsp",
+					"floraGrow": "0 tsp",
+					"floraBloom": "3/4 tsp",
+					"caliMagic": "1/2 tsp"
+				}
 		},
 		{
-			"week": 10,
-			"phase": "flowering",
-			"stage": "late bloom",
-			"nutrients": [
-				{"floraMicro": "1/2 tsp"},
-				{"floraGrow": "0"},
-				{"floraBloom": "3/4 tsp"},
-				{"caliMagic": "1/2 tsp"}
-			]
-		},
-		{
-			"week": 11,
-			"phase": "flowering",
-			"stage": "ripen",
-			"nutrients": [
-				{"floraMicro": "1/4"},
-				{"floraGrow": "0"},
-				{"floraBloom": "3/4"},
-				{"caliMagic": "1/2"}
-			]
-		},
-		{
-			"week": 12,
 			"phase": "flowering",
 			"stage": "flush",
-			"nutrients": [
-				{"floraMicro": "0"},
-				{"floraGrow": "0"},
-				{"floraBloom": "0"},
-				{"caliMagic": "0"}
-			]
+			"nutrients":
+				{
+					"floraMicro": "1/2 tsp",
+					"floraGrow": "0 tsp",
+					"floraBloom": "3/4 tsp",
+					"caliMagic": "1/2 tsp"
+				}
 		}
 	]
 }

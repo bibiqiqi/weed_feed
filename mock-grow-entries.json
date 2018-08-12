@@ -1,569 +1,897 @@
-    {
-      "shortId": "eWRhpRV",
-      "name": "Tangerine Dream",
-      "startDate": "2018-06-15",
-      "endDate": "",
-      "strain": "indica",
-      "growType": "coco coir",
-      "entries": [
-        {
-          "shortId": "YQILP",
-          "number": 1,
-          "date": "2018-06-15",
-          "week": 0,
+  {
+    "shortId": "4ZZWOM",
+    "name": "Tangerine Dream",
+    "startDate": "2018-05-20",
+    "endDate": "2018-07-20",
+    "strain": "indica",
+    "growType": "coco coir",
+    "entries": [
+      {
+        "shortId": "MBZIJ3",
+        "number": 1,
+        "date": "2018-05-20",
+        "week": 1,
+        "phaseProgress": {
           "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients": {
-            "floraMicro": "",
-            "floraGrow": "",
-            "floraBloom": "",
-            "caliMagic": ""
-          },
-          "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
-        },
-        {
-          "shortId": "07JR9",
-          "number": 2,
-          "date": "2018-06-18",
+          "phaseStartDate": "2018-05-20",
           "week": 1,
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients": {
-              "floraMicro": "1/4 tsp",
-              "floraGrow": "1/8 tsp",
-              "floraBloom": "1/8 tsp",
-              "caliMagic": "1 tsp"
+          "stage": "seedling"
           },
-          "notes": ""
+        "wasWatered": true,
+        "wasFed": false,
+        "nutrients": {
+					"floraMicro": "0",
+					"floraGrow": "0",
+					"floraBloom": "0",
+					"caliMagic": "0"
+				},
+        "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+      },
+      {
+        "shortId": "BYDU0O",
+        "number": 2,
+        "date": "2018-05-23",
+        "week": 1,
+        "phaseProgress": {
+          "phase": "vegetative",
+          "phaseStartDate": "2018-05-20",
+          "week": 1,
+          "stage": "seedling"
+          },
+        "wasWatered": false,
+        "wasFed": true,
+        "nutrients": {
+            "floraMicro": "1/4 tsp",
+            "floraGrow": "1/8 tsp",
+            "floraBloom": "1/8 tsp",
+            "caliMagic": "1 tsp"
         },
-        {
-          "shortId": "GD0VP",
-          "number": 3,
-          "date": "2018-06-20",
+        "notes": ""
+      },
+      {
+        "shortId": "9NLTW7",
+        "number": 3,
+        "date": "2018-05-28",
+        "week": 2,
+        "phaseProgress": {
+          "phase": "vegetative",
+          "phaseStartDate": "2018-05-20",
           "week": 2,
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients": {
-            "floraMicro": "",
-            "floraGrow": "",
-            "floraBloom": "",
-            "caliMagic": ""
+          "stage": "vegetative"
           },
-          "notes": "Lorem ipsum dolor sit amet, labitur."
+        "wasWatered": true,
+        "wasFed": false,
+        "nutrients": {
+          "floraMicro": "0",
+          "floraGrow": "0",
+          "floraBloom": "0",
+          "caliMagic": "0"
         },
-        {
-          "shortId": "I9SLP",
-          "number": 4,
-          "date": "2018-06-23",
-          "week": 3,
+        "notes": "Lorem ipsum dolor sit amet, labitur."
+      },
+      {
+        "shortId": "YUTAUU",
+        "number": 4,
+        "date": "2018-06-01",
+        "week": 2,
+        "phaseProgress": {
           "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/8 tsp",
-              "caliMagic": "1 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "L5TLM",
-          "number": 5,
-          "date": "2018-06-26",
-          "week": 4,
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients": {
-            "floraMicro": "",
-            "floraGrow": "",
-            "floraBloom": "",
-            "caliMagic": ""
+          "phaseStartDate": "2018-05-20",
+          "week": 2,
+          "stage": "vegetative"
           },
-          "notes": ""
+        "wasWatered": false,
+        "wasFed": true,
+        "nutrients":
+          {
+            "floraMicro": "1/2 tsp",
+            "floraGrow": "1/2 tsp",
+            "floraBloom": "1/4 tsp",
+            "caliMagic": "1 tsp"
+          },
+        "notes": ""
+      },
+      {
+        "shortId": "GGMU8D",
+        "number": 5,
+        "date": "2018-06-06",
+        "week": 3,
+        "phaseProgress": {
+          "phase": "flowering",
+          "phaseStartDate": "2018-06-06",
+          "week": 1,
+          "stage": "early bloom"
+          },
+        "wasWatered": true,
+        "wasFed": false,
+        "nutrients": {
+          "floraMicro": "0",
+          "floraGrow": "0",
+          "floraBloom": "0",
+          "caliMagic": "0"
         },
-        {
-         "shortId": "5G4OC",
-         "number": 6,
-         "date": "2018-06-29",
-         "week": 5,
+        "notes": ""
+      },
+      {
+       "shortId": "WQNFZN",
+       "number": 6,
+       "date": "2018-06-12",
+       "week": 4,
+       "phaseProgress": {
          "phase": "flowering",
-         "wasWatered": false,
-         "wasFed": true,
-         "nutrients":
-           {
-             "floraMicro": "1/2 tsp",
-             "floraGrow": "1/2 tsp",
-             "floraBloom": "1/2 tsp",
-             "caliMagic": "1/2 tsp"
-           },
-         "notes": ""
-       }
-      ]
-    }
-    { "shortId": "23TplPdS",
-      "name": "Green Crack",
-      "startDate": "2018-06-15",
-      "endDate": "",
-      "strain": "sativa",
-      "growType": "coco coir",
-      "entries": [
-        {
-          "shortId": "HAAV3",
-          "number": 1,
-          "date": "2018-06-15",
-          "week": 0,
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+         "phaseStartDate": "2018-06-06",
+         "week": 1,
+         "stage": "early bloom"
+         },
+       "wasWatered": false,
+       "wasFed": true,
+       "nutrients":
+         {
+           "floraMicro": "1/2 tsp",
+           "floraGrow": "1/4 tsp",
+           "floraBloom": "1/2 tsp",
+           "caliMagic": "1/2 tsp"
+         },
+       "notes": ""
+     },
+     {
+      "shortId": "OQ06AZ",
+      "number": 7,
+      "date": "2018-06-21",
+      "week": 5,
+      "phaseProgress": {
+        "phase": "flowering",
+        "phaseStartDate": "2018-06-06",
+        "week": 3,
+        "stage": "peak bloom"
         },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients":
         {
-          "shortId": "BGZ26",
-          "number": 2,
-          "date": "2018-06-18",
-          "week": 1,
-          "week": 0,
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
+          "floraMicro": "0",
+          "floraGrow": "0",
+          "floraBloom": "0",
+          "caliMagic": "0"
         },
-        {
-          "shortId": "ZV715",
-          "number": 3,
-          "date": "2018-06-20",
-          "week": 2,
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, labitur."
-        },
-        {
-          "shortId": "BN13F",
-          "number": 4,
-          "date": "2018-06-23",
-          "week": 3,
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "DAKXB",
-          "number": 5,
-          "date": "2018-06-26",
-          "week": 4,
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        }
-      ]
-    }
+      "notes": ""
+    },
     {
-      "shortId": "46Juzcyx",
-      "name": "Deep Sleep",
-      "startDate": "2018-07-3",
-      "endDate": "",
-      "strain": "indica",
-      "growType": "coco coir",
-      "entries": [
-        {
-          "shortId": "15SGS",
-          "number": 1,
-          "date": "2018-07-5",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
-        },
-        {
-          "shortId": "8RN9N",
-          "number": 2,
-          "date": "2018-07-10",
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "H57PQ",
-          "number": 3,
-          "date": "2018-07-14",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, labitur."
-        },
-        {
-          "shortId": "2LIW1",
-          "number": 4,
-          "date": "2018-07-17",
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "O72U8",
-          "number": 5,
-          "date": "2018-07-20",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        }
-      ]
-    }
+     "shortId": "BRM4QL",
+     "number": 8,
+     "date": "2018-06-30",
+     "week": 6,
+     "phaseProgress": {
+       "phase": "flowering",
+       "phaseStartDate": "2018-06-06",
+       "week": 4,
+       "stage": "late bloom"
+       },
+     "wasWatered": false,
+     "wasFed": true,
+     "nutrients":
+       {
+         "floraMicro": "1/2 tsp",
+         "floraGrow": "0 tsp",
+         "floraBloom": "3/4 tsp",
+         "caliMagic": "1/2 tsp"
+       },
+     "notes": ""
+   },
+   {
+    "shortId": "XKUCFV",
+    "number": 9,
+    "date": "2018-07-05",
+    "week": 7,
+    "phaseProgress": {
+      "phase": "flowering",
+      "phaseStartDate": "2018-06-06",
+      "week": 5,
+      "stage": "late bloom"
+      },
+    "wasWatered": true,
+    "wasFed": false,
+    "nutrients":
+      {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+    "notes": ""
+  },
+  {
+   "shortId": "MGE6XY",
+   "number": 10,
+   "date": "2018-07-10",
+   "week": 8,
+   "phaseProgress": {
+     "phase": "flowering",
+     "phaseStartDate": "2018-06-06",
+     "week": 5,
+     "stage": "flush"
+     },
+   "wasWatered": true,
+   "wasFed": false,
+   "nutrients":
+     {
+       "floraMicro": "0",
+       "floraGrow": "0",
+       "floraBloom": "0",
+       "caliMagic": "0"
+     },
+   "notes": ""
+ },
+ {
+  "shortId": "BE2AJD",
+  "number": 11,
+  "date": "2018-07-14",
+  "week": 8,
+  "phaseProgress": {
+    "phase": "flowering",
+    "phaseStartDate": "2018-06-06",
+    "week": 5,
+    "stage": "flush"
+    },
+  "wasWatered": true,
+  "wasFed": false,
+  "nutrients":
     {
-      "shortId": "dBvJIh-H",
-      "name": "Acapulco Gold",
-      "startDate": "2018-02-3",
-      "endDate": "",
-      "strain": "sativa",
-      "growType": "coco coir",
-      "entries": [
-        {
-          "shortId": "S5R97",
-          "number": 1,
-          "date": "2018-02-5",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
-        },
-        {
-          "shortId": "IWZID",
-          "number": 2,
-          "date": "2018-02-10",
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "5CHZB",
-          "number": 3,
-          "date": "2018-02-14",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, labitur."
-        },
-        {
-          "shortId": "19XSA",
-          "number": 4,
-          "date": "2018-02-17",
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "ZBDIT",
-          "number": 5,
-          "date": "2018-02-20",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "Q75IH",
-          "number": 6,
-          "date": "2018-02-23",
-          "phase": "flowering",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        },
-        {
-          "shortId": "JN5LA",
-          "number": 7,
-          "date": "2018-02-25",
-          "phase": "flowering",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet."
-        },
-        {
-          "shortId": "29KFH",
-          "number": 8,
-          "date": "2018-02-27",
-          "phase": "flowering",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        }
-      ]
-    }
+      "floraMicro": "0",
+      "floraGrow": "0",
+      "floraBloom": "0",
+      "caliMagic": "0"
+    },
+  "notes": ""
+  }
+  ]
+}
+{
+  "shortId": "XUUEBK",
+  "name": "Green Crack",
+  "startDate": "2018-05-20",
+  "endDate": null,
+  "strain": "sativa",
+  "growType": "coco coir",
+  "entries": [
     {
-      "shortId": "2WEKaVNO",
-      "name": "Brain Melt",
-      "startDate": "2018-02-3",
-      "endDate": "",
-      "strain": "sativa",
-      "growType": "coco coir",
-      "entries": [
-        {
-          "shortId": "6OU0V",
-          "number": 1,
-          "date": "2018-02-5",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+      "shortId": "3ZJWDB",
+      "number": 1,
+      "date": "2018-05-20",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
         },
-        {
-          "shortId": "5MJAW",
-          "number": 2,
-          "date": "2018-02-10",
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+      "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+    },
+    {
+      "shortId": "8GJEDE",
+      "number": 2,
+      "date": "2018-05-23",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
         },
-        {
-          "shortId": "ENEGF",
-          "number": 3,
-          "date": "2018-02-14",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet, labitur."
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients": {
+          "floraMicro": "1/4 tsp",
+          "floraGrow": "1/8 tsp",
+          "floraBloom": "1/8 tsp",
+          "caliMagic": "1 tsp"
+      },
+      "notes": ""
+    },
+    {
+      "shortId": "1N4T0V",
+      "number": 3,
+      "date": "2018-05-28",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
         },
-        {
-          "shortId": "24WQU",
-          "number": 4,
-          "date": "2018-02-17",
-          "phase": "vegetative",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": "Lorem ipsum dolor sit amet, labitur."
+    },
+    {
+      "shortId": "AWIRDC",
+      "number": 4,
+      "date": "2018-06-01",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
         },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients":
         {
-          "shortId": "28GDE",
-          "number": 5,
-          "date": "2018-02-20",
-          "phase": "vegetative",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
+          "floraMicro": "1/2 tsp",
+          "floraGrow": "1/2 tsp",
+          "floraBloom": "1/4 tsp",
+          "caliMagic": "1 tsp"
         },
-        {
-          "shortId": "0DHHX",
-          "number": 6,
-          "date": "2018-02-23",
-          "phase": "flowering",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
+      "notes": ""
+    },
+    {
+      "shortId": "DSM2HP",
+      "number": 5,
+      "date": "2018-06-06",
+      "week": 3,
+      "phaseProgress": {
+        "phase": "flowering",
+        "phaseStartDate": "2018-06-06",
+        "week": 1,
+        "stage": "early bloom"
         },
-        {
-          "shortId": "E54QN",
-          "number": 7,
-          "date": "2018-02-25",
-          "phase": "flowering",
-          "wasWatered": true,
-          "wasFed": false,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": "Lorem ipsum dolor sit amet."
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": ""
+    },
+    {
+     "shortId": "Q9VTXB",
+     "number": 6,
+     "date": "2018-06-12",
+     "week": 4,
+     "phaseProgress": {
+       "phase": "flowering",
+       "phaseStartDate": "2018-06-06",
+       "week": 1,
+       "stage": "early bloom"
+       },
+     "wasWatered": false,
+     "wasFed": true,
+     "nutrients":
+       {
+         "floraMicro": "1/2 tsp",
+         "floraGrow": "1/4 tsp",
+         "floraBloom": "1/2 tsp",
+         "caliMagic": "1/2 tsp"
+       },
+     "notes": ""
+   },
+   {
+    "shortId": "2GMUWW",
+    "number": 7,
+    "date": "2018-06-21",
+    "week": 5,
+    "phaseProgress": {
+      "phase": "flowering",
+      "phaseStartDate": "2018-06-06",
+      "week": 3,
+      "stage": "peak bloom"
+      },
+    "wasWatered": true,
+    "wasFed": false,
+    "nutrients":
+      {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+    "notes": ""
+  },
+  {
+   "shortId": "T4DFHE",
+   "number": 8,
+   "date": "2018-06-30",
+   "week": 6,
+   "phaseProgress": {
+     "phase": "flowering",
+     "phaseStartDate": "2018-06-06",
+     "week": 4,
+     "stage": "late bloom"
+     },
+   "wasWatered": false,
+   "wasFed": true,
+   "nutrients":
+     {
+       "floraMicro": "1/2 tsp",
+       "floraGrow": "0 tsp",
+       "floraBloom": "3/4 tsp",
+       "caliMagic": "1/2 tsp"
+     },
+   "notes": ""
+ },
+ {
+  "shortId": "N85J9T",
+  "number": 9,
+  "date": "2018-07-05",
+  "week": 7,
+  "phaseProgress": {
+    "phase": "flowering",
+    "phaseStartDate": "2018-06-06",
+    "week": 5,
+    "stage": "late bloom"
+    },
+  "wasWatered": true,
+  "wasFed": false,
+  "nutrients":
+    {
+      "floraMicro": "0",
+      "floraGrow": "0",
+      "floraBloom": "0",
+      "caliMagic": "0"
+    },
+  "notes": ""
+  }
+]
+}
+{
+  "shortId": "CKMUOB",
+  "name": "Deep Sleep",
+  "startDate": "2018-05-20",
+  "endDate": null,
+  "strain": "indica",
+  "growType": "coco coir",
+  "entries": [
+    {
+      "shortId": "E1CHYM",
+      "number": 1,
+      "date": "2018-05-20",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
         },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+      "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+    },
+    {
+      "shortId": "B1O30C",
+      "number": 2,
+      "date": "2018-05-23",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients": {
+          "floraMicro": "1/4 tsp",
+          "floraGrow": "1/8 tsp",
+          "floraBloom": "1/8 tsp",
+          "caliMagic": "1 tsp"
+      },
+      "notes": ""
+    },
+    {
+      "shortId": "ID2QRU",
+      "number": 3,
+      "date": "2018-05-28",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": "Lorem ipsum dolor sit amet, labitur."
+    },
+    {
+      "shortId": "KSY1ZM",
+      "number": 4,
+      "date": "2018-06-01",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients":
         {
-          "shortId": "UBRZB",
-          "number": 8,
-          "date": "2018-02-27",
-          "phase": "flowering",
-          "wasWatered": false,
-          "wasFed": true,
-          "nutrients":
-            {
-              "floraMicro": "1/2 tsp",
-              "floraGrow": "1/2 tsp",
-              "floraBloom": "1/2 tsp",
-              "caliMagic": "1/2 tsp"
-            },
-          "notes": ""
-        }
-      ]
+          "floraMicro": "1/2 tsp",
+          "floraGrow": "1/2 tsp",
+          "floraBloom": "1/4 tsp",
+          "caliMagic": "1 tsp"
+        },
+      "notes": ""
+    },
+    {
+      "shortId": "LNR7T7",
+      "number": 5,
+      "date": "2018-06-06",
+      "week": 3,
+      "phaseProgress": {
+        "phase": "flowering",
+        "phaseStartDate": "2018-06-06",
+        "week": 1,
+        "stage": "early bloom"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": ""
+    },
+    {
+     "shortId": "5K6P57",
+     "number": 6,
+     "date": "2018-06-12",
+     "week": 4,
+     "phaseProgress": {
+       "phase": "flowering",
+       "phaseStartDate": "2018-06-06",
+       "week": 1,
+       "stage": "early bloom"
+       },
+     "wasWatered": false,
+     "wasFed": true,
+     "nutrients":
+       {
+         "floraMicro": "1/2 tsp",
+         "floraGrow": "1/4 tsp",
+         "floraBloom": "1/2 tsp",
+         "caliMagic": "1/2 tsp"
+       },
+     "notes": ""
+   },
+   {
+    "shortId": "YTQQ9V",
+    "number": 7,
+    "date": "2018-06-21",
+    "week": 5,
+    "phaseProgress": {
+      "phase": "flowering",
+      "phaseStartDate": "2018-06-06",
+      "week": 3,
+      "stage": "peak bloom"
+      },
+    "wasWatered": true,
+    "wasFed": false,
+    "nutrients":
+      {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+    "notes": ""
+  }
+]
+}
+{
+  "shortId": "GZXEPT",
+  "name": "Girl Scout Cookies",
+  "startDate": "2018-05-20",
+  "endDate": null,
+  "strain": "indica",
+  "growType": "coco coir",
+  "entries": [
+    {
+      "shortId": "6HQJU3",
+      "number": 1,
+      "date": "2018-05-20",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+      "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+    },
+    {
+      "shortId": "SIFE29",
+      "number": 2,
+      "date": "2018-05-23",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients": {
+          "floraMicro": "1/4 tsp",
+          "floraGrow": "1/8 tsp",
+          "floraBloom": "1/8 tsp",
+          "caliMagic": "1 tsp"
+      },
+      "notes": ""
+    },
+    {
+      "shortId": "3FHCPK",
+      "number": 3,
+      "date": "2018-05-28",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": "Lorem ipsum dolor sit amet, labitur."
+    },
+    {
+      "shortId": "RV4ZT2",
+      "number": 4,
+      "date": "2018-06-01",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients":
+        {
+          "floraMicro": "1/2 tsp",
+          "floraGrow": "1/2 tsp",
+          "floraBloom": "1/4 tsp",
+          "caliMagic": "1 tsp"
+        },
+      "notes": ""
+    },
+    {
+      "shortId": "6ADA7R",
+      "number": 5,
+      "date": "2018-06-06",
+      "week": 3,
+      "phaseProgress": {
+        "phase": "flowering",
+        "phaseStartDate": "2018-06-06",
+        "week": 1,
+        "stage": "early bloom"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": ""
+    },
+    {
+     "shortId": "XR9ETE",
+     "number": 6,
+     "date": "2018-06-12",
+     "week": 4,
+     "phaseProgress": {
+       "phase": "flowering",
+       "phaseStartDate": "2018-06-06",
+       "week": 1,
+       "stage": "early bloom"
+       },
+     "wasWatered": false,
+     "wasFed": true,
+     "nutrients":
+       {
+         "floraMicro": "1/2 tsp",
+         "floraGrow": "1/4 tsp",
+         "floraBloom": "1/2 tsp",
+         "caliMagic": "1/2 tsp"
+       },
+     "notes": ""
+   }
+]
+}
+{
+  "shortId": "D4PXJ5",
+  "name": "Brain Melt",
+  "startDate": "2018-05-20",
+  "endDate": null,
+  "strain": "indica",
+  "growType": "coco coir",
+  "entries": [
+    {
+      "shortId": "T4NU43",
+      "number": 1,
+      "date": "2018-05-20",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+      "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+    },
+    {
+      "shortId": "3ZBN93",
+      "number": 2,
+      "date": "2018-05-23",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients": {
+          "floraMicro": "1/4 tsp",
+          "floraGrow": "1/8 tsp",
+          "floraBloom": "1/8 tsp",
+          "caliMagic": "1 tsp"
+      },
+      "notes": ""
+    },
+    {
+      "shortId": "GKHKBG",
+      "number": 3,
+      "date": "2018-05-28",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "",
+        "floraGrow": "",
+        "floraBloom": "",
+        "caliMagic": ""
+      },
+      "notes": "Lorem ipsum dolor sit amet, labitur."
+    },
+    {
+      "shortId": "5M53W4",
+      "number": 4,
+      "date": "2018-06-01",
+      "week": 2,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 2,
+        "stage": "vegetative"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients":
+        {
+          "floraMicro": "1/2 tsp",
+          "floraGrow": "1/2 tsp",
+          "floraBloom": "1/4 tsp",
+          "caliMagic": "1 tsp"
+        },
+      "notes": ""
     }
+]
+}
+{
+  "shortId": "QLMYDF",
+  "name": "Acapulco Gold",
+  "startDate": "2018-05-20",
+  "endDate": null,
+  "strain": "indica",
+  "growType": "coco coir",
+  "entries": [
+    {
+      "shortId": "P53X47",
+      "number": 1,
+      "date": "2018-05-20",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": true,
+      "wasFed": false,
+      "nutrients": {
+        "floraMicro": "0",
+        "floraGrow": "0",
+        "floraBloom": "0",
+        "caliMagic": "0"
+      },
+      "notes": "Lorem ipsum dolor sit amet, facer laoreet definiebas te pro. Vis cu recusabo gubergren dissentias, ea est natum facilisis, vis."
+    },
+    {
+      "shortId": "7LA72O",
+      "number": 2,
+      "date": "2018-05-23",
+      "week": 1,
+      "phaseProgress": {
+        "phase": "vegetative",
+        "phaseStartDate": "2018-05-20",
+        "week": 1,
+        "stage": "seedling"
+        },
+      "wasWatered": false,
+      "wasFed": true,
+      "nutrients": {
+          "floraMicro": "1/4 tsp",
+          "floraGrow": "1/8 tsp",
+          "floraBloom": "1/8 tsp",
+          "caliMagic": "1 tsp"
+      },
+      "notes": ""
+    }
+  ]
+}

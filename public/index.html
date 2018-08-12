@@ -20,21 +20,20 @@
 
     <!---cover-page-->
     <section id="cover-page" class="page" role="region">
-      <!-- TODO: add alternate text for browsers that don't support canvas -->
       <div id="title">
-        <h1>Grow your own weed...
+        <h2>Grow your own weed...
           for medicine or fun.
-        </h1>
-        <a id="enter-button"><h2>Enter</h2></a>
-        <h2>Use this app to keep track of your watering and feeding times
+        </h2>
+        <a id="enter-button"><h1>Enter</h1></a>
+        <h3>Use this app to keep track of your watering and feeding times
           <br/>
-          ...so your weed will "grow like a weed".</h2>
+          ...so your weed will "grow like a weed".</h3>
       </div>
     </section>
 
     <!---collection of past and current grows-->
     <section id="grow-collection-page" class="page hidden" role="region">
-      <header role="banner">
+      <header id="grow-collection-title" role="banner">
         <h1>My Grows</h1>
       </header>
       <div id="grow-grid">
@@ -46,22 +45,17 @@
     <section id="first-entry-page" class="page hidden" role="region">
       <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
       <a id="first-entry-hover">
-        <h1 id="add-first-entry">Add your first entry?</h1>
+        <h2 id="add-first-entry">Add your first entry?</h2>
         <img src="images/add-first-entry.jpeg"/>
       </a>
-
     </section>
 
     <!---timeline of past entries for this grow-->
     <section id="grow-entries-page" class="page hidden" role="region">
       <header role="banner">
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
-        <div class="delete-edit">
-          <button id="delete-grow">
-            <i class="ionicons ion-android-delete delete-icon"></i>
-          </button>
-        </div>
-        <h1 id="grow-name"><i class="fa fa-caret-left back-arrow"></i></h1>
+        <button id="delete-grow" class="delete-button"><i class="ionicons ion-android-delete delete-icon"></i></button>
+        <h2 class="grow-name"></h2>
       </header>
       <div id="grow-timeline">
         <div id="left-side">
@@ -81,13 +75,23 @@
       </div>
     </section>
 
-    <!--delete grow confirmation page-->
+<!--delete grow confirmation page-->
+    <section id="no-more-entries" class="page hidden" role="region">
+      <header>
+        <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
+      </header>
+      <div>
+        <h3>You already posted an entry for this grow within the last 24 hours.</h3>
+      </div>
+    </section>
+
+
     <section id="delete-grow-page" class="delete-confirm page hidden" role="region">
       <form id="delete-grow-conf" action="#">
-        <h2>are you sure you want to delete this grow?</h2>
+        <h3>are you sure you want to delete this grow?</h3>
         <div>
-          <button id="delete-grow-confirm" type="button"><h3>yes</h3></button>
-          <button id="delete-grow-deny" type="button"><h3>no</h3></button>
+          <button id="delete-grow-confirm" class="yes-no" type="button"><h4>yes</h4></button>
+          <button id="delete-grow-deny" class="yes-no" type="button"><h4>no</h4></button>
         </div>
       </form>
     </section>
@@ -96,7 +100,7 @@
     <section id="add-grow-page" class="page hidden" role="region">
       <header role="banner">
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
-        <h1>Start a New Grow</h1>
+        <h2>Start a New Grow</h2>
       </header>
       <form id="grow-submit" name="growSubmit" action="#">
       <div>
@@ -107,13 +111,6 @@
         <label for="germination-date">Date Seed Was Planted </label>
         <input type="string" id="germination-date" name="startDate" placeholder="YYYY-DD-MM" form="grow-submit">
       </div>
-      <fieldset id="grow-type">
-        <legend>Grow Type</legend>
-        <input type="radio" name="grow-type" id="coco-grow" class="grow-type" value="Coco Coir" form="grow-submit"/>
-        <label class="grow-type" for="coco-grow">Coco Coir</label><br/>
-        <input type="radio" name="grow-type" id="hydro-grow" class="grow-type" value="Hydroponics" form="grow-submit"/>
-        <label class="grow-type" for="hydro-grow">Hydroponics</label><br/>
-      </fieldset>
       <fieldset id="strain-group">
         <legend>Strain Group</legend>
         <input type="radio" name="strain" id="indica-strain" class="strain" value="indica" form="grow-submit"/>
@@ -128,61 +125,122 @@
     </section>
 
     <!---form for adding a new grow-log entry-->
-    <!-- TODO: add an option for user to end the grow -->
     <section id="add-entry-page" class="page hidden" role="region">
-      <header role="banner">
+<!-- TODO: header on this page: top margin is calculated but not showing for some reason -->
+      <header>
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
-        <h1>Entry <span class="entry-number"></span>
-        <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
-        Week <span class="week-number"></span></h1>
+        <h2 class="grow-name"></h2>
       </header>
-
-      <div id="water-feed-instruct">
-
-        <div id="water-instruct" class="hidden">
-          <div class="feed-water-img">
-            <img src="images/water.png"/>
-          </div>
-          <div class="water-feed-text">
-            <h3>Water your grow with plain water today. <br/> Give enough water for 10-20% runoff, <br/> and remember to remove the runoff.</h3>
-          </div>
-        </div>
-
-        <div id="feed-instruct" class="hidden">
-          <div id="feed-flex">
-            <div class="feed-water-img">
-              <img src="images/feed.png"/>
-            </div>
-            <div class="water-feed-text">
-              <h3>Feed your grow with the following nutrients today:</h3>
-              <ul class="nutrient-list">
-                <li>Flora Micro: <span class="flora-micro"></span></li>
-                <li>Flora Grow: <span class="flora-grow"></span></li>
-                <li>Flora Bloom: <span class="flora-bloom"></span></li>
-                <li>Cali Magic: <span class="cali-magic"></span></li>
-              </ul>
-            </div>
-          </div>
-          <div id="feed-note">
-            <div>
-              <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/><h4>Remember</h4><img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
-            </div>
-            <ul>
-              <li>Never mix nutrients directly with each other</li>
-              <li>Add "Flora Micro" to water first</li>
-              <li>Add all nutrients before testing pH</li>
-              <li> Maintain pH of 5.5-6.5</li>
-            </ul>
-          </div>
+      <div class="entry-subheading">
+        <h3>Entry <span class="entry-number"></span>
+        <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
+        Week <span class="week-number"></span></h3>
+        <div class="entry-sub-subheading">
+          <img class="flowering-phase hidden" src="images/flowering.png"/>
+          <img class="vegetative-phase hidden" src="images/vegetative.png"/>
+          <img class="seedling-stage hidden" src="images/seedling.png"/>
+          <h4 class="entry-date"></h4>
         </div>
       </div>
+        <section id="grow-progression" class="hidden" role="region">
+            <div id="to-seedling" class="hidden progress-questions">
+              <h4>Is <span class="grow-name"></span> a seedling yet?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+            <div id="to-vegetative" class="hidden progress-questions">
+              <h4>Has <span class="grow-name"></span> progressed from the seedling stage yet?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+            <div id="to-flowering" class="hidden progress-questions">
+              <h4>Have you switched <span class="grow-name"></span> to the flowering stage since your last entry?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+            <div id="to-peak-bloom" class="hidden progress-questions">
+              <h4>Has <span class="grow-name"></span> reached peak flowering stage yet?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+            <div id="to-late-bloom" class="hidden progress-questions">
+              <h4>Has <span class="grow-name"></span> reached the late-flowering stage yet?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+            <div id="to-flush" class="hidden progress-questions">
+              <h4>Are you ready to flush <span class="grow-name"></span> yet?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+            <div id="to-end" class="hidden progress-questions">
+              <h4>Are you ready to harvest <span class="grow-name"></span>?</h4>
+              <div>
+                <button class="progress-confirm yes-no" type="button"><h4>yes</h4></button>
+                <button class="progress-deny yes-no" type="button"><h4>no</h4></button>
+              </div>
+            </div>
+        </section>
 
-      <form id="entry-submit" name="entrySubmit" action="#">
-        <textarea row="8" cols="50" id="entry-notes" placeholder="notes"></textarea>
-        <label for="phase-switch">Switching to Flowering Stage? </label>
-        <input id="phase-switch" type="checkbox" value="flowering" form="entry-submit"/>
-        <input id="submit-entry" type="submit" value="submit" form="entry-submit"/>
-      </form>
+        <section id="entry-submission" class="hidden">
+
+            <div id="water-feed-instruct" class="hidden">
+            <div id="water-instruct" class="hidden">
+              <div class="water-feed-text">
+                <img src="images/water.png"/>
+                <h4>Water your grow with plain water today.</h4>
+                <h4>Give enough water for 10-20% runoff, and remember to remove the runoff.</h4>
+              </div>
+
+         </div>
+
+            <div id="feed-instruct" class="hidden">
+              <div id="feed-flex">
+                <div class="water-feed-text">
+                  <h4>Feed your grow with the following nutrients today:</h4>
+                  <ul class="nutrient-list">
+                    <li>Flora Micro: <span class="flora-micro"></span></li>
+                    <li>Flora Grow: <span class="flora-grow"></span></li>
+                    <li>Flora Bloom: <span class="flora-bloom"></span></li>
+                    <li>Cali Magic: <span class="cali-magic"></span></li>
+                  </ul>
+                </div>
+            <!--  <div class="feed-water-img"> -->
+                <img src="images/feed.png"/>
+            <!--  </div>  -->
+              </div>
+              <div id="feed-note">
+                <div>
+                  <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/><h4>Remember</h4><img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
+                </div>
+                <ul>
+                  <li>Never mix nutrients directly with each other</li>
+                  <li>Add "Flora Micro" to water first</li>
+                  <li>Add all nutrients before testing pH</li>
+                  <li> Maintain pH of 5.5-6.5</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <form id="entry-submit" name="entrySubmit" action="#">
+            <textarea row="10" cols="25" id="entry-notes" placeholder="notes"></textarea>
+            <input id="submit-entry" type="submit" value="submit" form="entry-submit"/>
+          </form>
+        </section>
+
     </section>
 
 <!-- TODO: add name of grow as header at top -->
@@ -190,35 +248,38 @@
     <section id="view-entry-page" class="page hidden" role="region">
       <header>
         <button class="back-arrow" type="button"><i class="fa fa-caret-left"></i></button>
-        <div class="delete-edit">
-          <button id="delete-entry">
+          <button id="delete-entry" class="delete-button">
             <i class="ionicons ion-android-delete delete-icon"></i>
           </button>
-        </div>
-        <h1>Entry <span class="entry-number"></span>
-        <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
-        Week <span class="week-number"></span></h1>
-        <div id="entry-subheading">
-          <img id="flowering-phase" class="hidden" src="images/flowering.png"/>
-          <img id="vegetative-phase" class="hidden" src="images/vegetative.png"/>
-          <h2 id="past-entry-date"></h2>
-        </div>
+        <h2 class="grow-name"></h2>
       </header>
-      <div>
-        <h3 id="fed" class="hidden">I fed <span class="my-grow"></span>:</h3>
+      <div class="entry-subheading">
+        <h3>Entry <span class="entry-number"></span>
+        <img class="circle-icon" src="images/circle.svg" alt="decorative circle"/>
+        Week <span class="week-number"></span></h3>
+          <div class="entry-sub-subheading">
+            <img class="flowering-phase hidden" src="images/flowering.png"/>
+            <img class="vegetative-phase hidden" src="images/vegetative.png"/>
+            <img class="seedling-stage hidden" src="images/seedling.png"/>
+            <h4 class="entry-date"></h4>
+          </div>
+      </div>
+      <main role="main">
+        <h4 id="fed" class="hidden">I fed <span class="my-grow"></span>:</h4>
         <ul class="nutrient-list hidden">
           <li>Flora Micro: <span class="flora-micro"></span></li>
           <li>Flora Grow: <span class="flora-grow"></span></li>
           <li>Flora Bloom: <span class="flora-bloom"></span></li>
           <li>Cali Magic: <span class="cali-magic"></span></li>
         </ul>
-        <h3 id="watered" class="hidden">I watered <span class="my-grow"></span>.</h3>
-        <div id="notes-box">
-          <button id="edit-entry">
-            <i class="ionicons ion-edit edit-icon"></i>
-          </button>
-          <p id="notes"></p>
-        </div>
+        <h4 id="watered" class="hidden">I watered <span class="my-grow"></span>.</h4>
+      </main>
+
+      <div id="notes-box">
+        <button id="edit-entry">
+          <i class="ionicons ion-edit edit-icon"></i>
+        </button>
+        <p id="notes"></p>
       </div>
       <!--form is hidden unless user selects the edit-entry icon -->
       <form id="entry-edit" class="hidden" name="entryEdit" action="#">
@@ -227,7 +288,6 @@
             <i class="fa fa-times"></i>
           </button>
           <textarea id="edit-notes" name="editNotes">
-            <!--value is dynamically generated by the original notes -->
           </textarea>
         </div>
         <!--value is dynamically generated by which entry user is on -->
@@ -238,10 +298,10 @@
 <!--delete entry confirmation page-->
 <section id="delete-entry-page" class="delete-confirm page hidden" role="region">
   <form id="delete-entry-conf" action="#">
-    <h2>are you sure you want to delete this entry?</h2>
+    <h3>are you sure you want to delete this entry?</h3>
     <div>
-      <button id="delete-entry-confirm" type="button"><h3>yes</h3></button>
-      <button id="delete-entry-deny" type="button"><h3>no</h3></button>
+      <button id="delete-entry-confirm" class="yes-no" type="button"><h4>yes</h4></button>
+      <button id="delete-entry-deny" class="yes-no" type="button"><h4>no</h4></button>
     </div>
   </form>
 </section>
