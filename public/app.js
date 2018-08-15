@@ -30,7 +30,7 @@ function getNutrientInstructs(entryDeets) {
 
 function getAllGrows() {
   return new Promise((resolve, reject) => {
-    console.log('getAllGrows() is making a request to this endpoint: /grows');
+    //console.log('getAllGrows() is making a request to this endpoint: /grows');
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/grows');
     xhr.onload = () => {
