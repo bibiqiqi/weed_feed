@@ -14,11 +14,9 @@ const entrySchema = mongoose.Schema({
   phaseProgress: {
     phase: String,
     phaseStartDate: String,
-    stage: String,
-    week: Number
+    week: Number,
+    stage: String
   },
-  phase: String,
-  stage: String,
   wasWatered: Boolean,
   wasFed: Boolean,
   nutrients: {
@@ -34,6 +32,7 @@ const growSchema = mongoose.Schema({
   shortId: String,
   name: {type: String, required: true},
   startDate: {type: String, required: true},
+  //endDate: {type: String, required: true},
   endDate: mongoose.Schema.Types.Mixed,
   strain: {type: String, required: true},
   entries: [entrySchema]
@@ -65,10 +64,9 @@ entrySchema.methods.serialize = function() {
     phaseProgress: {
       phase: this.phaseProgress.phase,
       phaseStartDate: moment(this.phaseProgress.phaseStartDate).format('YYYY-MM-DD'),
-      stage: this.phaseProgress.stage,
-      week: this.phaseProgress.week
+      week: this.phaseProgress.week,
+      stage: this.phaseProgress.stage
     },
-    stage: this.stage,
     wasWatered: this.wasWatered,
     wasFed: this.wasFed,
     nutrients: {

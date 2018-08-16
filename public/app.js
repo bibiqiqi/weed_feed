@@ -30,7 +30,7 @@ function getNutrientInstructs(entryDeets) {
 
 function getAllGrows() {
   return new Promise((resolve, reject) => {
-    //console.log('getAllGrows() is making a request to this endpoint: /grows');
+    console.log('getAllGrows() is making a request to this endpoint: /grows');
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/grows');
     xhr.onload = () => {
@@ -178,14 +178,17 @@ function goBack(currentPageId, returningPageId, selector, newPageName = 0) {
   };
 }
 
-function goBackFromEntry(resolveObj) {
-  if (resolveObj.number === 1 ) {
-    const backArrow = document.querySelector('#add-entry-page .back-arrow');
-    backArrow.onclick = function () {
-      hideEntryInstructs();
-      hidePhaseIcon("add-entry-page", "grow-collection-page", "grows");
+function goBackFromEntry(resolveObj = 0) {
+  if (resolveObj !== 0) {
+    if (resolveObj.number === 1 ) {
+      const backArrow = document.querySelector('#add-entry-page .back-arrow');
+      backArrow.onclick = function () {
+        hideEntryInstructs();
+        hidePhaseIcon("add-entry-page", "grow-collection-page", "grows");
       };
-  } else if (appData.page === "get-first-entry-stage") {
+    }
+  }
+  if (appData.page === "get-first-entry-stage") {
     const backArrow = document.querySelector('#add-entry-page .back-arrow');
     backArrow.onclick = function () {
       addClass(document.getElementById("grow-progression"), 'hidden');
@@ -276,7 +279,7 @@ function getRandomImage() {
 
 function draw() {
   getRandomImage().then(function(img) {
-   //console.log('getRandomImage() is passing', img, 'to drawWeed');
+   console.log('getRandomImage() is passing', img, 'to drawWeed');
    return drawWeed(img);
    });
 }
@@ -608,7 +611,6 @@ function onProgressConfirm(resolveObj) {
 
 function validateGrowSubmit() {
   return new Promise ((resolve, reject) => {
-    debugger;
     const growSubmit = {};
     const nameField = document.getElementById("new-grow-name").value;
     if (nameField === "") {
@@ -931,7 +933,7 @@ function main() {
     }); //that will add key/value pairs to entryDeets, depending on which one user clicks;
   }  else if (appData.page === "timeline") {
     renderFullTimeline().then(function(resolve){
-      //console.log('renderFullTimeline is passing', resolve, 'to displayGrowTimeline()');
+      console.log('renderFullTimeline is passing', resolve, 'to displayGrowTimeline()');
       return displayGrowTimeline(resolve);
     }).then(function(){
       const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];

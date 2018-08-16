@@ -4,7 +4,6 @@
     "startDate": "2018-05-20",
     "endDate": "2018-07-20",
     "strain": "indica",
-    "growType": "coco coir",
     "entries": [
       {
         "shortId": "MBZIJ3",
@@ -252,7 +251,6 @@
   "startDate": "2018-05-20",
   "endDate": null,
   "strain": "sativa",
-  "growType": "coco coir",
   "entries": [
     {
       "shortId": "3ZJWDB",
@@ -456,7 +454,6 @@
   "startDate": "2018-05-20",
   "endDate": null,
   "strain": "indica",
-  "growType": "coco coir",
   "entries": [
     {
       "shortId": "E1CHYM",
@@ -616,7 +613,6 @@
   "startDate": "2018-05-20",
   "endDate": null,
   "strain": "indica",
-  "growType": "coco coir",
   "entries": [
     {
       "shortId": "6HQJU3",
@@ -754,7 +750,6 @@
   "startDate": "2018-05-20",
   "endDate": null,
   "strain": "indica",
-  "growType": "coco coir",
   "entries": [
     {
       "shortId": "T4NU43",
@@ -849,7 +844,6 @@
   "startDate": "2018-05-20",
   "endDate": null,
   "strain": "indica",
-  "growType": "coco coir",
   "entries": [
     {
       "shortId": "P53X47",

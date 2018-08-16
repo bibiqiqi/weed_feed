@@ -66,7 +66,6 @@ app.get( '/nutrient-schedules', (req, res) => {
  });
 
  app.post('/entries/:growId', (req, res) => {
-   console.log(req);
    const requiredFields = ['number','date', 'week', 'phaseProgress', 'wasWatered', 'wasFed', 'nutrients', 'notes'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
@@ -75,7 +74,8 @@ app.get( '/nutrient-schedules', (req, res) => {
        return res.status(400).send(message);
      }
    }
-  Grow.findOneAndUpdate(
+  Grow.
+  findOneAndUpdate(
     {shortId: req.params.growId},
     {$push: {
       entries:
@@ -108,7 +108,6 @@ app.get( '/nutrient-schedules', (req, res) => {
 });
 
 app.put('/grows/:growId', (req, res) => {
-  console.log(req.body);
   const updated = {};
   const updateableFields = ['endDate'];
   updateableFields.forEach(field => {

@@ -13,34 +13,39 @@ chai.use(chaiHttp);
 
 const {testDataOne, testDataTwo, nutrientSchedule} = require('./test-data');
 
+//// TODO: make sure this is correct for new data scheme
 function generateFakeGrow() {
   return {
-    name: 'Brain Melt',
-    startDate: '2018-06-4',
-    endDate: '',
-    strain: 'Indica',
+    shortId: "D4PXJ5",
+    name: "Brain Melt",
+    startDate: "2018-05-20",
+    endDate: null,
+    strain: "indica",
     entries: []
   };
 }
 
 function generateFakeEntry() {
   return {
-    growId: '',
-    shortId: 'sas54545',
-    number: 1,
-    date: '2018-06-5',
-    week: 1,
-    phase: 'vegetative',
-    wasWatered: true,
-    wasFed: false,
-    nutrients: {
-      floraMicro: '',
-      floraGrow: '',
-      floraBloom: '',
-      caliMagic: ''
-    },
-    notes: 'In sed diam vitae quam dictum bibendum eget eu dui. Nullam in laoreet sapien. Nunc molestie placerat massa. Ut ultricies, purus vitae placerat egestas, nunc elit luctus ligula, ut placerat nisi eros ut felis. Duis posuere sed dolor nec facilisis. Quisque viverra in ipsum ut maximus.'
-  };
+       number: 11,
+       date: "2018-07-14",
+       week: 8,
+       phaseProgress: {
+          phase: "flowering",
+          phaseStartDate: "2018-06-06",
+          week: 5,
+          stage: "flush"
+       },
+       wasWatered: true,
+       wasFed: false,
+       nutrients:{
+          floraMicro: "0",
+          floraGrow: "0",
+          floraBloom: "0",
+          caliMagic: "0"
+       },
+       notes: ""
+    };
 }
 
 function seedGrowData() {
@@ -65,6 +70,7 @@ function tearDownDb() {
 }
 
 before(function() {
+  //console.log(TEST_DATABASE_URL);
    return runServer(TEST_DATABASE_URL);
  });
 
@@ -78,7 +84,7 @@ before(function() {
 
 afterEach(function() {
   return tearDownDb();
- });
+});
 
  after(function() {
    return closeServer();
@@ -146,31 +152,18 @@ describe('GET endpoint', function() {
 });
 
 describe('GET endpoint', function() {
-    // strategy:
-    //  1. Get an existing grow from db
-    //  2. Make a PUT request to update the notes field of an entry
-    // in that db
-    //  3. Prove the entry returned by request contains data we sent
-    //  4. Prove the entry in db is correctly updated
-    it('should get the appropriate nutrient schedule', function() {
-      let scheduleName;
-      return Schedule
-        .findOne()
-        .then(function(schedule) {
-          console.log(schedule);
-          scheduleName = schedule.name;
-          return chai.request(app)
-          .get(`/nutrient-schedules/${scheduleName}`)
-        })
-        .then(function(res) {
-          expect(res).to.have.status(200);
-          expect(res).to.be.json;
-          console.log(res.body);
-          expect(res.body).to.include.keys(
-            'name', 'schedule');
-        });
-    });
+    it('should get the appropriate nutrient schedules', function() {
+      let res;
+      return chai.request(app)
+      .get(`/nutrient-schedules`)
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(200);
+        expect(res.body).to.include.keys(
+          'name', 'schedule');
+      });
   });
+});
 
 describe('POST Grow endpoint', function() {
   // strategy:
@@ -218,9 +211,9 @@ describe('POST Entries endpoint', function() {
     return Grow
       .findOne()
       .then(function(grow) {
-        newEntry.growId = grow.id;
+        let growId = grow.shortId;
         return chai.request(app)
-          .post('/entries/growId')
+          .post(`/entries/${growId}`)
           .send(newEntry)
           .then(function(res) {
             const addedEntry = res.body.entries[res.body.entries.length-1];
@@ -228,12 +221,15 @@ describe('POST Entries endpoint', function() {
             expect(res).to.be.json;
             expect(addedEntry).to.be.a('object');
             expect(addedEntry).to.include.keys(
-              'number', 'date', 'week', 'phase', 'wasWatered', 'wasFed', 'nutrients', 'notes');
+              'shortId', 'number', 'date', 'week', 'phaseProgress', 'wasWatered', 'wasFed', 'nutrients', 'notes');
             expect(addedEntry._id).to.not.be.null;
             expect(addedEntry.number).to.equal(newEntry.number);
             expect(addedEntry.date).to.equal(newEntry.date);
             expect(addedEntry.week).to.equal(newEntry.week);
-            expect(addedEntry.phase).to.equal(newEntry.phase);
+            expect(addedEntry.phaseProgress.phase).to.equal(newEntry.phaseProgress.phase);
+            expect(addedEntry.phaseProgress.phaseStartDate).to.equal(newEntry.phaseProgress.phaseStartDate);
+            expect(addedEntry.phaseProgress.week).to.equal(newEntry.phaseProgress.week);
+            expect(addedEntry.phaseProgress.stage).to.equal(newEntry.phaseProgress.stage);
             expect(addedEntry.wasWatered).to.equal(newEntry.wasWatered);
             expect(addedEntry.wasFed).to.equal(newEntry.wasFed);
             expect(addedEntry.nutrients.floraMicro).to.equal(newEntry.nutrients.floraMicro);
@@ -241,14 +237,17 @@ describe('POST Entries endpoint', function() {
             expect(addedEntry.nutrients.floraBloom).to.equal(newEntry.nutrients.floraBloom);
             expect(addedEntry.nutrients.caliMagic).to.equal(newEntry.nutrients.caliMagic);
             expect(addedEntry.notes).to.equal(newEntry.notes);
-            return(Grow.findById(newEntry.growId))
+            return(Grow.findOne({shortId: res.body.shortId}))
           })
           .then(function(grow) {
             const addedEntry = grow.entries[grow.entries.length-1];
             expect(addedEntry.number).to.equal(newEntry.number);
             expect(addedEntry.date).to.equal(newEntry.date);
             expect(addedEntry.week).to.equal(newEntry.week);
-            expect(addedEntry.phase).to.equal(newEntry.phase);
+            expect(addedEntry.phaseProgress.phase).to.equal(newEntry.phaseProgress.phase);
+            expect(addedEntry.phaseProgress.phaseStartDate).to.equal(newEntry.phaseProgress.phaseStartDate);
+            expect(addedEntry.phaseProgress.week).to.equal(newEntry.phaseProgress.week);
+            expect(addedEntry.phaseProgress.stage).to.equal(newEntry.phaseProgress.stage);
             expect(addedEntry.wasWatered).to.equal(newEntry.wasWatered);
             expect(addedEntry.wasFed).to.equal(newEntry.wasFed);
             expect(addedEntry.nutrients.floraMicro).to.equal(newEntry.nutrients.floraMicro);
@@ -260,6 +259,32 @@ describe('POST Entries endpoint', function() {
   });
 });
 
+describe('PUT endpoint', function() {
+    // strategy:
+    //  1. Get an existing grow from db
+    //  2. Make a PUT request to update the notes field of an entry
+    // in that db
+    //  3. Prove the entry returned by request contains data we sent
+    //  4. Prove the entry in db is correctly updated
+    it('should update the endDate field for a grow' , function() {
+      const updateData = {
+        endDate: '2018-06-01'
+      };
+      let growId = "QLMYDF";
+      let entryId;
+      return chai.request(app)
+        .put(`/grows/${growId}`)
+        .send(updateData)
+        .then(function(res) {
+          expect(res).to.have.status(204);
+          return Grow.findOne({shortId : growId});
+        })
+        .then(function(grow) {
+          expect(grow.endDate).to.equal(updateData.endDate);
+      });
+  });
+});
+
  describe('PUT endpoint', function() {
      // strategy:
      //  1. Get an existing grow from db
@@ -267,22 +292,24 @@ describe('POST Entries endpoint', function() {
      // in that db
      //  3. Prove the entry returned by request contains data we sent
      //  4. Prove the entry in db is correctly updated
-     it('should update fields you send over', function() {
+     it('should update the notes field for an entry' , function() {
        const updateData = {
          notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum augue justo, in imperdiet elit pellentesque ut. Donec ornare id turpis in viverra. Nullam lacinia nibh felis, ut facilisis nulla egestas quis. Phasellus et ligula vulputate, hendrerit diam molestie, iaculis.'
        };
+       let growId, entryId;
        return Grow
          .findOne()
          .then(function(grow) {
-           updateData.growId = grow.id;
+           growId = grow.shortId;
+           entryId = grow.entries[0].shortId;
            updateData.id = grow.entries[0].id;
            return chai.request(app)
-             .put(`/entries/${updateData.id}`)
+             .put(`/entries/${growId}/${entryId}`)
              .send(updateData);
          })
          .then(function(res) {
            expect(res).to.have.status(204);
-           return Grow.findOne({_id : updateData.growId, "entries._id" : updateData.id });
+           return Grow.findOne({shortId : growId, "entries.shortId" : entryId });
          })
          .then(function(grow) {
            expect(grow.entries[0].notes).to.equal(updateData.notes);
@@ -291,23 +318,46 @@ describe('POST Entries endpoint', function() {
    });
 
    describe('DELETE endpoint', function(){
-     it('should delete a grow-log entry by id', function(){
-       const deleteEntry = {};
+     it('should delete a grow by id', function(){
+       const deleteGrow= {};
+       let growId;
        return Grow
          .findOne()
          .then(function(grow) {
-           deleteEntry.growId = grow.id;
-           deleteEntry.id = grow.entries[0].id;
+           growId = grow.shortId;
            return chai.request(app)
-            .delete(`/entries/${deleteEntry.id}`)
+            .delete(`/grows/${growId}`)
+            .send(deleteGrow);
+          })
+          .then(function(res) {
+            expect(res).to.have.status(204);
+            return Grow.findOne({shortId : growId});
+          })
+          .then(function(grow) {
+            expect(grow).to.be.null;
+      });
+    });
+   });
+
+   describe('DELETE endpoint', function(){
+     it('should delete a grow-log entry by id', function(){
+       const deleteEntry = {};
+       let growId, entryId;
+       return Grow
+         .findOne()
+         .then(function(grow) {
+           growId = grow.shortId;
+           entryId = grow.entries[0].shortId;
+           return chai.request(app)
+            .delete(`/entries/${growId}/${entryId}`)
             .send(deleteEntry);
           })
           .then(function(res) {
             expect(res).to.have.status(204);
-            return Grow.findOne({_id : deleteEntry.growId});
+            return Grow.findOne({shortId : growId, "entries.shortId" : entryId });
           })
           .then(function(grow) {
-            expect(grow.entries.id(deleteEntry.id)).to.be.null;
+            expect(grow).to.be.null;
       });
-     })
+    });
    });
