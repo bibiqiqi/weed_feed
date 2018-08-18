@@ -89,10 +89,6 @@ header:not(#grow-collection-title) {
   padding: 2rem 1rem;
 }
 
-header h2 {
-  clear: both;
-}
-
 /*classes that span multiple pages */
 .hidden {
   display: none !important;
@@ -458,7 +454,8 @@ input[type="submit"] {
 }
 
 #water-feed-instruct h4 {
-  line-height: 2rem;
+  line-height: 1.5rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 500;
 }
