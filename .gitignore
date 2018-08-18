@@ -2,3 +2,4 @@ design_files/
 node_modules/
 images/
 tasks.rtf
+process-vars.env
