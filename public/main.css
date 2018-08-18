@@ -642,8 +642,13 @@ input[type="submit"] {
   }
 
   #cover-page a {
-      margin: 2rem auto;
-      width: 20rem;
+      margin: 1rem auto;
+      width: 17rem;
+  }
+
+  #cover-page h1 {
+    line-height: 5rem;
+    font-size: 5rem;
   }
 
   #grow-grid {
@@ -656,7 +661,7 @@ input[type="submit"] {
   }
 
   #grow-collection-page h3 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height: 1rem;
   }
 
@@ -842,12 +847,11 @@ input[type="submit"] {
     right: 0;
     top: 14%;
     height: auto;
-    padding: 12rem 2rem;
+    padding: 4.5rem 2rem;
     margin: auto;
     visibility: hidden;
     line-height: 6rem;
     font-size: 7rem;
-    top: 14%;
     height: auto;
 
   }
