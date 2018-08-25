@@ -12,7 +12,7 @@ const appData = {
 function getNutrientInstructs(entryDeets) {
   const stage = entryDeets.phaseProgress.stage;
   return new Promise ((resolve, reject) => {
-    //console.log(`getNutrientInstructs() is making a request to this endpoint: /nutrient-schedules`);
+    console.log(`getNutrientInstructs() is making a request to this endpoint: /nutrient-schedules`);
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `/nutrient-schedules`);
     xhr.onload = () => {
@@ -30,13 +30,13 @@ function getNutrientInstructs(entryDeets) {
 
 function getAllGrows() {
   return new Promise((resolve, reject) => {
-    //console.log('getAllGrows() is making a request to this endpoint: /grows');
+    console.log('getAllGrows() is making a request to this endpoint: /grows');
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/grows');
     xhr.onload = () => {
       const parsedData = JSON.parse(xhr.response);
       appData.allGrows = parsedData;
-      //console.log('getAllGrows assigned all the grows in the db to appData.allGrows:', appData.allGrows);
+      console.log('getAllGrows assigned all the grows in the db to appData.allGrows:', appData.allGrows);
       return (xhr.status === 200 ? resolve(parsedData) : reject(Error(xhr.statusText)));
     };
     xhr.send();
@@ -45,12 +45,12 @@ function getAllGrows() {
 
 function postGrow(grow) {
   return new Promise((resolve, reject) => {
-    //console.log('postGrow() is making a request with', grow, 'to this endpoint: /grows');
+    console.log('postGrow() is making a request with', grow, 'to this endpoint: /grows');
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/grows', true);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onload = () => {
-      //console.log(xhr.response);
+      console.log(xhr.response);
       const parsedResp = JSON.parse(xhr.response);
       return (xhr.status === 201 ? resolve(parsedResp) : reject(Error(xhr.statusText)));
     };
@@ -61,7 +61,7 @@ function postGrow(grow) {
 function postEntry(entry) {
   return new Promise((resolve, reject) => {
     const growId = appData.allGrows.grows[appData.currentGrowIndex].shortId;
-    //console.log('postEntry() is making a request with', entry, 'to this endpoint: /entries/', growId);
+    console.log('postEntry() is making a request with', entry, 'to this endpoint: /entries/', growId);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/entries/${growId}`, true);
     xhr.setRequestHeader("Content-type", "application/json");
@@ -77,7 +77,7 @@ function putGrow(edit) {
   return new Promise ((resolve, reject) => {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
     const growId = thisGrow.shortId;
-    //console.log('putGrow() is making a request with', edit, 'to this endpoint: /entries/', growId);
+    console.log('putGrow() is making a request with', edit, 'to this endpoint: /entries/', growId);
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', `/grows/${growId}`, true);
     xhr.setRequestHeader("Content-type", "application/json", "charset=utf-8");
@@ -93,7 +93,7 @@ function putEntry(edit) {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
     const growId = thisGrow.shortId;
     const entryId = thisGrow.entries[appData.currentEntryIndex].shortId;
-    //console.log('putEntry() is making a request with', edit, 'to this endpoint: /entries', growId, '/', entryId);
+    console.log('putEntry() is making a request with', edit, 'to this endpoint: /entries', growId, '/', entryId);
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', `/entries/${growId}/${entryId}`, true);
     xhr.setRequestHeader("Content-type", "application/json", "charset=utf-8");
@@ -107,7 +107,7 @@ function putEntry(edit) {
 function deleteGrow() {
   return new Promise ((resolve, reject) => {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex], growId = thisGrow.shortId, growName = thisGrow.name;
-    //console.log('deleteGrow() is making a request to this endpoint: /grows/', growId);
+    console.log('deleteGrow() is making a request to this endpoint: /grows/', growId);
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", `grows/${growId}/`, true);
     xhr.onload = () => {
@@ -121,7 +121,7 @@ function deleteEntry() {
   return new Promise ((resolve, reject) => {
     const thisGrow = appData.allGrows.grows[appData.currentGrowIndex], growId = thisGrow.shortId, growName = thisGrow.name;
     const thisEntry = thisGrow.entries[appData.currentEntryIndex], entryId = thisEntry.shortId, entryNumber = thisEntry.number;
-    //console.log('deleteEntry() is making a request to this endpoint: /entries/', growId, '/', entryId);
+    console.log('deleteEntry() is making a request to this endpoint: /entries/', growId, '/', entryId);
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", `entries/${growId}/${entryId}`, true);
     xhr.onload = () => {
@@ -162,10 +162,10 @@ function removeClass(elements, myClass) {
 function turnPage(previousPage, newPage, newPageName = 0) {
   addClass(document.getElementById(previousPage),'hidden');
   removeClass(document.getElementById(newPage),'hidden');
-  //console.log('turnPage() is turning page from', previousPage, 'to', newPage);
+  console.log('turnPage() is turning page from', previousPage, 'to', newPage);
   if (newPageName !== 0) {
     appData.page = newPageName;
-    //console.log('turnPage() set appData.page equal to ', appData.page);
+    console.log('turnPage() set appData.page equal to ', appData.page);
     main();
   }
 }
@@ -279,7 +279,7 @@ function getRandomImage() {
 
 function draw() {
   getRandomImage().then(function(img) {
-   //console.log('getRandomImage() is passing', img, 'to drawWeed');
+   console.log('getRandomImage() is passing', img, 'to drawWeed');
    return drawWeed(img);
    });
 }
@@ -507,7 +507,7 @@ function displayEntryHeader(page, entryDeets) {
 function displayEntry() {
   const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
   const thisEntry = thisGrow.entries[appData.currentEntryIndex];
-  //console.log('displayEntry() is passing "#view-entry-page" to displayEntryHeader');
+  console.log('displayEntry() is passing "#view-entry-page" to displayEntryHeader');
   displayEntryHeader('#view-entry-page');
     if (thisEntry.wasWatered === true) {
       removeClass(document.getElementById("watered"),'hidden');
@@ -533,7 +533,7 @@ function displayEntry() {
 
 function displayGrowProgressQuestion(resolveObj) {
   return new Promise ((resolve, reject) => {
-    //console.log('displayGrowProgressQuestion()');
+    console.log('displayGrowProgressQuestion()');
     removeClass(document.getElementById("grow-progression"),'hidden');
     removeClass(document.getElementById(resolveObj.parentId),'hidden');
     resolve(resolveObj);
@@ -544,7 +544,7 @@ function displayEntryInstructsHeader(resolveObj) {
   const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
   displayEntryHeader('#add-entry-page', resolveObj.entryDeets);
   document.querySelectorAll(`#${resolveObj.parentId} .grow-name`)[0].innerHTML = thisGrow.name;
-  //console.log('displayEntryInstructsHeader() is passing', resolveObj, 'to');
+  console.log('displayEntryInstructsHeader() is passing', resolveObj, 'to');
   onProgressConfirm(resolveObj); //if user clicks, onProgressConfirm returns an alterned entryDeets
   onProgressDeny(resolveObj);
 }
@@ -555,13 +555,13 @@ function displayEntryInstructsHeader(resolveObj) {
 function onProgressDeny(resolveObj) {
     const userDeny = document.querySelector(`#${resolveObj.parentId} .progress-deny`);
     userDeny.onclick = function() {
-      //console.log('onProgressDeny()');
+      console.log('onProgressDeny()');
       addClass(document.getElementById("grow-progression"), 'hidden');
       addClass(document.getElementById(resolveObj.parentId), 'hidden');
       appData.entryDeets = resolveObj.entryDeets;
-      //console.log('onProgressDeny() set appData.entryDeets equal to', appData.page);
+      console.log('onProgressDeny() set appData.entryDeets equal to', appData.page);
       appData.page = "add-entry";
-      //console.log('onProgressDeny() set appData.page equal to', appData.page, 'now');
+      console.log('onProgressDeny() set appData.page equal to', appData.page, 'now');
       main();
     };
 }
@@ -570,7 +570,7 @@ function onProgressConfirm(resolveObj) {
   const phaseProgress = resolveObj.entryDeets.phaseProgress;
   const userConfirms = document.querySelector(`#${resolveObj.parentId} .progress-confirm`);
   userConfirms.onclick = function () {
-    //console.log('onProgressConfirm()');
+    console.log('onProgressConfirm()');
     if (resolveObj.parentId === "to-seedling") {
       resolveObj.entryDeets.phaseProgress.stage = "seedling";
     } else if (resolveObj.parentId === "to-vegetative") {
@@ -592,18 +592,18 @@ function onProgressConfirm(resolveObj) {
     addClass(document.getElementById(resolveObj.parentId), 'hidden');
     if (phaseProgress.stage === "end") {
       const edit = {endDate: moment().format('YYYY-MM-DD')};
-      //console.log('User ended the grow and onProgressConfirm() is passing', edit, 'to putGrow');
+      console.log('User ended the grow and onProgressConfirm() is passing', edit, 'to putGrow');
       putGrow(edit).then(function(resolve){
         appData.allGrows = '';
-        //console.log('onProgressConfirm set appData.allGrows equal to an empty string now');
+        console.log('onProgressConfirm set appData.allGrows equal to an empty string now');
         turnPage("add-entry-page", "grow-collection-page", "grows");
       });
     }
     else {
       appData.entryDeets = resolveObj.entryDeets;
-      //console.log('onProgressConfirm() set appData.entryDeets equal to', appData.entryDeets);
+      console.log('onProgressConfirm() set appData.entryDeets equal to', appData.entryDeets);
       appData.page = "add-entry";
-      //console.log('onProgressConfirm() set appData.page equal to', appData.page);
+      console.log('onProgressConfirm() set appData.page equal to', appData.page);
       main();
     }
   };
@@ -655,12 +655,12 @@ function onSubmitGrowClick() {
       return postGrow(resolve);
     }).then(function(resolve){
       appData.allGrows = '';
-      //console.log('onSubmitGrowClick() set appData.allGrows to an empty string');
+      console.log('onSubmitGrowClick() set appData.allGrows to an empty string');
       return getAllGrows(resolve);
     }).then(function(resolve){
-      //console.log('onSubmitGrowClick() called getAllGrows():', resolve);
+      console.log('onSubmitGrowClick() called getAllGrows():', resolve);
       appData.currentGrowIndex = resolve.grows.length-1;
-      //console.log('onSubmitGrowClick() set appData.currentGrowIndex to', appData.currentGrowIndex);
+      console.log('onSubmitGrowClick() set appData.currentGrowIndex to', appData.currentGrowIndex);
       turnPage("add-grow-page", "first-entry-page", "add-first-entry");
     });
   };
@@ -671,17 +671,17 @@ function onSubmitEntryClick(entrySubmit) {
   submitEntry.onclick = function () {
     event.preventDefault();
     entrySubmit.notes = document.getElementById("entry-notes").value;
-    //console.log('onSubmitEntryClick is passing:', entrySubmit, 'to postEntry()');
+    console.log('onSubmitEntryClick is passing:', entrySubmit, 'to postEntry()');
     postEntry(entrySubmit).then(function(){
       appData.allGrows = '';
-      //console.log('onSubmitEntryClick() set appData.allGrows to an empty string');
+      console.log('onSubmitEntryClick() set appData.allGrows to an empty string');
       appData.currentEntryIndex = '';
-      //console.log('onSubmitEntryClick() set appData.currentEntryIndex to an empty string');
+      console.log('onSubmitEntryClick() set appData.currentEntryIndex to an empty string');
       appData.entryDeets = '';
-      //console.log('onSubmitEntryClick() set appData.entryDeets to an empty string now');
+      console.log('onSubmitEntryClick() set appData.entryDeets to an empty string now');
       return getAllGrows();
     }).then(function(resolve){
-      //console.log('onSubmitEntryClick called getAllGrows:', resolve);
+      console.log('onSubmitEntryClick called getAllGrows:', resolve);
       hideEntryInstructs();
       hidePhaseIcon("add-entry-page", "grow-entries-page", "timeline");
     });
@@ -693,7 +693,7 @@ function onEditEntryClick() {
   const thisEntry = thisGrow.entries[appData.currentEntryIndex];
   const editEntry = document.getElementById("edit-entry");
   editEntry.onclick = function () {
-    //console.log("edit-entry button was clicked");
+    console.log("edit-entry button was clicked");
     turnPage("notes-box", "entry-edit");
     onSubmitEditClick();
     const exitEdit = document.getElementById("exit-edit");
@@ -709,13 +709,13 @@ function onSubmitEditClick() {
     event.preventDefault();
     const edit = {};
     edit.notes = document.getElementById("edit-notes").value;
-    //console.log('onSubmitEditClick() is passing:', edit, 'to putEntry()');
+    console.log('onSubmitEditClick() is passing:', edit, 'to putEntry()');
     putEntry(edit).then(function(){
         appData.allGrows = '';
-        //console.log('onSubmitEditClick() is setting appData.allGrows to an empty string now');
+        console.log('onSubmitEditClick() is setting appData.allGrows to an empty string now');
         return getAllGrows();
     }).then(function(resolve){
-      //console.log('onSubmitEditClick() called getAllGrows():', resolve);
+      console.log('onSubmitEditClick() called getAllGrows():', resolve);
       turnPage("view-entry-page", "grow-entries-page", "timeline");
     });
   };
@@ -760,7 +760,7 @@ function calculateNeededUserInput() {
       resolveObj.parentId = "to-end";
     }
     appData.entryDeets = entryDeets;
-    //console.log('calculateNeededUserInput() set appData.entryDeets equal to', appData.entryDeets);
+    console.log('calculateNeededUserInput() set appData.entryDeets equal to', appData.entryDeets);
     resolve(resolveObj);
   });
 }
@@ -851,10 +851,10 @@ function onEnterClick() {
 function onGrowClick() {
   const growLinks = Array.from(document.getElementsByClassName("grow-links")).forEach(function(element) {
     element.onclick =  function () {
-      //console.log('grow was clicked');
+      console.log('grow was clicked');
       const imageId = this.getAttribute('id');
       appData.currentGrowIndex = Number(imageId.slice(5, imageId.length));
-      //console.log('onGrowClick() set appData.currentGrowIndex to ', appData.currentGrowIndex);
+      console.log('onGrowClick() set appData.currentGrowIndex to ', appData.currentGrowIndex);
       const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
       if (thisGrow.entries.length < 1) {
         turnPage("grow-collection-page", "first-entry-page", "add-first-entry");
@@ -873,12 +873,12 @@ function onAddClick(selector, previousPage, nextPage, newPageName) {
 }
 
 function onEntryClick() {
-  //console.log('onEntryClick() is running');
+  console.log('onEntryClick() is running');
   Array.from(document.getElementsByClassName("past-entry")).forEach(function(element) {
     element.onclick = function () {
       const entryId = this.getAttribute('id');
       appData.currentEntryIndex = Number(entryId.slice(6, entryId.length));
-      //console.log('onEntryClick() set appData.currentEntryIndex equal to ', appData.currentEntryIndex);
+      console.log('onEntryClick() set appData.currentEntryIndex equal to ', appData.currentEntryIndex);
       turnPage("grow-entries-page", "view-entry-page", "view-entry");
     };
   });
@@ -894,7 +894,7 @@ function onDeleteClick(selector, previousPage, newPage, newPageName) {
 function onDeleteConfirm(selector, previousPage, newPage, newPageName, deleteFunction) {
   const deleteConfirm = document.getElementById(selector);
   deleteConfirm.onclick = function () {
-    //console.log('delete confirm was clicked');
+    console.log('delete confirm was clicked');
     deleteFunction().then(function(){
       return getAllGrows();
     }).then(function(){
@@ -917,7 +917,7 @@ function main() {
     onEnterClick();
   } else if (appData.page === "grows" ){
     getAllGrows().then(function(resolve){
-      //console.log('getAllGrows() is passing', resolve, 'to displayGrowGrid()');
+      console.log('getAllGrows() is passing', resolve, 'to displayGrowGrid()');
       displayGrowGrid(resolve);
       onGrowClick();
       onAddClick('add-a-grow', 'grow-collection-page', 'add-grow-page', 'add-grow');
@@ -927,13 +927,13 @@ function main() {
     goBack("first-entry-page", "grow-collection-page", "#first-entry-page button", "grows");
   } else if (appData.page === "get-first-entry-stage") {
     calculateStartingPhase().then(function(resolve){
-      //console.log('getStartingPhaseProgress is passing', resolve, 'to displayEntryInstructsHeader() and goBackFromEntry()');
+      console.log('getStartingPhaseProgress is passing', resolve, 'to displayEntryInstructsHeader() and goBackFromEntry()');
       displayEntryInstructsHeader(resolve); //calls two event listeners (onProgressConfirm and onProgressDeny)
       goBackFromEntry(resolve);
     }); //that will add key/value pairs to entryDeets, depending on which one user clicks;
   }  else if (appData.page === "timeline") {
     renderFullTimeline().then(function(resolve){
-      //console.log('renderFullTimeline is passing', resolve, 'to displayGrowTimeline()');
+      console.log('renderFullTimeline is passing', resolve, 'to displayGrowTimeline()');
       return displayGrowTimeline(resolve);
     }).then(function(){
       const thisGrow = appData.allGrows.grows[appData.currentGrowIndex];
@@ -954,38 +954,38 @@ function main() {
     goBack("add-grow-page", "grow-collection-page", "#add-grow-page button", "grows");
   } else if (appData.page === "get-entry-stage") {
     calculateNeededUserInput().then(function(resolve){
-      //console.log('calculateNeededUserInput() is passing', resolve, "to:");
+      console.log('calculateNeededUserInput() is passing', resolve, "to:");
       if ('parentId' in resolve) {
         displayGrowProgressQuestion(resolve).then(function(resolve){
-          //console.log('displayGrowProgressQuestion is passing', resolve, 'to displayEntryInstructsHeader() and goBackFromEntry()');
+          console.log('displayGrowProgressQuestion is passing', resolve, 'to displayEntryInstructsHeader() and goBackFromEntry()');
           displayEntryInstructsHeader(resolve); //calls two event listeners (onProgressConfirm and onProgressDeny) //entryDeets are passed to appData by both event listeners
           goBackFromEntry(resolve);
         });
       } else {
         appData.page = "add-entry";
-        //console.log('main() set appData.page to ', appData.page);
+        console.log('main() set appData.page to ', appData.page);
         main();
       }
     });
   } else if (appData.page === "add-entry") {
       calculateInstructs().then(function(resolve){
-        //console.log('calculateInstructs() is passing', resolve, 'to:');
+        console.log('calculateInstructs() is passing', resolve, 'to:');
         if (resolve.wasFed === true) {
-            //console.log('getNutrientInstructs()');
+            console.log('getNutrientInstructs()');
             getNutrientInstructs(resolve).then(function(resolve){
-              //console.log('getNutrientInstructs() is passing:', resolve, 'to displayEntryInstructs()');
+              console.log('getNutrientInstructs() is passing:', resolve, 'to displayEntryInstructs()');
               return displayEntryInstructs(resolve);
           }).then(function(resolve){
-            //console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick() and goBackFromEntry()');
+            console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick() and goBackFromEntry()');
             onSubmitEntryClick(resolve);
             goBackFromEntry(resolve);
           });
         } else {
           populateEmptyInstructs(resolve).then(function(resolve){
-            //console.log('populateEmptyInstructs(), and populateEmptyInstructs() is passing', resolve, 'to displayEntryInstructs()');
+            console.log('populateEmptyInstructs(), and populateEmptyInstructs() is passing', resolve, 'to displayEntryInstructs()');
             return displayEntryInstructs(resolve);
           }).then(function(resolve){
-            //console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick() and goBackFromEntry()');
+            console.log('displayEntryInstructs() is passing:', resolve, 'to onSubmitEntryClick() and goBackFromEntry()');
             onSubmitEntryClick(resolve);
             goBackFromEntry(resolve);
           });
