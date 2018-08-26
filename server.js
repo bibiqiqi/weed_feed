@@ -6,6 +6,7 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const shortid = require('shortid');
+const moment = require('moment');
 
 const { PORT, DATABASE_URL } = require('./config');
 const { Grow, Schedule } = require('./models');
@@ -19,6 +20,7 @@ app.use(express.json());
 app.get('/grows', (req, res) => {
   Grow
     .find()
+    .sort({startDate: 'asc'})
     .then(grows => {
       res.json({
         grows: grows.map(
@@ -42,6 +44,7 @@ app.get( '/nutrient-schedules', (req, res) => {
 });
 
  app.post('/grows', (req, res) => {
+   console.log(moment(req.body.startDate, "YYYY-MM-DD HH:mm:ss"));
    const requiredFields = ['name', 'startDate', 'strain'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
@@ -55,7 +58,8 @@ app.get( '/nutrient-schedules', (req, res) => {
      .create({
        shortId: shortid.generate(),
        name: req.body.name,
-       startDate: req.body.startDate,
+       startDate: moment(req.body.startDate),
+         //, "YYYY-MM-DD HH:mm:ss"),
        endDate: null,
        strain: req.body.strain,
        entries: []

@@ -239,9 +239,7 @@ function hidePhaseIcon(currentPageId, newPageId, newPageName) {
 let loadedImageArray = [];
 let weeds = [];
 let weedImg;
-// = getRandomImage();
 let c;
-//, mobile;
 
 function makeImagePathArray() {
   const imageArray = [];
@@ -278,15 +276,21 @@ function getRandomImage() {
 }
 
 function draw() {
-  getRandomImage().then(function(img) {
-   console.log('getRandomImage() is passing', img, 'to drawWeed');
-   return drawWeed(img);
-   });
+  if (screen.width < 1000) { //if device is mobile
+    noLoop();
+    removeClass(document.getElementById("cover-page-mobile"),'hidden');
+  } else {
+    removeClass(document.getElementById("enter-button"),'hidden');
+    getRandomImage().then(function(img) {
+    console.log('getRandomImage() is passing', img, 'to drawWeed');
+    return drawWeed(img);
+    });
+  }
 }
 
-function drawWeed() {
+function drawWeed(img) {
     var w = random(10, 200);
-    var h = w / weedImg.width * weedImg.height;
+    var h = w / img.width * img.height;
     var r = random(-0.5, 0.5);
 
     var a = random(0, 360);
@@ -300,7 +304,7 @@ function drawWeed() {
     if (random(1) > 0.5) {
       scale(-1, 1);
     }
-    image(weedImg, 0, 0, w, h);
+    image(img, 0, 0, w, h);
     pop();
 }
 
@@ -345,7 +349,7 @@ let imageHtml;
       <a href="#" id="grow-${index}" class="grow-links" role="button">
         <h2>${item.name}</h2>
         <br><br>
-        <h3>Started:<br>${item.startDate}</h3>
+        <h3>Started:<br>${moment(item.startDate).format('YYYY-MM-DD')}</h3>
       </a>
     `;
   } else {
@@ -353,8 +357,8 @@ let imageHtml;
     <a href="#" id="grow-${index}" class="grow-links finished-grow" role="button">
       <h2>${item.name}</h2>
       <br><br>
-      <h3>Started:<br>${item.startDate}</h3>
-      <h3>Ended:<br>${item.endDate}</h3>
+      <h3>Started:<br>${moment(item.startDate).format('YYYY-MM-DD')}</h3>
+      <h3>Ended:<br>${moment(item.endDate).format('YYYY-MM-DD')}</h3>
     </a>
   `;
 }
@@ -632,9 +636,11 @@ function validateGrowSubmit() {
     }
     let dateField = document.getElementById("germination-date").value;
     if (dateField === "") {
-      growSubmit.startDate = moment().format('YYYY-MM-DD');
+      growSubmit.startDate = moment();
+      console.log("the startDate moment for the new Grow is", growSubmit.startDate);
+      console.log(growSubmit.startDate);
     } else if (moment(dateField).isValid()) {
-      growSubmit.startDate = moment(dateField).format('YYYY-MM-DD');
+      growSubmit.startDate = moment(dateField);
     } else {
       alert("Not a valid date.");
     }
@@ -658,13 +664,33 @@ function onSubmitGrowClick() {
       console.log('onSubmitGrowClick() set appData.allGrows to an empty string');
       return getAllGrows(resolve);
     }).then(function(resolve){
-      console.log('onSubmitGrowClick() called getAllGrows():', resolve);
-      appData.currentGrowIndex = resolve.grows.length-1;
-      console.log('onSubmitGrowClick() set appData.currentGrowIndex to', appData.currentGrowIndex);
+      // findMostRecentGrow(resolve);
+        console.log(resolve);
+        appData.currentGrowIndex = resolve.grows.length-1;
+        console.log('onSubmitGrowClick() set appData.currentGrowIndex to', appData.currentGrowIndex);
       turnPage("add-grow-page", "first-entry-page", "add-first-entry");
     });
   };
 }
+
+// function findMostRecentGrow(resolve) {
+//   let startDateArray = [];
+//   let growArray = resolve.grows;
+//   let i = 0;
+//   console.log(growArray);
+//   growArray.forEach(function(element) {
+//     let sortObject = {};
+//     sortObject.index = i;
+//     sortObject.toNow = moment().diff(element.startDate, 'seconds');
+//     startDateArray.push(sortObject);
+//     i++;
+//   });
+//   console.log(startDateArray);
+//   startDateArray.sort((a, b) => parseFloat(a.toNow) - parseFloat(b.toNow));
+//   console.log(startDateArray);
+//   appData.currentGrowIndex = startDateArray[0].index;
+//   console.log('findMostRecentGrow() set appData.currentGrowIndex to', appData.currentGrowIndex);
+// }
 
 function onSubmitEntryClick(entrySubmit) {
   const submitEntry = document.getElementById("submit-entry");
@@ -693,6 +719,7 @@ function onEditEntryClick() {
   const thisEntry = thisGrow.entries[appData.currentEntryIndex];
   const editEntry = document.getElementById("edit-entry");
   editEntry.onclick = function () {
+    document.getElementById('edit-notes').innerHTML = thisEntry.notes;
     console.log("edit-entry button was clicked");
     turnPage("notes-box", "entry-edit");
     onSubmitEditClick();
@@ -841,11 +868,16 @@ function whichSide(arrayLength) {
 //event listeners
 
 function onEnterClick() {
-  const enterButton = document.getElementById("enter-button");
-    enterButton.onclick = function() {
-      noLoop();
-      turnPage("cover-page", "grow-collection-page", "grows");
-    };
+  let enterButton;
+  if (screen.width < 1000) {
+    enterButton = document.getElementById("cover-page-mobile");
+  } else {
+    enterButton = document.getElementById("enter-button");
+  }
+  enterButton.onclick = function() {
+    noLoop();
+    turnPage("cover-page", "grow-collection-page", "grows");
+  };
 }
 
 function onGrowClick() {

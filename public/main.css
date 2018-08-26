@@ -165,18 +165,46 @@ header:not(#grow-collection-title) {
 }
 
 /*cover-page */
+/*#cover-page {
+    background-color: black;
+}*/
+
 #title {
   position: relative;
-  width: 80vw;
+  width: 100vw;
   margin: 0 auto;
   top: 50%;
   transform: perspective(1px) translateY(-50%);
   border-radius: 1rem;
-  color: white;
+  color: black;
+}
+
+#title h1 {
+  line-height: 5rem;
+  font-size: 4.5rem;
 }
 
 #title h2 {
   padding: 0;
+}
+
+#title h3 {
+  color: orange;
+}
+
+#title h4 {
+  line-height: 2rem;
+}
+
+#title .vegetative-phase {
+  width: 4rem;
+}
+
+#cover-page-mobile {
+  width: 100%;
+  border: black solid 1rem;
+  border-left-width: .5rem;
+  border-right-width: .5rem;
 }
 
 #cover-page a {
@@ -202,13 +230,6 @@ header:not(#grow-collection-title) {
 
 #cover-page a h2 {
   margin: 1rem;
-}
-
-#defaultCanvas0 {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  background-color: white;
 }
 
 /* add-first-entry page */
@@ -250,7 +271,7 @@ header:not(#grow-collection-title) {
   margin: 4.4vw;
 }
 
-#grow-collection-page .grow-links,
+.grow-links,
 #add-a-grow {
   margin: .5vw .5vw;
   box-sizing: border-box;
@@ -259,7 +280,7 @@ header:not(#grow-collection-title) {
   border-radius: .5rem;
 }
 
-#grow-collection-page .grow-links {
+ .grow-links {
   background-color: black;
   padding: 25% 5%;
 }
@@ -269,8 +290,16 @@ header:not(#grow-collection-title) {
   padding: 35% 5%;
 }
 
-#grow-collection-page .finished-grow {
+.finished-grow {
   background-color: darkgray;
+}
+
+.finished-grow:hover {
+    color: darkgray !important;
+}
+
+.finished-grow:active {
+    color: darkgray !important;
 }
 
 .grow-links:link {
@@ -638,14 +667,45 @@ input[type="submit"] {
     font-size: 5rem
   }
 
-  #cover-page a {
-      margin: 1rem auto;
-      width: 17rem;
+  #title {
+    color: white;
   }
 
-  #cover-page h1 {
-    line-height: 5rem;
-    font-size: 5rem;
+  #defaultCanvas0 {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    background-color: white;
+  }
+
+  #title a {
+    margin: 1rem auto;
+    width: 21rem;
+  }
+
+  #title h1 {
+    line-height: 9rem;
+    font-size: 9rem;
+  }
+
+  #title h2 {
+    line-height: 6rem;
+    font-size: 6rem;
+    font-weight: 700;
+    margin: .5rem;
+  }
+
+  #title h3 {
+    color: white;
+  }
+
+  #title h4 {
+    line-height: 2.5rem;
+    font-size: 2.5rem;
+  }
+
+  #title .vegetative-phase {
+    width: 8rem;
   }
 
   #grow-grid {
@@ -658,8 +718,8 @@ input[type="submit"] {
   }
 
   #grow-collection-page h3 {
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: 2rem;
+    line-height: 2rem;
   }
 
   #grow-collection-page .grow-links,

@@ -59,7 +59,8 @@ entrySchema.methods.serialize = function() {
     id: this._id,
     shortId: this.shortId,
     number: this.number,
-    date: moment(this.date).format('YYYY-MM-DD'),
+    date: moment(this.date),
+    //.format('YYYY-MM-DD'),
     week: this.week,
     phaseProgress: {
       phase: this.phaseProgress.phase,
@@ -84,7 +85,7 @@ growSchema.methods.serialize = function() {
     id: this._id,
     shortId: this.shortId,
     name: this.name,
-    startDate: moment(this.startDate).format('YYYY-MM-DD'),
+    startDate: moment(this.startDate).format("YYYY-MM-DD HH:mm:ss"),
     endDate: this.endDate,
     strain: this.strain,
     entries: this.entries

@@ -1,4 +1,4 @@
-# Grow Your Own Weed
+# Weed Feed
 This application was designed as a tool for growing weed indoors, by keeping track of your plant's nutrient schedule. When the user starts growing a new weed plant or group of plants, they can add it to the app. The user should regularly check the moisture of their plant by placing a finger in the soil. When the soil is dry, the user can post an entry in the grow, for the app to give it instructions on whether to water or feed the plant, and with how much of each nutrient source.
 
 ## [Live App](https://grow-your-own-weed.herokuapp.com/)
