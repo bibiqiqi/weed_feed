@@ -44,7 +44,7 @@ app.get( '/nutrient-schedules', (req, res) => {
 });
 
  app.post('/grows', (req, res) => {
-   console.log(moment(req.body.startDate, "YYYY-MM-DD HH:mm:ss"));
+   //console.log(moment(req.body.startDate, "YYYY-MM-DD HH:mm:ss"));
    const requiredFields = ['name', 'startDate', 'strain'];
    for (let i = 0; i < requiredFields.length; i++) {
      const field = requiredFields[i];
@@ -58,8 +58,7 @@ app.get( '/nutrient-schedules', (req, res) => {
      .create({
        shortId: shortid.generate(),
        name: req.body.name,
-       startDate: moment(req.body.startDate),
-         //, "YYYY-MM-DD HH:mm:ss"),
+       startDate: moment(req.body.startDate, "YYYY-MM-DD HH:mm:ss"),
        endDate: null,
        strain: req.body.strain,
        entries: []

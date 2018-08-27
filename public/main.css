@@ -129,7 +129,7 @@ header:not(#grow-collection-title) {
 
 .delete-confirm div {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem;
 }
 

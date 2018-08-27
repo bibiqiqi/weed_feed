@@ -32,7 +32,6 @@ const growSchema = mongoose.Schema({
   shortId: String,
   name: {type: String, required: true},
   startDate: {type: String, required: true},
-  //endDate: {type: String, required: true},
   endDate: mongoose.Schema.Types.Mixed,
   strain: {type: String, required: true},
   entries: [entrySchema]
@@ -60,7 +59,6 @@ entrySchema.methods.serialize = function() {
     shortId: this.shortId,
     number: this.number,
     date: moment(this.date),
-    //.format('YYYY-MM-DD'),
     week: this.week,
     phaseProgress: {
       phase: this.phaseProgress.phase,
@@ -85,7 +83,8 @@ growSchema.methods.serialize = function() {
     id: this._id,
     shortId: this.shortId,
     name: this.name,
-    startDate: moment(this.startDate).format("YYYY-MM-DD HH:mm:ss"),
+    startDate: moment(this.startDate),
+    //.format("YYYY-MM-DD HH:mm:ss"),
     endDate: this.endDate,
     strain: this.strain,
     entries: this.entries

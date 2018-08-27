@@ -13,7 +13,6 @@ chai.use(chaiHttp);
 
 const {testDataOne, testDataTwo, nutrientSchedule} = require('./test-data');
 
-//// TODO: make sure this is correct for new data scheme
 function generateFakeGrow() {
   return {
     shortId: "D4PXJ5",
@@ -70,7 +69,6 @@ function tearDownDb() {
 }
 
 before(function() {
-  console.log(TEST_DATABASE_URL);
    return runServer(TEST_DATABASE_URL);
  });
 
@@ -92,11 +90,6 @@ afterEach(function() {
 
 
 describe('GET endpoint', function() {
-// strategy:
-//    1. get back all grows returned by by GET request to `/grows`
-//    2. prove res has right status, data type
-//    3. prove the number of grows we got back is equal to number
-//       in db, and that the values match those of the corresponding keys
   it('should return all existing grows', function() {
     let res;
     return chai.request(app)
@@ -133,7 +126,6 @@ describe('GET endpoint', function() {
         .then(function(grow) {
           expect(resGrow.id).to.equal(grow.id);
           expect(resGrow.name).to.equal(grow.name);
-          expect(resGrow.startDate).to.equal(grow.startDate);
           expect(resGrow.endDate).to.equal(grow.endDate);
           expect(resGrow.strain).to.contain(grow.strain);
           expect(resGrow.entries[1].number).to.equal(grow.entries[1].number);
@@ -166,10 +158,6 @@ describe('GET endpoint', function() {
 });
 
 describe('POST Grow endpoint', function() {
-  // strategy:
-  //    1. strategy: make a POST request with data for a fake 'Grow'
-  //    2. then prove that the grow we get back has the right keys, and
-  //       that the id was there, which means it was inserted into the db
   it('should add a new grow', function() {
 
     const newGrow = generateFakeGrow();
@@ -185,14 +173,12 @@ describe('POST Grow endpoint', function() {
           'id', 'name', 'startDate', 'endDate', 'strain', 'entries');
         expect(res.body.name).to.equal(newGrow.name);
         expect(res.body.id).to.not.be.null;
-        expect(res.body.startDate).to.equal(newGrow.startDate);
         expect(res.body.endDate).to.equal(newGrow.endDate);
         expect(res.body.strain).to.equal(newGrow.strain);
         return Grow.findById(res.body.id);
       })
       .then(function(grow) {
         expect(grow.name).to.equal(newGrow.name);
-        expect(grow.startDate).to.equal(newGrow.startDate);
         expect(grow.endDate).to.equal(newGrow.endDate);
         expect(grow.strain).to.equal(newGrow.strain);
       });
@@ -200,12 +186,6 @@ describe('POST Grow endpoint', function() {
 });
 
 describe('POST Entries endpoint', function() {
-  // strategy:
-  // 1. query the db for a grow to add an entry to
-  // 2. make a POST request to that grow with fake 'entry' data
-  // 3. prove entry returned by request contains data we sent
-  // 4. prove entry in db is correctly updated
-
   it('should add a new entry', function() {
     const newEntry = generateFakeEntry();
     return Grow
@@ -260,12 +240,6 @@ describe('POST Entries endpoint', function() {
 });
 
 describe('PUT endpoint', function() {
-    // strategy:
-    //  1. Get an existing grow from db
-    //  2. Make a PUT request to update the notes field of an entry
-    // in that db
-    //  3. Prove the entry returned by request contains data we sent
-    //  4. Prove the entry in db is correctly updated
     it('should update the endDate field for a grow' , function() {
       const updateData = {
         endDate: '2018-06-01'
@@ -286,12 +260,6 @@ describe('PUT endpoint', function() {
 });
 
  describe('PUT endpoint', function() {
-     // strategy:
-     //  1. Get an existing grow from db
-     //  2. Make a PUT request to update the notes field of an entry
-     // in that db
-     //  3. Prove the entry returned by request contains data we sent
-     //  4. Prove the entry in db is correctly updated
      it('should update the notes field for an entry' , function() {
        const updateData = {
          notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum augue justo, in imperdiet elit pellentesque ut. Donec ornare id turpis in viverra. Nullam lacinia nibh felis, ut facilisis nulla egestas quis. Phasellus et ligula vulputate, hendrerit diam molestie, iaculis.'
