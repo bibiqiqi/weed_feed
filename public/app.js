@@ -646,7 +646,7 @@ function validateGrowSubmit() {
     if (growSubmit.name !== undefined && growSubmit.strain !== undefined && growSubmit.startDate !== undefined) {
       resolve(growSubmit);
     } else {
-      reject(//console.log("grow submission was not validated. calling submitGrow() again"));
+      reject(console.log("grow submission was not validated. calling submitGrow() again"));
       onSubmitGrowClick();
     }
   });
