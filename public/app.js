@@ -348,7 +348,6 @@ let imageHtml;
     imageHtml = `
       <a href="#" id="grow-${index}" class="grow-links" role="button">
         <h2>${item.name}</h2>
-        <br><br>
         <h3>Started:<br>${moment(item.startDate).format('YYYY-MM-DD')}</h3>
       </a>
     `;
@@ -356,7 +355,6 @@ let imageHtml;
     imageHtml = `
     <a href="#" id="grow-${index}" class="grow-links finished-grow" role="button">
       <h2>${item.name}</h2>
-      <br><br>
       <h3>Started:<br>${moment(item.startDate).format('YYYY-MM-DD')}</h3>
       <h3>Ended:<br>${moment(item.endDate).format('YYYY-MM-DD')}</h3>
     </a>
@@ -706,6 +704,7 @@ function onEditEntryClick() {
     const exitEdit = document.getElementById("exit-edit");
     exitEdit.onclick = function () {
       event.preventDefault();
+      document.getElementById('edit-notes').innerHTML = thisEntry.notes;
       turnPage("entry-edit", "notes-box");
     };
   };

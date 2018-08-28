@@ -233,6 +233,10 @@ header:not(#grow-collection-title) {
 }
 
 /* add-first-entry page */
+#grow-collection-page h2 {
+  margin: 1rem auto;
+}
+
 #first-entry-page {
   background-color: black;
 }
@@ -278,16 +282,17 @@ header:not(#grow-collection-title) {
   width: 90vw;
   height: 90vw;
   border-radius: .5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
  .grow-links {
   background-color: black;
-  padding: 25% 5%;
 }
 
 #add-a-grow {
   border: .5vw dotted black;
-  padding: 35% 5%;
 }
 
 .finished-grow {
